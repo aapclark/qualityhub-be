@@ -9,11 +9,14 @@ services:
       # - PRISMA_ENDPOINT:'${PRISMA_ENDPOINT}'
       PRISMA_ENDPOINT: 'http://prisma:${PRISMA_PORT}'
       PRISMA_SECRET: '${PRISMA_SECRET}'
+      APOLLO_PORT: '${APOLLO_PORT}'
+      JWT_SECRET: '${JWT_SECRET}'
+      PRISMA_MANAGEMENT_API_SECRET: '${PRISMA_MANAGEMENT_API_SECRET}'
     volumes:
       - ./apollo/src:/app/src
     ports:
       - '${APOLLO_PORT:-8000}:${APOLLO_PORT:-8000}'
-    command: 'npm run development'
+    command: sh -c "npm install -g nodemon && nodemon src/index.js"
   prisma:
     image: prismagraphql/prisma:1.34.10
     restart: always
