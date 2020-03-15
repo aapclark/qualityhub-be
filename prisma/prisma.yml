@@ -1,6 +1,6 @@
 # The HTTP endpoint for your Prisma API
 endpoint: ${env:PRISMA_ENDPOINT}
-# secret: ${env:PRISMA_SECRET}
+secret: ${env:PRISMA_SECRET}
 
 # Points to the file that contains your datamodel
 datamodel: datamodel.prisma
@@ -8,8 +8,8 @@ datamodel: datamodel.prisma
 # Specifies language & location for the generated Prisma client
 generate:
   - generator: javascript-client
-    output: ../src/generated/prisma-client
-
-seed:
-  # import: ./seeds/seed_users.graphql
-  run: node ./seeds/01_seed_users.js
+    output: ../apollo/src/generated/prisma-client
+  - generator: graphql-schema
+    output: ../apollo/schema//prisma.graphql
+# seed:
+#   run: node ./seeds/01_seed_users.js
