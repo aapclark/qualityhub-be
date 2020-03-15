@@ -3,7 +3,7 @@ services:
   apollo:
     build:
       context: ./apollo
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test
     environment:
       # NODE_ENV=production
       # - PRISMA_ENDPOINT:'${PRISMA_ENDPOINT}'
