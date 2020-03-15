@@ -3,14 +3,11 @@ services:
   apollo:
     build:
       context: ./apollo
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.test
     environment:
       # NODE_ENV=production
       # - PRISMA_ENDPOINT:'${PRISMA_ENDPOINT}'
-      PRISMA_ENDPOINT: '${PRISMA_ENDPOINT}/${PRISMA_SERVICE_NAME}/${PRISMA_STAGE}'
-      PRISMA_SERVICE_NAME: ${PRISMA_SERVICE_NAME}
-      PRISMA_STAGE: ${PRISMA_STAGE}
-      PRISMA_PORT: ${PRISMA_PORT}
+      PRISMA_ENDPOINT: '${PRISMA_ENDPOINT}/${RISMA_SERVICE_NAME}/test'
       PRISMA_SECRET: '${PRISMA_SECRET}'
       APOLLO_PORT: '${APOLLO_PORT}'
       JWT_SECRET: '${JWT_SECRET}'
