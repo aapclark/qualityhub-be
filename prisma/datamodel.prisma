@@ -2,13 +2,12 @@ type User @key(fields: "email") {
   id: ID! @id
   stripeId: String @unique
   stripeCusId: String @unique
+  password: String!
+  email: String! @unique
   first_name: String!
   last_name: String!
-  email: String! @unique
-  password: String!
   city: String!
   state: String!
-  gender: String
   bio: String
   image_url: String
   portfolio_url: String
@@ -18,16 +17,94 @@ type User @key(fields: "email") {
   blog_url: String
   twitter_url: String
   activated_stripe: Boolean
-  fn_lc: String
-  ln_lc: String
-  city_lc: String
-  state_lc: String
   chatActive: Boolean @default(value: false)
   reviewsReceived: [Review!] @relation(name: "ReviewCoach")
   reviewsGiven: [Review!] @relation(name:"ReviewSeeker")
 }
 
-type Review {
+
+type ServiceListing {
+  id: ID! @id
+  coach: User!
+  description: String!
+  price: Int!
+  microservice: Microservice!
+  tag: [ListingTags!]
+  industry: [ListingIndustry!]
+}
+
+type ListingIndustry {
+  id: ID! @id
+  name: String!
+}
+
+type ListingTags {
+  id: ID! @id
+  name: String!
+}
+
+type IQAvailability {
+  id: ID! @id
+  hour: Int!
+  minute: Int!
+  coach: User!
+  bookingID: String
+  year: Int!
+  month: Int!
+  day: Int!
+  isOpen: Boolean!
+  recurring: Boolean!
+}
+
+type Job {
+  id: ID! @id
+  coach: User!
+  seeker: User!
+  listing: ServiceListing!
+  microservice: Microservice!
+  dateRequested: DateTime
+  dateAccepted: DateTime
+  dateCompleted: DateTime
+  pending: Boolean @default(value: true)
+  accepted: Boolean @deafault(value: false)
+  completed: Boolean @default(value: false)
+}
+
+type CoachFeedback {
+  id: ID! @id
+  coach: User!
+  seeker: User!
+  job: Job!
+  feedback: [FeedbackEntry!] 
+  isSent: Boolean
+}
+
+// Allows a CoachFeedback entry to contain many lines of feedback.
+type FeedbackEntry {
+  id: ID! @id
+  CoachFeedback: CoachFeedback! 
+  title: String!
+  content: String!
+}
+
+
+type IQJobInfo {
+  id: ID! @id
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  job: Job!
+  availability: [IQAvailability]!
+  pending: Boolean
+  confirmed: Boolean
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+}
+
+type SeekerReview {
   id: ID! @id
   coach: User! @relation(name:"ReviewCoach")
   seeker: User! @relation(name:"ReviewSeeker")
@@ -35,17 +112,17 @@ type Review {
   rating: Int!
   review: String
   createdAt: DateTime! @createdAt
-  lastUpdated: DateTime! @updatedAt
-  response: Response @relation(link: INLINE)
+  updatedAt: DateTime! @updatedAt
+  response: CoachReviewResponse @relation(link: INLINE)
   microservice: Microservice!
 }
 
-type Response {
+type CoachReviewResponse {
   id: ID! @id
   review: Review! @unique
   text: String!
   createdAt: DateTime! @createdAt
-  lastUpdated: DateTime! @updatedAt
+  updatedAt: DateTime! @updatedAt
 }
 
 # MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
