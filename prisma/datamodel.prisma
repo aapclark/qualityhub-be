@@ -18,8 +18,7 @@ type User @key(fields: "email") {
   twitter_url: String
   activated_stripe: Boolean
   chatActive: Boolean @default(value: false)
-  reviewsReceived: [Review!] @relation(name: "ReviewCoach")
-  reviewsGiven: [Review!] @relation(name:"ReviewSeeker")
+
 }
 
 
@@ -58,8 +57,8 @@ type IQAvailability {
 
 type Job {
   id: ID! @id
-  coach: User!
-  seeker: User!
+  coach: User! @relation(name: "JobCoach")
+  seeker: User! @relation(name: "JobSeeker")
   listing: ServiceListing!
   microservice: Microservice!
   dateRequested: DateTime
@@ -72,14 +71,14 @@ type Job {
 
 type CoachFeedback {
   id: ID! @id
-  coach: User!
-  seeker: User!
+  coach: User! @relation(name: "FeedbackCoach")
+  seeker: User! @relation(name: "FeedbackSeeker")
   job: Job!
   feedback: [FeedbackEntry!] 
   isSent: Boolean
 }
 
-// Allows a CoachFeedback entry to contain many lines of feedback.
+
 type FeedbackEntry {
   id: ID! @id
   CoachFeedback: CoachFeedback! 
@@ -119,7 +118,7 @@ type SeekerReview {
 
 type CoachReviewResponse {
   id: ID! @id
-  review: Review! @unique
+  review: SeekerReview! @unique
   text: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
