@@ -28,7 +28,7 @@ type ServiceListing {
   description: String!
   price: Int!
   microservice: Microservice!
-  tag: [ListingTags!]
+  tag: [ListingTag!]
   industry: [ListingIndustry!]
 }
 
@@ -37,7 +37,7 @@ type ListingIndustry {
   name: String!
 }
 
-type ListingTags {
+type ListingTag {
   id: ID! @id
   name: String!
 }
