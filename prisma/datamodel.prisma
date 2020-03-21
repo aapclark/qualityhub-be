@@ -28,7 +28,7 @@ type ServiceListing {
   description: String!
   price: Int!
   microservice: Microservice!
-  tag: [ListingTag!]
+  tags: [ListingTag!]
   industry: [ListingIndustry!]
 }
 
@@ -42,12 +42,12 @@ type ListingTag {
   name: String!
 }
 
-type IQAvailability {
+type ListingAvailability {
   id: ID! @id
   hour: Int!
   minute: Int!
   coach: User!
-  bookingID: String
+  listing: ServiceListing!
   year: Int!
   month: Int!
   day: Int!
@@ -87,6 +87,8 @@ type FeedbackEntry {
 }
 
 
+
+# May need to update this to reduce overlapping information between IQJI and Job
 type IQJobInfo {
   id: ID! @id
   year: Int!
@@ -95,7 +97,7 @@ type IQJobInfo {
   hour: Int!
   minute: Int!
   job: Job!
-  availability: [IQAvailability]!
+  availability: [ListingAvailability]!
   pending: Boolean
   confirmed: Boolean
   interviewGoals: String
@@ -112,11 +114,13 @@ type SeekerReview {
   review: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  response: CoachReviewResponse @relation(link: INLINE)
+  response: SeekerReviewResponse @relation(link: INLINE)
   microservice: Microservice!
 }
 
-type CoachReviewResponse {
+
+
+type SeekerReviewResponse {
   id: ID! @id
   review: SeekerReview! @unique
   text: String!
