@@ -87,6 +87,8 @@ type FeedbackEntry {
 }
 
 
+
+# May need to update this to reduce overlapping information between IQJI and Job
 type IQJobInfo {
   id: ID! @id
   year: Int!
@@ -116,7 +118,9 @@ type SeekerReview {
   microservice: Microservice!
 }
 
-type CoachReviewResponse {
+
+
+type SeekerReviewResponse {
   id: ID! @id
   review: SeekerReview! @unique
   text: String!
