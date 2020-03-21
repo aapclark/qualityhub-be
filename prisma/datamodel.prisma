@@ -47,7 +47,7 @@ type ListingAvailability {
   hour: Int!
   minute: Int!
   coach: User!
-  bookingID: String
+  listing: ServiceListing!
   year: Int!
   month: Int!
   day: Int!
