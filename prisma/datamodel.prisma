@@ -114,7 +114,7 @@ type SeekerReview {
   review: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  response: CoachReviewResponse @relation(link: INLINE)
+  response: SeekerReviewResponse @relation(link: INLINE)
   microservice: Microservice!
 }
 
