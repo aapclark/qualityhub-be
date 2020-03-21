@@ -9,11 +9,43 @@ var models = [
     embedded: false
   },
   {
-    name: "Review",
+    name: "ServiceListing",
     embedded: false
   },
   {
-    name: "Response",
+    name: "ListingIndustry",
+    embedded: false
+  },
+  {
+    name: "ListingTag",
+    embedded: false
+  },
+  {
+    name: "ListingAvailability",
+    embedded: false
+  },
+  {
+    name: "Job",
+    embedded: false
+  },
+  {
+    name: "CoachFeedback",
+    embedded: false
+  },
+  {
+    name: "FeedbackEntry",
+    embedded: false
+  },
+  {
+    name: "IQJobInfo",
+    embedded: false
+  },
+  {
+    name: "SeekerReview",
+    embedded: false
+  },
+  {
+    name: "SeekerReviewResponse",
     embedded: false
   },
   {
@@ -24,9 +56,7 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `http://prisma:${process.env["PRISMA_PORT"]}/${
-    process.env["PRISMA_SERVICE_NAME"]
-  }/${process.env["PRISMA_STAGE"]}`,
+  endpoint: `${process.env["PRISMA_ENDPOINT"]}`,
   secret: `${process.env["PRISMA_SECRET"]}`
 });
 exports.prisma = new exports.Prisma();
