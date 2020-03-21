@@ -42,7 +42,7 @@ type ListingTag {
   name: String!
 }
 
-type IQAvailability {
+type ListingAvailability {
   id: ID! @id
   hour: Int!
   minute: Int!
@@ -95,7 +95,7 @@ type IQJobInfo {
   hour: Int!
   minute: Int!
   job: Job!
-  availability: [IQAvailability]!
+  availability: [ListingAvailability]!
   pending: Boolean
   confirmed: Boolean
   interviewGoals: String
