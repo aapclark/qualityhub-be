@@ -24,10 +24,10 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
-		// ! reviewsReceived(microservice: String first: Int): [Review!]
-		// ! reviewsGiven(microservice: String): [Review!]
-		// ! average_coach_rating(microservice: String): Float
-		// ! ratingsReceived(microservice: String): Int
+#		// ! reviewsReceived(microservice: String first: Int): [Review!]
+#		// ! reviewsGiven(microservice: String): [Review!]
+#		// ! average_coach_rating(microservice: String): Float
+#		// ! ratingsReceived(microservice: String): Int
 	}
 
 	type ServiceListing {
