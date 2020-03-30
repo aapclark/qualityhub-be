@@ -22,7 +22,7 @@ type User @key(fields: "email") {
 }
 
 
-type ServiceListing {
+type Listing {
   id: ID! @id
   coach: User!
   description: String!
@@ -47,7 +47,7 @@ type ListingAvailability {
   hour: Int!
   minute: Int!
   coach: User!
-  listing: ServiceListing!
+  listing: Listing!
   year: Int!
   month: Int!
   day: Int!
@@ -59,7 +59,7 @@ type Job {
   id: ID! @id
   coach: User! @relation(name: "JobCoach")
   seeker: User! @relation(name: "JobSeeker")
-  listing: ServiceListing!
+  listing: Listing!
   microservice: Microservice!
   dateRequested: DateTime
   dateAccepted: DateTime
