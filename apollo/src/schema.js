@@ -6,6 +6,13 @@ const { gql } = require('apollo-server');
 
 
 const typeDefs = gql`
+
+
+	enum Microservice {
+		INTERVIEWQ
+		RESUMEQ
+	}
+
 	type User @key(fields: "id") {
 		id: ID!
 		stripeCustomerConnected: Boolean
@@ -24,10 +31,7 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
-#		// ! reviewsReceived(microservice: String first: Int): [Review!]
-#		// ! reviewsGiven(microservice: String): [Review!]
-#		// ! average_coach_rating(microservice: String): Float
-#		// ! ratingsReceived(microservice: String): Int
+
 	}
 
 	type ServiceListing {
@@ -37,7 +41,7 @@ const typeDefs = gql`
 		price: Int!
 		microservice: Microservice
 		tags: [ListingTag!]
-		industry; [ListingIndustry!]
+		industry: [ListingIndustry!]
 	}
 
 
@@ -46,10 +50,13 @@ const typeDefs = gql`
 		name: String!
 	}
 
-	type ListingTag {
+
+	type ListingIndustry {
 		id: ID!
 		name: String!
 	}
+
+
 
 	type ListingAvailability {
 		id: ID!
@@ -70,9 +77,9 @@ const typeDefs = gql`
 		seeker: User!
 		listing: ServiceListing!
 		microservice: Microservice!
-		dateRequested: DateTime
-		dateAccepted: DateTime
-		dateCompleted: DateTime
+		dateRequested: String
+		dateAccepted: String
+		dateCompleted: String
 		pending: Boolean
 		accepted: Boolean
 		completed: Boolean
@@ -93,6 +100,8 @@ const typeDefs = gql`
 		title: String!
 		content: String!
 	}
+
+
 
 `
 
