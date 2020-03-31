@@ -39,7 +39,7 @@ const typeDefs = gql`
 		price: Int!
 		microservice: Microservice
 		tags: [ListingTag!]
-		industry; [ListingIndustry!]
+		industry: [ListingIndustry!]
 	}
 
 
