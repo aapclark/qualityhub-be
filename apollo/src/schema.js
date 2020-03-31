@@ -114,6 +114,100 @@ const typeDefs = gql`
 		title: String!
 		content: String!
 	}
+
+	type Mutation {
+		# User Mutations
+		signup(
+    	RegistrationInput
+			): AuthPayload!
+		login(
+			LoginInput
+			): AuthPayload!
+		userUpdate (
+			UserUpdateInput
+			): User!
+		userDelete: User!
+		
+		# Stripe Mutations
+		createCustomer(
+			email: String!
+			source: String!
+		): String!
+		addCoachStripeId(
+			code: String!
+		) : User!
+		createStripeLink: String!
+		stripeDirectCharge(
+			amount: Int!
+			currency: String
+			source: String!
+			coachId: String!
+		): Status!
+		stripePayout(
+			amount: Int!
+			currency: String
+			method: String
+			coachId: String!
+		): String!
+		stripePayIntent(
+			amount: Int!
+			currency: String
+			source: String
+			): User!
+		stripeCreateToken(
+			customer: String!)
+			: User!
+
+
+		}
+
+
+	type AuthPayload {
+		token: String!
+		user: User!
+	}
+
+	type RegistrationInput {
+		first_name: String!
+		last_name: String!
+		email: String!
+		password: String!
+		city: String!
+		state: String!
+		image_url: String
+		personal_url: String
+		blog_url: String
+		twitter_url: String
+		portfolio_url: String
+		linkedin_url: String
+		github_url: String
+		bio: String
+	}
+
+	type UserUpdateInput {
+		stripeId: String
+    stripeCusId: String
+    first_name: String
+    last_name: String
+    password: String
+    email: String
+    city: String
+    state: String
+    image_url: String
+    gender: String
+    personal_url: String
+    blog_url: String
+    twitter_url: String
+    portfolio_url: String
+    linkedin_url: String
+    github_url: String
+    bio: String
+	}
+
+	type LoginInput {
+		email: String!
+		password: String!
+	}
 `
 
 module.exports = typeDefs
