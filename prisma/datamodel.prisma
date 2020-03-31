@@ -1,151 +1,151 @@
-type User @key(fields: "email") {
-  id: ID! @id
-  stripeId: String @unique
-  stripeCusId: String @unique
-  password: String!
-  email: String! @unique
-  first_name: String!
-  last_name: String!
-  city: String!
-  state: String!
-  bio: String
-  image_url: String
-  portfolio_url: String
-  linkedin_url: String
-  github_url: String
-  personal_url: String
-  blog_url: String
-  twitter_url: String
-  activated_stripe: Boolean
-  chatActive: Boolean @default(value: false)
+type User {
+	id: ID! @id
+	stripeId: String @unique
+	stripeCusId: String @unique
+	password: String!
+	email: String! @unique
+	first_name: String!
+	last_name: String!
+	city: String!
+	state: String!
+	bio: String
+	image_url: String
+	portfolio_url: String
+	linkedin_url: String
+	github_url: String
+	personal_url: String
+	blog_url: String
+	twitter_url: String
+	activated_stripe: Boolean
+	chatActive: Boolean @default(value: false)
 }
 
 type Chat {
-  id: ID!
-  user1: String
-  user2: String
-  messages: [Message!]
+	id: ID! @id
+	user1: String
+	user2: String
+	messages: [Message!]
 }
 
 type Message {
-  id: ID!
-  chat: Chat!
-  sender: User!
-  reciever: User!
-  content: String!
-  createdAt: DateTime
+	id: ID! @id
+	chat: Chat!
+	sender: User! @relation(name: "MessageSender")
+	reciever: User! @relation(name: "MessageReciever")
+	content: String!
+	createdAt: DateTime! @createdAt
 }
 
 
 
 type Listing {
-  id: ID! @id
-  coach: User!
-  description: String!
-  price: Int!
-  microservice: Microservice!
-  tags: [ListingTag!]
-  industry: [ListingIndustry!]
+	id: ID! @id
+	coach: User!
+	description: String!
+	price: Int!
+	microservice: Microservice!
+	tags: [ListingTag!]
+	industry: [ListingIndustry!]
 }
 
 type ListingIndustry {
-  id: ID! @id
-  name: String!
+	id: ID! @id
+	name: String!
 }
 
 type ListingTag {
-  id: ID! @id
-  name: String!
+	id: ID! @id
+	name: String!
 }
 
 type ListingAvailability {
-  id: ID! @id
-  hour: Int!
-  minute: Int!
-  coach: User!
-  listing: Listing!
-  year: Int!
-  month: Int!
-  day: Int!
-  isOpen: Boolean!
-  recurring: Boolean!
+	id: ID! @id
+	hour: Int!
+	minute: Int!
+	coach: User!
+	listing: Listing!
+	year: Int!
+	month: Int!
+	day: Int!
+	isOpen: Boolean!
+	recurring: Boolean!
 }
 
 type Job {
-  id: ID! @id
-  coach: User! @relation(name: "JobCoach")
-  seeker: User! @relation(name: "JobSeeker")
-  listing: Listing!
-  microservice: Microservice!
-  dateRequested: DateTime
-  dateAccepted: DateTime
-  dateCompleted: DateTime
-  pending: Boolean @default(value: true)
-  accepted: Boolean @deafault(value: false)
-  completed: Boolean @default(value: false)
+	id: ID! @id
+	coach: User! @relation(name: "JobCoach")
+	seeker: User! @relation(name: "JobSeeker")
+	listing: Listing!
+	microservice: Microservice!
+	dateRequested: DateTime
+	dateAccepted: DateTime
+	dateCompleted: DateTime
+	pending: Boolean @default(value: true)
+	accepted: Boolean @deafault(value: false)
+	completed: Boolean @default(value: false)
 }
 
 type CoachFeedback {
-  id: ID! @id
-  coach: User! @relation(name: "FeedbackCoach")
-  seeker: User! @relation(name: "FeedbackSeeker")
-  job: Job!
-  feedback: [FeedbackEntry!] 
-  isSent: Boolean
+	id: ID! @id
+	coach: User! @relation(name: "FeedbackCoach")
+	seeker: User! @relation(name: "FeedbackSeeker")
+	job: Job!
+	feedback: [FeedbackEntry!] 
+	isSent: Boolean
 }
 
 
 type FeedbackEntry {
-  id: ID! @id
-  CoachFeedback: CoachFeedback! 
-  title: String!
-  content: String!
+	id: ID! @id
+	CoachFeedback: CoachFeedback! 
+	title: String!
+	content: String!
 }
 
 
 
 # May need to update this to reduce overlapping information between IQJI and Job
 type IQJobInfo {
-  id: ID! @id
-  year: Int!
-  month: Int!
-  day: Int!
-  hour: Int!
-  minute: Int!
-  job: Job!
-  availability: [ListingAvailability]!
-  pending: Boolean
-  confirmed: Boolean
-  interviewGoals: String
-  interviewQuestions: String
-  resumeURL: String
+	id: ID! @id
+	year: Int!
+	month: Int!
+	day: Int!
+	hour: Int!
+	minute: Int!
+	job: Job!
+	availability: [ListingAvailability]!
+	pending: Boolean
+	confirmed: Boolean
+	interviewGoals: String
+	interviewQuestions: String
+	resumeURL: String
 }
 
 type SeekerReview {
-  id: ID! @id
-  coach: User! @relation(name:"ReviewCoach")
-  seeker: User! @relation(name:"ReviewSeeker")
-  job: String! @unique
-  rating: Int!
-  review: String
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
-  response: SeekerReviewResponse @relation(link: INLINE)
-  microservice: Microservice!
+	id: ID! @id
+	coach: User! @relation(name: "ReviewCoach")
+	seeker: User! @relation(name: "ReviewSeeker")
+	job: String! @unique
+	rating: Int!
+	review: String
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	response: SeekerReviewResponse @relation(link: INLINE)
+	microservice: Microservice!
 }
 
 
 
 type SeekerReviewResponse {
-  id: ID! @id
-  review: SeekerReview! @unique
-  text: String!
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
+	id: ID! @id
+	review: SeekerReview! @unique
+	text: String!
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
 
 # MicroServices can be added as more microservices are builtout. The enum is used to differentiate what service a review is left in
 enum Microservice {
-  INTERVIEWQ
-  RESUMEQ
+	INTERVIEWQ
+	RESUMEQ
 }
