@@ -29,7 +29,32 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
+	}
 
+	type Chat {
+		id: ID!
+		user1: String
+		user2: String
+		messages: [Message!]
+	}
+
+	type Message {
+		id: ID!
+		chat: Chat!
+		sender: User!
+		reciever: User!
+		content: String!
+		createdAt: String
+	}
+
+	type Balance {
+		available: Int!
+		pending: Int!
+	}
+
+	type Status {
+		success: String
+		error: String
 	}
 
 	type ServiceListing {
@@ -39,16 +64,15 @@ const typeDefs = gql`
 		price: Int!
 		microservice: Microservice
 		tags: [ListingTag!]
-		industry; [ListingIndustry!]
+		industry: [ListingIndustry!]
 	}
-
 
 	type ListingTag {
 		id: ID!
 		name: String!
 	}
 
-	type ListingTag {
+	type ListingIndustry {
 		id: ID!
 		name: String!
 	}
@@ -72,9 +96,9 @@ const typeDefs = gql`
 		seeker: User!
 		listing: ServiceListing!
 		microservice: Microservice!
-		dateRequested: DateTime
-		dateAccepted: DateTime
-		dateCompleted: DateTime
+		dateRequested: String
+		dateAccepted: String
+		dateCompleted: String
 		pending: Boolean
 		accepted: Boolean
 		completed: Boolean
@@ -95,7 +119,6 @@ const typeDefs = gql`
 		title: String!
 		content: String!
 	}
-
 `
 
 module.exports = typeDefs
