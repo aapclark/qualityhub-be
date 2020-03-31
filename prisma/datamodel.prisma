@@ -18,8 +18,24 @@ type User @key(fields: "email") {
   twitter_url: String
   activated_stripe: Boolean
   chatActive: Boolean @default(value: false)
-
 }
+
+type Chat {
+  id: ID!
+  user1: String
+  user2: String
+  messages: [Message!]
+}
+
+type Message {
+  id: ID!
+  chat: Chat!
+  sender: User!
+  reciever: User!
+  content: String!
+  createdAt: DateTime
+}
+
 
 
 type Listing {
