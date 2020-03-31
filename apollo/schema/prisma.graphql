@@ -1,3 +1,7 @@
+type AggregateChat {
+  count: Int!
+}
+
 type AggregateCoachFeedback {
   count: Int!
 }
@@ -14,6 +18,10 @@ type AggregateJob {
   count: Int!
 }
 
+type AggregateListing {
+  count: Int!
+}
+
 type AggregateListingAvailability {
   count: Int!
 }
@@ -26,15 +34,15 @@ type AggregateListingTag {
   count: Int!
 }
 
+type AggregateMessage {
+  count: Int!
+}
+
 type AggregateSeekerReview {
   count: Int!
 }
 
 type AggregateSeekerReviewResponse {
-  count: Int!
-}
-
-type AggregateServiceListing {
   count: Int!
 }
 
@@ -44,6 +52,158 @@ type AggregateUser {
 
 type BatchPayload {
   count: Long!
+}
+
+type Chat {
+  id: ID!
+  user1: String
+  user2: String
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+}
+
+type ChatConnection {
+  pageInfo: PageInfo!
+  edges: [ChatEdge]!
+  aggregate: AggregateChat!
+}
+
+input ChatCreateInput {
+  id: ID
+  user1: String
+  user2: String
+  messages: MessageCreateManyWithoutChatInput
+}
+
+input ChatCreateOneWithoutMessagesInput {
+  create: ChatCreateWithoutMessagesInput
+  connect: ChatWhereUniqueInput
+}
+
+input ChatCreateWithoutMessagesInput {
+  id: ID
+  user1: String
+  user2: String
+}
+
+type ChatEdge {
+  node: Chat!
+  cursor: String!
+}
+
+enum ChatOrderByInput {
+  id_ASC
+  id_DESC
+  user1_ASC
+  user1_DESC
+  user2_ASC
+  user2_DESC
+}
+
+type ChatPreviousValues {
+  id: ID!
+  user1: String
+  user2: String
+}
+
+type ChatSubscriptionPayload {
+  mutation: MutationType!
+  node: Chat
+  updatedFields: [String!]
+  previousValues: ChatPreviousValues
+}
+
+input ChatSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ChatWhereInput
+  AND: [ChatSubscriptionWhereInput!]
+  OR: [ChatSubscriptionWhereInput!]
+  NOT: [ChatSubscriptionWhereInput!]
+}
+
+input ChatUpdateInput {
+  user1: String
+  user2: String
+  messages: MessageUpdateManyWithoutChatInput
+}
+
+input ChatUpdateManyMutationInput {
+  user1: String
+  user2: String
+}
+
+input ChatUpdateOneRequiredWithoutMessagesInput {
+  create: ChatCreateWithoutMessagesInput
+  update: ChatUpdateWithoutMessagesDataInput
+  upsert: ChatUpsertWithoutMessagesInput
+  connect: ChatWhereUniqueInput
+}
+
+input ChatUpdateWithoutMessagesDataInput {
+  user1: String
+  user2: String
+}
+
+input ChatUpsertWithoutMessagesInput {
+  update: ChatUpdateWithoutMessagesDataInput!
+  create: ChatCreateWithoutMessagesInput!
+}
+
+input ChatWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user1: String
+  user1_not: String
+  user1_in: [String!]
+  user1_not_in: [String!]
+  user1_lt: String
+  user1_lte: String
+  user1_gt: String
+  user1_gte: String
+  user1_contains: String
+  user1_not_contains: String
+  user1_starts_with: String
+  user1_not_starts_with: String
+  user1_ends_with: String
+  user1_not_ends_with: String
+  user2: String
+  user2_not: String
+  user2_in: [String!]
+  user2_not_in: [String!]
+  user2_lt: String
+  user2_lte: String
+  user2_gt: String
+  user2_gte: String
+  user2_contains: String
+  user2_not_contains: String
+  user2_starts_with: String
+  user2_not_starts_with: String
+  user2_ends_with: String
+  user2_not_ends_with: String
+  messages_every: MessageWhereInput
+  messages_some: MessageWhereInput
+  messages_none: MessageWhereInput
+  AND: [ChatWhereInput!]
+  OR: [ChatWhereInput!]
+  NOT: [ChatWhereInput!]
+}
+
+input ChatWhereUniqueInput {
+  id: ID
 }
 
 type CoachFeedback {
@@ -648,7 +808,7 @@ type Job {
   id: ID!
   coach: User!
   seeker: User!
-  listing: ServiceListing!
+  listing: Listing!
   microservice: Microservice!
   dateRequested: DateTime
   dateAccepted: DateTime
@@ -668,7 +828,7 @@ input JobCreateInput {
   id: ID
   coach: UserCreateOneInput!
   seeker: UserCreateOneInput!
-  listing: ServiceListingCreateOneInput!
+  listing: ListingCreateOneInput!
   microservice: Microservice!
   dateRequested: DateTime
   dateAccepted: DateTime
@@ -739,7 +899,7 @@ input JobSubscriptionWhereInput {
 input JobUpdateDataInput {
   coach: UserUpdateOneRequiredInput
   seeker: UserUpdateOneRequiredInput
-  listing: ServiceListingUpdateOneRequiredInput
+  listing: ListingUpdateOneRequiredInput
   microservice: Microservice
   dateRequested: DateTime
   dateAccepted: DateTime
@@ -752,7 +912,7 @@ input JobUpdateDataInput {
 input JobUpdateInput {
   coach: UserUpdateOneRequiredInput
   seeker: UserUpdateOneRequiredInput
-  listing: ServiceListingUpdateOneRequiredInput
+  listing: ListingUpdateOneRequiredInput
   microservice: Microservice
   dateRequested: DateTime
   dateAccepted: DateTime
@@ -801,7 +961,7 @@ input JobWhereInput {
   id_not_ends_with: ID
   coach: UserWhereInput
   seeker: UserWhereInput
-  listing: ServiceListingWhereInput
+  listing: ListingWhereInput
   microservice: Microservice
   microservice_not: Microservice
   microservice_in: [Microservice!]
@@ -845,12 +1005,22 @@ input JobWhereUniqueInput {
   id: ID
 }
 
+type Listing {
+  id: ID!
+  coach: User!
+  description: String!
+  price: Int!
+  microservice: Microservice!
+  tags(where: ListingTagWhereInput, orderBy: ListingTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingTag!]
+  industry(where: ListingIndustryWhereInput, orderBy: ListingIndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingIndustry!]
+}
+
 type ListingAvailability {
   id: ID!
   hour: Int!
   minute: Int!
   coach: User!
-  listing: ServiceListing!
+  listing: Listing!
   year: Int!
   month: Int!
   day: Int!
@@ -869,7 +1039,7 @@ input ListingAvailabilityCreateInput {
   hour: Int!
   minute: Int!
   coach: UserCreateOneInput!
-  listing: ServiceListingCreateOneInput!
+  listing: ListingCreateOneInput!
   year: Int!
   month: Int!
   day: Int!
@@ -1003,7 +1173,7 @@ input ListingAvailabilityUpdateDataInput {
   hour: Int
   minute: Int
   coach: UserUpdateOneRequiredInput
-  listing: ServiceListingUpdateOneRequiredInput
+  listing: ListingUpdateOneRequiredInput
   year: Int
   month: Int
   day: Int
@@ -1015,7 +1185,7 @@ input ListingAvailabilityUpdateInput {
   hour: Int
   minute: Int
   coach: UserUpdateOneRequiredInput
-  listing: ServiceListingUpdateOneRequiredInput
+  listing: ListingUpdateOneRequiredInput
   year: Int
   month: Int
   day: Int
@@ -1103,7 +1273,7 @@ input ListingAvailabilityWhereInput {
   minute_gt: Int
   minute_gte: Int
   coach: UserWhereInput
-  listing: ServiceListingWhereInput
+  listing: ListingWhereInput
   year: Int
   year_not: Int
   year_in: [Int!]
@@ -1139,6 +1309,32 @@ input ListingAvailabilityWhereInput {
 
 input ListingAvailabilityWhereUniqueInput {
   id: ID
+}
+
+type ListingConnection {
+  pageInfo: PageInfo!
+  edges: [ListingEdge]!
+  aggregate: AggregateListing!
+}
+
+input ListingCreateInput {
+  id: ID
+  coach: UserCreateOneInput!
+  description: String!
+  price: Int!
+  microservice: Microservice!
+  tags: ListingTagCreateManyInput
+  industry: ListingIndustryCreateManyInput
+}
+
+input ListingCreateOneInput {
+  create: ListingCreateInput
+  connect: ListingWhereUniqueInput
+}
+
+type ListingEdge {
+  node: Listing!
+  cursor: String!
 }
 
 type ListingIndustry {
@@ -1313,6 +1509,42 @@ input ListingIndustryWhereUniqueInput {
   id: ID
 }
 
+enum ListingOrderByInput {
+  id_ASC
+  id_DESC
+  description_ASC
+  description_DESC
+  price_ASC
+  price_DESC
+  microservice_ASC
+  microservice_DESC
+}
+
+type ListingPreviousValues {
+  id: ID!
+  description: String!
+  price: Int!
+  microservice: Microservice!
+}
+
+type ListingSubscriptionPayload {
+  mutation: MutationType!
+  node: Listing
+  updatedFields: [String!]
+  previousValues: ListingPreviousValues
+}
+
+input ListingSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ListingWhereInput
+  AND: [ListingSubscriptionWhereInput!]
+  OR: [ListingSubscriptionWhereInput!]
+  NOT: [ListingSubscriptionWhereInput!]
+}
+
 type ListingTag {
   id: ID!
   name: String!
@@ -1485,7 +1717,313 @@ input ListingTagWhereUniqueInput {
   id: ID
 }
 
+input ListingUpdateDataInput {
+  coach: UserUpdateOneRequiredInput
+  description: String
+  price: Int
+  microservice: Microservice
+  tags: ListingTagUpdateManyInput
+  industry: ListingIndustryUpdateManyInput
+}
+
+input ListingUpdateInput {
+  coach: UserUpdateOneRequiredInput
+  description: String
+  price: Int
+  microservice: Microservice
+  tags: ListingTagUpdateManyInput
+  industry: ListingIndustryUpdateManyInput
+}
+
+input ListingUpdateManyMutationInput {
+  description: String
+  price: Int
+  microservice: Microservice
+}
+
+input ListingUpdateOneRequiredInput {
+  create: ListingCreateInput
+  update: ListingUpdateDataInput
+  upsert: ListingUpsertNestedInput
+  connect: ListingWhereUniqueInput
+}
+
+input ListingUpsertNestedInput {
+  update: ListingUpdateDataInput!
+  create: ListingCreateInput!
+}
+
+input ListingWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  coach: UserWhereInput
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  price: Int
+  price_not: Int
+  price_in: [Int!]
+  price_not_in: [Int!]
+  price_lt: Int
+  price_lte: Int
+  price_gt: Int
+  price_gte: Int
+  microservice: Microservice
+  microservice_not: Microservice
+  microservice_in: [Microservice!]
+  microservice_not_in: [Microservice!]
+  tags_every: ListingTagWhereInput
+  tags_some: ListingTagWhereInput
+  tags_none: ListingTagWhereInput
+  industry_every: ListingIndustryWhereInput
+  industry_some: ListingIndustryWhereInput
+  industry_none: ListingIndustryWhereInput
+  AND: [ListingWhereInput!]
+  OR: [ListingWhereInput!]
+  NOT: [ListingWhereInput!]
+}
+
+input ListingWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
+
+type Message {
+  id: ID!
+  chat: Chat!
+  sender: User!
+  reciever: User!
+  content: String!
+  createdAt: DateTime!
+}
+
+type MessageConnection {
+  pageInfo: PageInfo!
+  edges: [MessageEdge]!
+  aggregate: AggregateMessage!
+}
+
+input MessageCreateInput {
+  id: ID
+  chat: ChatCreateOneWithoutMessagesInput!
+  sender: UserCreateOneInput!
+  reciever: UserCreateOneInput!
+  content: String!
+}
+
+input MessageCreateManyWithoutChatInput {
+  create: [MessageCreateWithoutChatInput!]
+  connect: [MessageWhereUniqueInput!]
+}
+
+input MessageCreateWithoutChatInput {
+  id: ID
+  sender: UserCreateOneInput!
+  reciever: UserCreateOneInput!
+  content: String!
+}
+
+type MessageEdge {
+  node: Message!
+  cursor: String!
+}
+
+enum MessageOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MessagePreviousValues {
+  id: ID!
+  content: String!
+  createdAt: DateTime!
+}
+
+input MessageScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MessageScalarWhereInput!]
+  OR: [MessageScalarWhereInput!]
+  NOT: [MessageScalarWhereInput!]
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+  updatedFields: [String!]
+  previousValues: MessagePreviousValues
+}
+
+input MessageSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: MessageWhereInput
+  AND: [MessageSubscriptionWhereInput!]
+  OR: [MessageSubscriptionWhereInput!]
+  NOT: [MessageSubscriptionWhereInput!]
+}
+
+input MessageUpdateInput {
+  chat: ChatUpdateOneRequiredWithoutMessagesInput
+  sender: UserUpdateOneRequiredInput
+  reciever: UserUpdateOneRequiredInput
+  content: String
+}
+
+input MessageUpdateManyDataInput {
+  content: String
+}
+
+input MessageUpdateManyMutationInput {
+  content: String
+}
+
+input MessageUpdateManyWithoutChatInput {
+  create: [MessageCreateWithoutChatInput!]
+  delete: [MessageWhereUniqueInput!]
+  connect: [MessageWhereUniqueInput!]
+  set: [MessageWhereUniqueInput!]
+  disconnect: [MessageWhereUniqueInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutChatInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutChatInput!]
+  deleteMany: [MessageScalarWhereInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
+}
+
+input MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput!
+  data: MessageUpdateManyDataInput!
+}
+
+input MessageUpdateWithoutChatDataInput {
+  sender: UserUpdateOneRequiredInput
+  reciever: UserUpdateOneRequiredInput
+  content: String
+}
+
+input MessageUpdateWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateWithoutChatDataInput!
+}
+
+input MessageUpsertWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput!
+  update: MessageUpdateWithoutChatDataInput!
+  create: MessageCreateWithoutChatInput!
+}
+
+input MessageWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  chat: ChatWhereInput
+  sender: UserWhereInput
+  reciever: UserWhereInput
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  AND: [MessageWhereInput!]
+  OR: [MessageWhereInput!]
+  NOT: [MessageWhereInput!]
+}
+
+input MessageWhereUniqueInput {
+  id: ID
+}
 
 enum Microservice {
   INTERVIEWQ
@@ -1493,6 +2031,12 @@ enum Microservice {
 }
 
 type Mutation {
+  createChat(data: ChatCreateInput!): Chat!
+  updateChat(data: ChatUpdateInput!, where: ChatWhereUniqueInput!): Chat
+  updateManyChats(data: ChatUpdateManyMutationInput!, where: ChatWhereInput): BatchPayload!
+  upsertChat(where: ChatWhereUniqueInput!, create: ChatCreateInput!, update: ChatUpdateInput!): Chat!
+  deleteChat(where: ChatWhereUniqueInput!): Chat
+  deleteManyChats(where: ChatWhereInput): BatchPayload!
   createCoachFeedback(data: CoachFeedbackCreateInput!): CoachFeedback!
   updateCoachFeedback(data: CoachFeedbackUpdateInput!, where: CoachFeedbackWhereUniqueInput!): CoachFeedback
   updateManyCoachFeedbacks(data: CoachFeedbackUpdateManyMutationInput!, where: CoachFeedbackWhereInput): BatchPayload!
@@ -1517,6 +2061,12 @@ type Mutation {
   upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
   deleteJob(where: JobWhereUniqueInput!): Job
   deleteManyJobs(where: JobWhereInput): BatchPayload!
+  createListing(data: ListingCreateInput!): Listing!
+  updateListing(data: ListingUpdateInput!, where: ListingWhereUniqueInput!): Listing
+  updateManyListings(data: ListingUpdateManyMutationInput!, where: ListingWhereInput): BatchPayload!
+  upsertListing(where: ListingWhereUniqueInput!, create: ListingCreateInput!, update: ListingUpdateInput!): Listing!
+  deleteListing(where: ListingWhereUniqueInput!): Listing
+  deleteManyListings(where: ListingWhereInput): BatchPayload!
   createListingAvailability(data: ListingAvailabilityCreateInput!): ListingAvailability!
   updateListingAvailability(data: ListingAvailabilityUpdateInput!, where: ListingAvailabilityWhereUniqueInput!): ListingAvailability
   updateManyListingAvailabilities(data: ListingAvailabilityUpdateManyMutationInput!, where: ListingAvailabilityWhereInput): BatchPayload!
@@ -1535,6 +2085,12 @@ type Mutation {
   upsertListingTag(where: ListingTagWhereUniqueInput!, create: ListingTagCreateInput!, update: ListingTagUpdateInput!): ListingTag!
   deleteListingTag(where: ListingTagWhereUniqueInput!): ListingTag
   deleteManyListingTags(where: ListingTagWhereInput): BatchPayload!
+  createMessage(data: MessageCreateInput!): Message!
+  updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
+  updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
+  upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
+  deleteMessage(where: MessageWhereUniqueInput!): Message
+  deleteManyMessages(where: MessageWhereInput): BatchPayload!
   createSeekerReview(data: SeekerReviewCreateInput!): SeekerReview!
   updateSeekerReview(data: SeekerReviewUpdateInput!, where: SeekerReviewWhereUniqueInput!): SeekerReview
   updateManySeekerReviews(data: SeekerReviewUpdateManyMutationInput!, where: SeekerReviewWhereInput): BatchPayload!
@@ -1547,12 +2103,6 @@ type Mutation {
   upsertSeekerReviewResponse(where: SeekerReviewResponseWhereUniqueInput!, create: SeekerReviewResponseCreateInput!, update: SeekerReviewResponseUpdateInput!): SeekerReviewResponse!
   deleteSeekerReviewResponse(where: SeekerReviewResponseWhereUniqueInput!): SeekerReviewResponse
   deleteManySeekerReviewResponses(where: SeekerReviewResponseWhereInput): BatchPayload!
-  createServiceListing(data: ServiceListingCreateInput!): ServiceListing!
-  updateServiceListing(data: ServiceListingUpdateInput!, where: ServiceListingWhereUniqueInput!): ServiceListing
-  updateManyServiceListings(data: ServiceListingUpdateManyMutationInput!, where: ServiceListingWhereInput): BatchPayload!
-  upsertServiceListing(where: ServiceListingWhereUniqueInput!, create: ServiceListingCreateInput!, update: ServiceListingUpdateInput!): ServiceListing!
-  deleteServiceListing(where: ServiceListingWhereUniqueInput!): ServiceListing
-  deleteManyServiceListings(where: ServiceListingWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -1579,6 +2129,9 @@ type PageInfo {
 }
 
 type Query {
+  chat(where: ChatWhereUniqueInput!): Chat
+  chats(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Chat]!
+  chatsConnection(where: ChatWhereInput, orderBy: ChatOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatConnection!
   coachFeedback(where: CoachFeedbackWhereUniqueInput!): CoachFeedback
   coachFeedbacks(where: CoachFeedbackWhereInput, orderBy: CoachFeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CoachFeedback]!
   coachFeedbacksConnection(where: CoachFeedbackWhereInput, orderBy: CoachFeedbackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CoachFeedbackConnection!
@@ -1591,6 +2144,9 @@ type Query {
   job(where: JobWhereUniqueInput!): Job
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
   jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  listing(where: ListingWhereUniqueInput!): Listing
+  listings(where: ListingWhereInput, orderBy: ListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Listing]!
+  listingsConnection(where: ListingWhereInput, orderBy: ListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListingConnection!
   listingAvailability(where: ListingAvailabilityWhereUniqueInput!): ListingAvailability
   listingAvailabilities(where: ListingAvailabilityWhereInput, orderBy: ListingAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingAvailability]!
   listingAvailabilitiesConnection(where: ListingAvailabilityWhereInput, orderBy: ListingAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListingAvailabilityConnection!
@@ -1600,15 +2156,15 @@ type Query {
   listingTag(where: ListingTagWhereUniqueInput!): ListingTag
   listingTags(where: ListingTagWhereInput, orderBy: ListingTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingTag]!
   listingTagsConnection(where: ListingTagWhereInput, orderBy: ListingTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListingTagConnection!
+  message(where: MessageWhereUniqueInput!): Message
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
+  messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
   seekerReview(where: SeekerReviewWhereUniqueInput!): SeekerReview
   seekerReviews(where: SeekerReviewWhereInput, orderBy: SeekerReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SeekerReview]!
   seekerReviewsConnection(where: SeekerReviewWhereInput, orderBy: SeekerReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SeekerReviewConnection!
   seekerReviewResponse(where: SeekerReviewResponseWhereUniqueInput!): SeekerReviewResponse
   seekerReviewResponses(where: SeekerReviewResponseWhereInput, orderBy: SeekerReviewResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SeekerReviewResponse]!
   seekerReviewResponsesConnection(where: SeekerReviewResponseWhereInput, orderBy: SeekerReviewResponseOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SeekerReviewResponseConnection!
-  serviceListing(where: ServiceListingWhereUniqueInput!): ServiceListing
-  serviceListings(where: ServiceListingWhereInput, orderBy: ServiceListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ServiceListing]!
-  serviceListingsConnection(where: ServiceListingWhereInput, orderBy: ServiceListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ServiceListingConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1985,182 +2541,19 @@ input SeekerReviewWhereUniqueInput {
   job: String
 }
 
-type ServiceListing {
-  id: ID!
-  coach: User!
-  description: String!
-  price: Int!
-  microservice: Microservice!
-  tags(where: ListingTagWhereInput, orderBy: ListingTagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingTag!]
-  industry(where: ListingIndustryWhereInput, orderBy: ListingIndustryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingIndustry!]
-}
-
-type ServiceListingConnection {
-  pageInfo: PageInfo!
-  edges: [ServiceListingEdge]!
-  aggregate: AggregateServiceListing!
-}
-
-input ServiceListingCreateInput {
-  id: ID
-  coach: UserCreateOneInput!
-  description: String!
-  price: Int!
-  microservice: Microservice!
-  tags: ListingTagCreateManyInput
-  industry: ListingIndustryCreateManyInput
-}
-
-input ServiceListingCreateOneInput {
-  create: ServiceListingCreateInput
-  connect: ServiceListingWhereUniqueInput
-}
-
-type ServiceListingEdge {
-  node: ServiceListing!
-  cursor: String!
-}
-
-enum ServiceListingOrderByInput {
-  id_ASC
-  id_DESC
-  description_ASC
-  description_DESC
-  price_ASC
-  price_DESC
-  microservice_ASC
-  microservice_DESC
-}
-
-type ServiceListingPreviousValues {
-  id: ID!
-  description: String!
-  price: Int!
-  microservice: Microservice!
-}
-
-type ServiceListingSubscriptionPayload {
-  mutation: MutationType!
-  node: ServiceListing
-  updatedFields: [String!]
-  previousValues: ServiceListingPreviousValues
-}
-
-input ServiceListingSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: ServiceListingWhereInput
-  AND: [ServiceListingSubscriptionWhereInput!]
-  OR: [ServiceListingSubscriptionWhereInput!]
-  NOT: [ServiceListingSubscriptionWhereInput!]
-}
-
-input ServiceListingUpdateDataInput {
-  coach: UserUpdateOneRequiredInput
-  description: String
-  price: Int
-  microservice: Microservice
-  tags: ListingTagUpdateManyInput
-  industry: ListingIndustryUpdateManyInput
-}
-
-input ServiceListingUpdateInput {
-  coach: UserUpdateOneRequiredInput
-  description: String
-  price: Int
-  microservice: Microservice
-  tags: ListingTagUpdateManyInput
-  industry: ListingIndustryUpdateManyInput
-}
-
-input ServiceListingUpdateManyMutationInput {
-  description: String
-  price: Int
-  microservice: Microservice
-}
-
-input ServiceListingUpdateOneRequiredInput {
-  create: ServiceListingCreateInput
-  update: ServiceListingUpdateDataInput
-  upsert: ServiceListingUpsertNestedInput
-  connect: ServiceListingWhereUniqueInput
-}
-
-input ServiceListingUpsertNestedInput {
-  update: ServiceListingUpdateDataInput!
-  create: ServiceListingCreateInput!
-}
-
-input ServiceListingWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  coach: UserWhereInput
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  price: Int
-  price_not: Int
-  price_in: [Int!]
-  price_not_in: [Int!]
-  price_lt: Int
-  price_lte: Int
-  price_gt: Int
-  price_gte: Int
-  microservice: Microservice
-  microservice_not: Microservice
-  microservice_in: [Microservice!]
-  microservice_not_in: [Microservice!]
-  tags_every: ListingTagWhereInput
-  tags_some: ListingTagWhereInput
-  tags_none: ListingTagWhereInput
-  industry_every: ListingIndustryWhereInput
-  industry_some: ListingIndustryWhereInput
-  industry_none: ListingIndustryWhereInput
-  AND: [ServiceListingWhereInput!]
-  OR: [ServiceListingWhereInput!]
-  NOT: [ServiceListingWhereInput!]
-}
-
-input ServiceListingWhereUniqueInput {
-  id: ID
-}
-
 type Subscription {
+  chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   coachFeedback(where: CoachFeedbackSubscriptionWhereInput): CoachFeedbackSubscriptionPayload
   feedbackEntry(where: FeedbackEntrySubscriptionWhereInput): FeedbackEntrySubscriptionPayload
   iQJobInfo(where: IQJobInfoSubscriptionWhereInput): IQJobInfoSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
+  listing(where: ListingSubscriptionWhereInput): ListingSubscriptionPayload
   listingAvailability(where: ListingAvailabilitySubscriptionWhereInput): ListingAvailabilitySubscriptionPayload
   listingIndustry(where: ListingIndustrySubscriptionWhereInput): ListingIndustrySubscriptionPayload
   listingTag(where: ListingTagSubscriptionWhereInput): ListingTagSubscriptionPayload
+  message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   seekerReview(where: SeekerReviewSubscriptionWhereInput): SeekerReviewSubscriptionPayload
   seekerReviewResponse(where: SeekerReviewResponseSubscriptionWhereInput): SeekerReviewResponseSubscriptionPayload
-  serviceListing(where: ServiceListingSubscriptionWhereInput): ServiceListingSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
