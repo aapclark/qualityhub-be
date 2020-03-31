@@ -1,17 +1,12 @@
 const { gql } = require('apollo-server');
 
-// TODO - extend external type Booking with Review
-
-// TODO - extend external type ResumeReview with Review
-
-
 const typeDefs = gql`
 	enum Microservice{
 		RESUMEQ
 		INTERVIEWQ
 	}
 	
-	type User @key(fields: "id") {
+	type User  {
 		id: ID!
 		stripeCustomerConnected: Boolean
 		stripeCoachConnected: Boolean
