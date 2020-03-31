@@ -8,12 +8,12 @@ const User = require('./User')
 
 
 const resolvers = {
-  Booking,
-  Mutation,
-  Query,
-  Response,
-  ResumeReview,
-  Review,
+  // Booking,
+  // Mutation,
+  // Query,
+  // Response,
+  // ResumeReview,
+  // Review,
   User
 }
 

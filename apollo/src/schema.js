@@ -6,7 +6,7 @@ const typeDefs = gql`
 		INTERVIEWQ
 	}
 	
-	type User @key(fields: "id") {
+	type User  {
 		id: ID!
 		stripeCustomerConnected: Boolean
 		stripeCoachConnected: Boolean
