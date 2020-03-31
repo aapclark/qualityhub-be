@@ -6,16 +6,18 @@ const ResumeReview = require('./ResumeReview')
 const Review = require('./Review')
 const User = require('./User')
 
+console.log('User', User)
 
-const resolvers = {
+console.log('Mutation', Mutation)
+
+
+
+module.exports = {
   // Booking,
   Mutation,
-  // Query,
+  Query,
   // Response,
   // ResumeReview,
   // Review,
-  // User
+  User
 }
-
-
-module.exports = resolvers

@@ -4,6 +4,11 @@ const typeDefs = gql`
 
 	type Query {
 		test: String
+		info: String
+		user: User!
+
+		# Stripe Queries
+		stripeBalance: Balance!
 	}
 	enum Microservice{
 		RESUMEQ
@@ -121,8 +126,14 @@ const typeDefs = gql`
 
 	type Mutation {
 		# User Mutations
-		signup(
-			input: RegistrationInput
+		
+		register(
+				first_name: String!
+				last_name: String!
+				email: String!
+				password: String!
+				city: String!
+				state: String!
 			): AuthPayload!
 		login(
 			input: LoginInput
@@ -161,8 +172,7 @@ const typeDefs = gql`
 		stripeCreateToken(
 			customer: String!
 			): User!
-
-
+		
 		}
 
 

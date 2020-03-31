@@ -51,12 +51,14 @@ async function ratingsReceived(parent, args, { prisma }) {
 }
 
 
+
+
 module.exports = {
 	__resolveReference,
 	stripeCustomerConnected,
 	stripeCoachConnected,
-	reviewsReceived,
-	reviewsGiven,
-	average_coach_rating,
-	ratingsReceived,
+	// reviewsReceived,
+	// reviewsGiven,
+	// average_coach_rating,
+	// ratingsReceived,
 };

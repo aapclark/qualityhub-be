@@ -10,7 +10,6 @@ module.exports = {
   createStripeLink,
   stripeDirectCharge,
   stripePayout,
-  stripeBalance,
   stripePayIntent,
   stripeCreateToken,
 }
@@ -124,18 +123,8 @@ async function stripePayout(_parent, args, context) {
 
 }
 
+// TODO -- move to Query
 
-async function stripeBalance(_parent, args, context) {
-  const coach = await context.prisma.user({ id: getUserId(context) });
-  return stripe.balance.retrieve({
-    stripe_account: coach.stripeId,
-  }).then(function (balance) {
-    return { available: balance.available[0].amount, pending: balance.pending[0].amount }
-  }).catch(function (err) {
-    console.log(err);
-    return err
-  })
-}
 
 
 async function stripePayIntent(_parent, args, context) {

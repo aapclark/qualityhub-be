@@ -1,30 +1,17 @@
 //  Mutations for User management
 const bcrypt = require('bcryptjs');
-
 const {
   generateToken,
   checkFields,
-
 } = require('../../utils')
 
-const User = {
-  signup,
-  login,
-  updateUser,
-  deleteUser,
-}
 
-async function signup(_parent, args, context) {
-  const { first_name, last_name, password, email, city, state } = args;
-  checkFields({ first_name, last_name, password, email, city, state });
+async function register(_parent, args, { prisma }) {
   const hash = bcrypt.hashSync(args.password, 10);
   args.password = hash;
-  const user = await context.prisma.createUser({
-    ...args,
-    fn_lc: first_name.toLowerCase(),
-    ln_lc: last_name.toLowerCase(),
-    city_lc: city.toLowerCase(),
-    state_lc: state.toLowerCase(),
+  checkFields(args)
+  const user = await prisma.createUser({
+    ...args
   });
   const token = generateToken(user);
 
@@ -35,6 +22,7 @@ async function signup(_parent, args, context) {
 }
 
 async function login(_parent, args, context) {
+  console.log('LOGIN ATTEMPT')
   const user = await context.prisma.user({ email: args.email });
   const token = generateToken(user);
   const passwordMatch = await bcrypt.compare(args.password, user.password);
@@ -94,4 +82,9 @@ async function deleteUser(_parent, _args, context) {
   return await context.prisma.deleteUser({ id });
 }
 
-module.exports = User
+module.exports = {
+  register,
+  login,
+  updateUser,
+  deleteUser,
+}
