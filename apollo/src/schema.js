@@ -1,6 +1,10 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+
+	type Query {
+		test: String
+	}
 	enum Microservice{
 		RESUMEQ
 		INTERVIEWQ
@@ -118,45 +122,45 @@ const typeDefs = gql`
 	type Mutation {
 		# User Mutations
 		signup(
-    	RegistrationInput
+			input: RegistrationInput
 			): AuthPayload!
 		login(
-			LoginInput
+			input: LoginInput
 			): AuthPayload!
-		userUpdate (
-			UserUpdateInput
+		updateUser (
+			input: UpdateUserInput
 			): User!
-		userDelete: User!
+		deleteUser: User!
 		
 		# Stripe Mutations
 		createCustomer(
 			email: String!
 			source: String!
-		): String!
+			): String!
 		addCoachStripeId(
 			code: String!
-		) : User!
+			): User!
 		createStripeLink: String!
 		stripeDirectCharge(
 			amount: Int!
 			currency: String
 			source: String!
 			coachId: String!
-		): Status!
+			): Status!
 		stripePayout(
 			amount: Int!
 			currency: String
 			method: String
 			coachId: String!
-		): String!
+			): String!
 		stripePayIntent(
 			amount: Int!
 			currency: String
 			source: String
 			): User!
 		stripeCreateToken(
-			customer: String!)
-			: User!
+			customer: String!
+			): User!
 
 
 		}
@@ -167,7 +171,7 @@ const typeDefs = gql`
 		user: User!
 	}
 
-	type RegistrationInput {
+	input RegistrationInput {
 		first_name: String!
 		last_name: String!
 		email: String!
@@ -184,7 +188,7 @@ const typeDefs = gql`
 		bio: String
 	}
 
-	type UserUpdateInput {
+	input UpdateUserInput {
 		stripeId: String
     stripeCusId: String
     first_name: String
@@ -204,7 +208,7 @@ const typeDefs = gql`
     bio: String
 	}
 
-	type LoginInput {
+	input LoginInput {
 		email: String!
 		password: String!
 	}
