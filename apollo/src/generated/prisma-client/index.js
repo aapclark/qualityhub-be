@@ -9,7 +9,15 @@ var models = [
     embedded: false
   },
   {
-    name: "ServiceListing",
+    name: "Chat",
+    embedded: false
+  },
+  {
+    name: "Message",
+    embedded: false
+  },
+  {
+    name: "Listing",
     embedded: false
   },
   {

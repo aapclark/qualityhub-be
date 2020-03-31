@@ -6,13 +6,11 @@ const { gql } = require('apollo-server');
 
 
 const typeDefs = gql`
-
-
-	enum Microservice {
-		INTERVIEWQ
+	enum Microservice{
 		RESUMEQ
+		INTERVIEWQ
 	}
-
+	
 	type User @key(fields: "id") {
 		id: ID!
 		stripeCustomerConnected: Boolean
@@ -31,7 +29,32 @@ const typeDefs = gql`
 		blog_url: String
 		twitter_url: String
 		chatActive: Boolean
+	}
 
+	type Chat {
+		id: ID!
+		user1: String
+		user2: String
+		messages: [Message!]
+	}
+
+	type Message {
+		id: ID!
+		chat: Chat!
+		sender: User!
+		reciever: User!
+		content: String!
+		createdAt: String
+	}
+
+	type Balance {
+		available: Int!
+		pending: Int!
+	}
+
+	type Status {
+		success: String
+		error: String
 	}
 
 	type ServiceListing {
@@ -44,19 +67,15 @@ const typeDefs = gql`
 		industry: [ListingIndustry!]
 	}
 
-
 	type ListingTag {
 		id: ID!
 		name: String!
 	}
 
-
 	type ListingIndustry {
 		id: ID!
 		name: String!
 	}
-
-
 
 	type ListingAvailability {
 		id: ID!
@@ -100,9 +119,6 @@ const typeDefs = gql`
 		title: String!
 		content: String!
 	}
-
-
-
 `
 
 module.exports = typeDefs

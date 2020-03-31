@@ -16,20 +16,22 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  chat: (where?: ChatWhereInput) => Promise<boolean>;
   coachFeedback: (where?: CoachFeedbackWhereInput) => Promise<boolean>;
   feedbackEntry: (where?: FeedbackEntryWhereInput) => Promise<boolean>;
   iQJobInfo: (where?: IQJobInfoWhereInput) => Promise<boolean>;
   job: (where?: JobWhereInput) => Promise<boolean>;
+  listing: (where?: ListingWhereInput) => Promise<boolean>;
   listingAvailability: (
     where?: ListingAvailabilityWhereInput
   ) => Promise<boolean>;
   listingIndustry: (where?: ListingIndustryWhereInput) => Promise<boolean>;
   listingTag: (where?: ListingTagWhereInput) => Promise<boolean>;
+  message: (where?: MessageWhereInput) => Promise<boolean>;
   seekerReview: (where?: SeekerReviewWhereInput) => Promise<boolean>;
   seekerReviewResponse: (
     where?: SeekerReviewResponseWhereInput
   ) => Promise<boolean>;
-  serviceListing: (where?: ServiceListingWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
@@ -52,6 +54,25 @@ export interface Prisma {
    * Queries
    */
 
+  chat: (where: ChatWhereUniqueInput) => ChatNullablePromise;
+  chats: (args?: {
+    where?: ChatWhereInput;
+    orderBy?: ChatOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Chat>;
+  chatsConnection: (args?: {
+    where?: ChatWhereInput;
+    orderBy?: ChatOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ChatConnectionPromise;
   coachFeedback: (
     where: CoachFeedbackWhereUniqueInput
   ) => CoachFeedbackNullablePromise;
@@ -132,6 +153,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => JobConnectionPromise;
+  listing: (where: ListingWhereUniqueInput) => ListingNullablePromise;
+  listings: (args?: {
+    where?: ListingWhereInput;
+    orderBy?: ListingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Listing>;
+  listingsConnection: (args?: {
+    where?: ListingWhereInput;
+    orderBy?: ListingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ListingConnectionPromise;
   listingAvailability: (
     where: ListingAvailabilityWhereUniqueInput
   ) => ListingAvailabilityNullablePromise;
@@ -193,6 +233,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => ListingTagConnectionPromise;
+  message: (where: MessageWhereUniqueInput) => MessageNullablePromise;
+  messages: (args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Message>;
+  messagesConnection: (args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => MessageConnectionPromise;
   seekerReview: (
     where: SeekerReviewWhereUniqueInput
   ) => SeekerReviewNullablePromise;
@@ -235,27 +294,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => SeekerReviewResponseConnectionPromise;
-  serviceListing: (
-    where: ServiceListingWhereUniqueInput
-  ) => ServiceListingNullablePromise;
-  serviceListings: (args?: {
-    where?: ServiceListingWhereInput;
-    orderBy?: ServiceListingOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<ServiceListing>;
-  serviceListingsConnection: (args?: {
-    where?: ServiceListingWhereInput;
-    orderBy?: ServiceListingOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => ServiceListingConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -281,6 +319,22 @@ export interface Prisma {
    * Mutations
    */
 
+  createChat: (data: ChatCreateInput) => ChatPromise;
+  updateChat: (args: {
+    data: ChatUpdateInput;
+    where: ChatWhereUniqueInput;
+  }) => ChatPromise;
+  updateManyChats: (args: {
+    data: ChatUpdateManyMutationInput;
+    where?: ChatWhereInput;
+  }) => BatchPayloadPromise;
+  upsertChat: (args: {
+    where: ChatWhereUniqueInput;
+    create: ChatCreateInput;
+    update: ChatUpdateInput;
+  }) => ChatPromise;
+  deleteChat: (where: ChatWhereUniqueInput) => ChatPromise;
+  deleteManyChats: (where?: ChatWhereInput) => BatchPayloadPromise;
   createCoachFeedback: (data: CoachFeedbackCreateInput) => CoachFeedbackPromise;
   updateCoachFeedback: (args: {
     data: CoachFeedbackUpdateInput;
@@ -353,6 +407,22 @@ export interface Prisma {
   }) => JobPromise;
   deleteJob: (where: JobWhereUniqueInput) => JobPromise;
   deleteManyJobs: (where?: JobWhereInput) => BatchPayloadPromise;
+  createListing: (data: ListingCreateInput) => ListingPromise;
+  updateListing: (args: {
+    data: ListingUpdateInput;
+    where: ListingWhereUniqueInput;
+  }) => ListingPromise;
+  updateManyListings: (args: {
+    data: ListingUpdateManyMutationInput;
+    where?: ListingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertListing: (args: {
+    where: ListingWhereUniqueInput;
+    create: ListingCreateInput;
+    update: ListingUpdateInput;
+  }) => ListingPromise;
+  deleteListing: (where: ListingWhereUniqueInput) => ListingPromise;
+  deleteManyListings: (where?: ListingWhereInput) => BatchPayloadPromise;
   createListingAvailability: (
     data: ListingAvailabilityCreateInput
   ) => ListingAvailabilityPromise;
@@ -413,6 +483,22 @@ export interface Prisma {
   }) => ListingTagPromise;
   deleteListingTag: (where: ListingTagWhereUniqueInput) => ListingTagPromise;
   deleteManyListingTags: (where?: ListingTagWhereInput) => BatchPayloadPromise;
+  createMessage: (data: MessageCreateInput) => MessagePromise;
+  updateMessage: (args: {
+    data: MessageUpdateInput;
+    where: MessageWhereUniqueInput;
+  }) => MessagePromise;
+  updateManyMessages: (args: {
+    data: MessageUpdateManyMutationInput;
+    where?: MessageWhereInput;
+  }) => BatchPayloadPromise;
+  upsertMessage: (args: {
+    where: MessageWhereUniqueInput;
+    create: MessageCreateInput;
+    update: MessageUpdateInput;
+  }) => MessagePromise;
+  deleteMessage: (where: MessageWhereUniqueInput) => MessagePromise;
+  deleteManyMessages: (where?: MessageWhereInput) => BatchPayloadPromise;
   createSeekerReview: (data: SeekerReviewCreateInput) => SeekerReviewPromise;
   updateSeekerReview: (args: {
     data: SeekerReviewUpdateInput;
@@ -455,28 +541,6 @@ export interface Prisma {
   deleteManySeekerReviewResponses: (
     where?: SeekerReviewResponseWhereInput
   ) => BatchPayloadPromise;
-  createServiceListing: (
-    data: ServiceListingCreateInput
-  ) => ServiceListingPromise;
-  updateServiceListing: (args: {
-    data: ServiceListingUpdateInput;
-    where: ServiceListingWhereUniqueInput;
-  }) => ServiceListingPromise;
-  updateManyServiceListings: (args: {
-    data: ServiceListingUpdateManyMutationInput;
-    where?: ServiceListingWhereInput;
-  }) => BatchPayloadPromise;
-  upsertServiceListing: (args: {
-    where: ServiceListingWhereUniqueInput;
-    create: ServiceListingCreateInput;
-    update: ServiceListingUpdateInput;
-  }) => ServiceListingPromise;
-  deleteServiceListing: (
-    where: ServiceListingWhereUniqueInput
-  ) => ServiceListingPromise;
-  deleteManyServiceListings: (
-    where?: ServiceListingWhereInput
-  ) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -502,6 +566,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  chat: (
+    where?: ChatSubscriptionWhereInput
+  ) => ChatSubscriptionPayloadSubscription;
   coachFeedback: (
     where?: CoachFeedbackSubscriptionWhereInput
   ) => CoachFeedbackSubscriptionPayloadSubscription;
@@ -514,6 +581,9 @@ export interface Subscription {
   job: (
     where?: JobSubscriptionWhereInput
   ) => JobSubscriptionPayloadSubscription;
+  listing: (
+    where?: ListingSubscriptionWhereInput
+  ) => ListingSubscriptionPayloadSubscription;
   listingAvailability: (
     where?: ListingAvailabilitySubscriptionWhereInput
   ) => ListingAvailabilitySubscriptionPayloadSubscription;
@@ -523,15 +593,15 @@ export interface Subscription {
   listingTag: (
     where?: ListingTagSubscriptionWhereInput
   ) => ListingTagSubscriptionPayloadSubscription;
+  message: (
+    where?: MessageSubscriptionWhereInput
+  ) => MessageSubscriptionPayloadSubscription;
   seekerReview: (
     where?: SeekerReviewSubscriptionWhereInput
   ) => SeekerReviewSubscriptionPayloadSubscription;
   seekerReviewResponse: (
     where?: SeekerReviewResponseSubscriptionWhereInput
   ) => SeekerReviewResponseSubscriptionPayloadSubscription;
-  serviceListing: (
-    where?: ServiceListingSubscriptionWhereInput
-  ) => ServiceListingSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
@@ -544,6 +614,22 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type MessageOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "content_ASC"
+  | "content_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC";
+
+export type ChatOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "user1_ASC"
+  | "user1_DESC"
+  | "user2_ASC"
+  | "user2_DESC";
 
 export type Microservice = "INTERVIEWQ" | "RESUMEQ";
 
@@ -633,6 +719,16 @@ export type JobOrderByInput =
   | "completed_ASC"
   | "completed_DESC";
 
+export type ListingOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "description_ASC"
+  | "description_DESC"
+  | "price_ASC"
+  | "price_DESC"
+  | "microservice_ASC"
+  | "microservice_DESC";
+
 export type SeekerReviewOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -658,16 +754,6 @@ export type SeekerReviewResponseOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
-
-export type ServiceListingOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "price_ASC"
-  | "price_DESC"
-  | "microservice_ASC"
-  | "microservice_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -711,11 +797,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type CoachFeedbackWhereUniqueInput = AtLeastOne<{
+export type ChatWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface ListingTagWhereInput {
+export interface MessageWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -730,89 +816,9 @@ export interface ListingTagWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
-  OR?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
-  NOT?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
-}
-
-export interface ListingIndustryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
-  OR?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
-  NOT?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
-}
-
-export interface FeedbackEntryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  CoachFeedback?: Maybe<CoachFeedbackWhereInput>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
+  chat?: Maybe<ChatWhereInput>;
+  sender?: Maybe<UserWhereInput>;
+  reciever?: Maybe<UserWhereInput>;
   content?: Maybe<String>;
   content_not?: Maybe<String>;
   content_in?: Maybe<String[] | String>;
@@ -827,12 +833,20 @@ export interface FeedbackEntryWhereInput {
   content_not_starts_with?: Maybe<String>;
   content_ends_with?: Maybe<String>;
   content_not_ends_with?: Maybe<String>;
-  AND?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
-  OR?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
-  NOT?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MessageWhereInput[] | MessageWhereInput>;
+  OR?: Maybe<MessageWhereInput[] | MessageWhereInput>;
+  NOT?: Maybe<MessageWhereInput[] | MessageWhereInput>;
 }
 
-export interface CoachFeedbackWhereInput {
+export interface ChatWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -847,17 +861,40 @@ export interface CoachFeedbackWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  coach?: Maybe<UserWhereInput>;
-  seeker?: Maybe<UserWhereInput>;
-  job?: Maybe<JobWhereInput>;
-  feedback_every?: Maybe<FeedbackEntryWhereInput>;
-  feedback_some?: Maybe<FeedbackEntryWhereInput>;
-  feedback_none?: Maybe<FeedbackEntryWhereInput>;
-  isSent?: Maybe<Boolean>;
-  isSent_not?: Maybe<Boolean>;
-  AND?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
-  OR?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
-  NOT?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
+  user1?: Maybe<String>;
+  user1_not?: Maybe<String>;
+  user1_in?: Maybe<String[] | String>;
+  user1_not_in?: Maybe<String[] | String>;
+  user1_lt?: Maybe<String>;
+  user1_lte?: Maybe<String>;
+  user1_gt?: Maybe<String>;
+  user1_gte?: Maybe<String>;
+  user1_contains?: Maybe<String>;
+  user1_not_contains?: Maybe<String>;
+  user1_starts_with?: Maybe<String>;
+  user1_not_starts_with?: Maybe<String>;
+  user1_ends_with?: Maybe<String>;
+  user1_not_ends_with?: Maybe<String>;
+  user2?: Maybe<String>;
+  user2_not?: Maybe<String>;
+  user2_in?: Maybe<String[] | String>;
+  user2_not_in?: Maybe<String[] | String>;
+  user2_lt?: Maybe<String>;
+  user2_lte?: Maybe<String>;
+  user2_gt?: Maybe<String>;
+  user2_gte?: Maybe<String>;
+  user2_contains?: Maybe<String>;
+  user2_not_contains?: Maybe<String>;
+  user2_starts_with?: Maybe<String>;
+  user2_not_starts_with?: Maybe<String>;
+  user2_ends_with?: Maybe<String>;
+  user2_not_ends_with?: Maybe<String>;
+  messages_every?: Maybe<MessageWhereInput>;
+  messages_some?: Maybe<MessageWhereInput>;
+  messages_none?: Maybe<MessageWhereInput>;
+  AND?: Maybe<ChatWhereInput[] | ChatWhereInput>;
+  OR?: Maybe<ChatWhereInput[] | ChatWhereInput>;
+  NOT?: Maybe<ChatWhereInput[] | ChatWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -1108,6 +1145,155 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export type CoachFeedbackWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ListingTagWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
+  OR?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
+  NOT?: Maybe<ListingTagWhereInput[] | ListingTagWhereInput>;
+}
+
+export interface ListingIndustryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
+  OR?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
+  NOT?: Maybe<ListingIndustryWhereInput[] | ListingIndustryWhereInput>;
+}
+
+export interface FeedbackEntryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  CoachFeedback?: Maybe<CoachFeedbackWhereInput>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  AND?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
+  OR?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
+  NOT?: Maybe<FeedbackEntryWhereInput[] | FeedbackEntryWhereInput>;
+}
+
+export interface CoachFeedbackWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  coach?: Maybe<UserWhereInput>;
+  seeker?: Maybe<UserWhereInput>;
+  job?: Maybe<JobWhereInput>;
+  feedback_every?: Maybe<FeedbackEntryWhereInput>;
+  feedback_some?: Maybe<FeedbackEntryWhereInput>;
+  feedback_none?: Maybe<FeedbackEntryWhereInput>;
+  isSent?: Maybe<Boolean>;
+  isSent_not?: Maybe<Boolean>;
+  AND?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
+  OR?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
+  NOT?: Maybe<CoachFeedbackWhereInput[] | CoachFeedbackWhereInput>;
+}
+
 export interface JobWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
@@ -1125,7 +1311,7 @@ export interface JobWhereInput {
   id_not_ends_with?: Maybe<ID_Input>;
   coach?: Maybe<UserWhereInput>;
   seeker?: Maybe<UserWhereInput>;
-  listing?: Maybe<ServiceListingWhereInput>;
+  listing?: Maybe<ListingWhereInput>;
   microservice?: Maybe<Microservice>;
   microservice_not?: Maybe<Microservice>;
   microservice_in?: Maybe<Microservice[] | Microservice>;
@@ -1165,7 +1351,7 @@ export interface JobWhereInput {
   NOT?: Maybe<JobWhereInput[] | JobWhereInput>;
 }
 
-export interface ServiceListingWhereInput {
+export interface ListingWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1213,9 +1399,9 @@ export interface ServiceListingWhereInput {
   industry_every?: Maybe<ListingIndustryWhereInput>;
   industry_some?: Maybe<ListingIndustryWhereInput>;
   industry_none?: Maybe<ListingIndustryWhereInput>;
-  AND?: Maybe<ServiceListingWhereInput[] | ServiceListingWhereInput>;
-  OR?: Maybe<ServiceListingWhereInput[] | ServiceListingWhereInput>;
-  NOT?: Maybe<ServiceListingWhereInput[] | ServiceListingWhereInput>;
+  AND?: Maybe<ListingWhereInput[] | ListingWhereInput>;
+  OR?: Maybe<ListingWhereInput[] | ListingWhereInput>;
+  NOT?: Maybe<ListingWhereInput[] | ListingWhereInput>;
 }
 
 export type FeedbackEntryWhereUniqueInput = AtLeastOne<{
@@ -1258,7 +1444,7 @@ export interface ListingAvailabilityWhereInput {
   minute_gt?: Maybe<Int>;
   minute_gte?: Maybe<Int>;
   coach?: Maybe<UserWhereInput>;
-  listing?: Maybe<ServiceListingWhereInput>;
+  listing?: Maybe<ListingWhereInput>;
   year?: Maybe<Int>;
   year_not?: Maybe<Int>;
   year_in?: Maybe<Int[] | Int>;
@@ -1406,6 +1592,10 @@ export type JobWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
+export type ListingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
 export type ListingAvailabilityWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
@@ -1415,6 +1605,10 @@ export type ListingIndustryWhereUniqueInput = AtLeastOne<{
 }>;
 
 export type ListingTagWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type MessageWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -1561,10 +1755,6 @@ export type SeekerReviewResponseWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type ServiceListingWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   stripeId?: Maybe<String>;
@@ -1572,13 +1762,25 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: Maybe<String>;
 }>;
 
-export interface CoachFeedbackCreateInput {
+export interface ChatCreateInput {
   id?: Maybe<ID_Input>;
-  coach: UserCreateOneInput;
-  seeker: UserCreateOneInput;
-  job: JobCreateOneInput;
-  feedback?: Maybe<FeedbackEntryCreateManyWithoutCoachFeedbackInput>;
-  isSent?: Maybe<Boolean>;
+  user1?: Maybe<String>;
+  user2?: Maybe<String>;
+  messages?: Maybe<MessageCreateManyWithoutChatInput>;
+}
+
+export interface MessageCreateManyWithoutChatInput {
+  create?: Maybe<
+    MessageCreateWithoutChatInput[] | MessageCreateWithoutChatInput
+  >;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+}
+
+export interface MessageCreateWithoutChatInput {
+  id?: Maybe<ID_Input>;
+  sender: UserCreateOneInput;
+  reciever: UserCreateOneInput;
+  content: String;
 }
 
 export interface UserCreateOneInput {
@@ -1608,6 +1810,150 @@ export interface UserCreateInput {
   chatActive?: Maybe<Boolean>;
 }
 
+export interface ChatUpdateInput {
+  user1?: Maybe<String>;
+  user2?: Maybe<String>;
+  messages?: Maybe<MessageUpdateManyWithoutChatInput>;
+}
+
+export interface MessageUpdateManyWithoutChatInput {
+  create?: Maybe<
+    MessageCreateWithoutChatInput[] | MessageCreateWithoutChatInput
+  >;
+  delete?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  connect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  set?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  disconnect?: Maybe<MessageWhereUniqueInput[] | MessageWhereUniqueInput>;
+  update?: Maybe<
+    | MessageUpdateWithWhereUniqueWithoutChatInput[]
+    | MessageUpdateWithWhereUniqueWithoutChatInput
+  >;
+  upsert?: Maybe<
+    | MessageUpsertWithWhereUniqueWithoutChatInput[]
+    | MessageUpsertWithWhereUniqueWithoutChatInput
+  >;
+  deleteMany?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  updateMany?: Maybe<
+    | MessageUpdateManyWithWhereNestedInput[]
+    | MessageUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface MessageUpdateWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput;
+  data: MessageUpdateWithoutChatDataInput;
+}
+
+export interface MessageUpdateWithoutChatDataInput {
+  sender?: Maybe<UserUpdateOneRequiredInput>;
+  reciever?: Maybe<UserUpdateOneRequiredInput>;
+  content?: Maybe<String>;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateDataInput {
+  stripeId?: Maybe<String>;
+  stripeCusId?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  first_name?: Maybe<String>;
+  last_name?: Maybe<String>;
+  city?: Maybe<String>;
+  state?: Maybe<String>;
+  bio?: Maybe<String>;
+  image_url?: Maybe<String>;
+  portfolio_url?: Maybe<String>;
+  linkedin_url?: Maybe<String>;
+  github_url?: Maybe<String>;
+  personal_url?: Maybe<String>;
+  blog_url?: Maybe<String>;
+  twitter_url?: Maybe<String>;
+  activated_stripe?: Maybe<Boolean>;
+  chatActive?: Maybe<Boolean>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface MessageUpsertWithWhereUniqueWithoutChatInput {
+  where: MessageWhereUniqueInput;
+  update: MessageUpdateWithoutChatDataInput;
+  create: MessageCreateWithoutChatInput;
+}
+
+export interface MessageScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  OR?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+  NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
+}
+
+export interface MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput;
+  data: MessageUpdateManyDataInput;
+}
+
+export interface MessageUpdateManyDataInput {
+  content?: Maybe<String>;
+}
+
+export interface ChatUpdateManyMutationInput {
+  user1?: Maybe<String>;
+  user2?: Maybe<String>;
+}
+
+export interface CoachFeedbackCreateInput {
+  id?: Maybe<ID_Input>;
+  coach: UserCreateOneInput;
+  seeker: UserCreateOneInput;
+  job: JobCreateOneInput;
+  feedback?: Maybe<FeedbackEntryCreateManyWithoutCoachFeedbackInput>;
+  isSent?: Maybe<Boolean>;
+}
+
 export interface JobCreateOneInput {
   create?: Maybe<JobCreateInput>;
   connect?: Maybe<JobWhereUniqueInput>;
@@ -1617,7 +1963,7 @@ export interface JobCreateInput {
   id?: Maybe<ID_Input>;
   coach: UserCreateOneInput;
   seeker: UserCreateOneInput;
-  listing: ServiceListingCreateOneInput;
+  listing: ListingCreateOneInput;
   microservice: Microservice;
   dateRequested?: Maybe<DateTimeInput>;
   dateAccepted?: Maybe<DateTimeInput>;
@@ -1627,12 +1973,12 @@ export interface JobCreateInput {
   completed?: Maybe<Boolean>;
 }
 
-export interface ServiceListingCreateOneInput {
-  create?: Maybe<ServiceListingCreateInput>;
-  connect?: Maybe<ServiceListingWhereUniqueInput>;
+export interface ListingCreateOneInput {
+  create?: Maybe<ListingCreateInput>;
+  connect?: Maybe<ListingWhereUniqueInput>;
 }
 
-export interface ServiceListingCreateInput {
+export interface ListingCreateInput {
   id?: Maybe<ID_Input>;
   coach: UserCreateOneInput;
   description: String;
@@ -1688,39 +2034,6 @@ export interface CoachFeedbackUpdateInput {
   isSent?: Maybe<Boolean>;
 }
 
-export interface UserUpdateOneRequiredInput {
-  create?: Maybe<UserCreateInput>;
-  update?: Maybe<UserUpdateDataInput>;
-  upsert?: Maybe<UserUpsertNestedInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface UserUpdateDataInput {
-  stripeId?: Maybe<String>;
-  stripeCusId?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  first_name?: Maybe<String>;
-  last_name?: Maybe<String>;
-  city?: Maybe<String>;
-  state?: Maybe<String>;
-  bio?: Maybe<String>;
-  image_url?: Maybe<String>;
-  portfolio_url?: Maybe<String>;
-  linkedin_url?: Maybe<String>;
-  github_url?: Maybe<String>;
-  personal_url?: Maybe<String>;
-  blog_url?: Maybe<String>;
-  twitter_url?: Maybe<String>;
-  activated_stripe?: Maybe<Boolean>;
-  chatActive?: Maybe<Boolean>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
 export interface JobUpdateOneRequiredInput {
   create?: Maybe<JobCreateInput>;
   update?: Maybe<JobUpdateDataInput>;
@@ -1731,7 +2044,7 @@ export interface JobUpdateOneRequiredInput {
 export interface JobUpdateDataInput {
   coach?: Maybe<UserUpdateOneRequiredInput>;
   seeker?: Maybe<UserUpdateOneRequiredInput>;
-  listing?: Maybe<ServiceListingUpdateOneRequiredInput>;
+  listing?: Maybe<ListingUpdateOneRequiredInput>;
   microservice?: Maybe<Microservice>;
   dateRequested?: Maybe<DateTimeInput>;
   dateAccepted?: Maybe<DateTimeInput>;
@@ -1741,14 +2054,14 @@ export interface JobUpdateDataInput {
   completed?: Maybe<Boolean>;
 }
 
-export interface ServiceListingUpdateOneRequiredInput {
-  create?: Maybe<ServiceListingCreateInput>;
-  update?: Maybe<ServiceListingUpdateDataInput>;
-  upsert?: Maybe<ServiceListingUpsertNestedInput>;
-  connect?: Maybe<ServiceListingWhereUniqueInput>;
+export interface ListingUpdateOneRequiredInput {
+  create?: Maybe<ListingCreateInput>;
+  update?: Maybe<ListingUpdateDataInput>;
+  upsert?: Maybe<ListingUpsertNestedInput>;
+  connect?: Maybe<ListingWhereUniqueInput>;
 }
 
-export interface ServiceListingUpdateDataInput {
+export interface ListingUpdateDataInput {
   coach?: Maybe<UserUpdateOneRequiredInput>;
   description?: Maybe<String>;
   price?: Maybe<Int>;
@@ -1931,9 +2244,9 @@ export interface ListingIndustryUpdateManyDataInput {
   name?: Maybe<String>;
 }
 
-export interface ServiceListingUpsertNestedInput {
-  update: ServiceListingUpdateDataInput;
-  create: ServiceListingCreateInput;
+export interface ListingUpsertNestedInput {
+  update: ListingUpdateDataInput;
+  create: ListingCreateInput;
 }
 
 export interface JobUpsertNestedInput {
@@ -2131,7 +2444,7 @@ export interface ListingAvailabilityCreateInput {
   hour: Int;
   minute: Int;
   coach: UserCreateOneInput;
-  listing: ServiceListingCreateOneInput;
+  listing: ListingCreateOneInput;
   year: Int;
   month: Int;
   day: Int;
@@ -2196,7 +2509,7 @@ export interface ListingAvailabilityUpdateDataInput {
   hour?: Maybe<Int>;
   minute?: Maybe<Int>;
   coach?: Maybe<UserUpdateOneRequiredInput>;
-  listing?: Maybe<ServiceListingUpdateOneRequiredInput>;
+  listing?: Maybe<ListingUpdateOneRequiredInput>;
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
@@ -2311,7 +2624,7 @@ export interface IQJobInfoUpdateManyMutationInput {
 export interface JobUpdateInput {
   coach?: Maybe<UserUpdateOneRequiredInput>;
   seeker?: Maybe<UserUpdateOneRequiredInput>;
-  listing?: Maybe<ServiceListingUpdateOneRequiredInput>;
+  listing?: Maybe<ListingUpdateOneRequiredInput>;
   microservice?: Maybe<Microservice>;
   dateRequested?: Maybe<DateTimeInput>;
   dateAccepted?: Maybe<DateTimeInput>;
@@ -2331,11 +2644,26 @@ export interface JobUpdateManyMutationInput {
   completed?: Maybe<Boolean>;
 }
 
+export interface ListingUpdateInput {
+  coach?: Maybe<UserUpdateOneRequiredInput>;
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  microservice?: Maybe<Microservice>;
+  tags?: Maybe<ListingTagUpdateManyInput>;
+  industry?: Maybe<ListingIndustryUpdateManyInput>;
+}
+
+export interface ListingUpdateManyMutationInput {
+  description?: Maybe<String>;
+  price?: Maybe<Int>;
+  microservice?: Maybe<Microservice>;
+}
+
 export interface ListingAvailabilityUpdateInput {
   hour?: Maybe<Int>;
   minute?: Maybe<Int>;
   coach?: Maybe<UserUpdateOneRequiredInput>;
-  listing?: Maybe<ServiceListingUpdateOneRequiredInput>;
+  listing?: Maybe<ListingUpdateOneRequiredInput>;
   year?: Maybe<Int>;
   month?: Maybe<Int>;
   day?: Maybe<Int>;
@@ -2367,6 +2695,53 @@ export interface ListingTagUpdateInput {
 
 export interface ListingTagUpdateManyMutationInput {
   name?: Maybe<String>;
+}
+
+export interface MessageCreateInput {
+  id?: Maybe<ID_Input>;
+  chat: ChatCreateOneWithoutMessagesInput;
+  sender: UserCreateOneInput;
+  reciever: UserCreateOneInput;
+  content: String;
+}
+
+export interface ChatCreateOneWithoutMessagesInput {
+  create?: Maybe<ChatCreateWithoutMessagesInput>;
+  connect?: Maybe<ChatWhereUniqueInput>;
+}
+
+export interface ChatCreateWithoutMessagesInput {
+  id?: Maybe<ID_Input>;
+  user1?: Maybe<String>;
+  user2?: Maybe<String>;
+}
+
+export interface MessageUpdateInput {
+  chat?: Maybe<ChatUpdateOneRequiredWithoutMessagesInput>;
+  sender?: Maybe<UserUpdateOneRequiredInput>;
+  reciever?: Maybe<UserUpdateOneRequiredInput>;
+  content?: Maybe<String>;
+}
+
+export interface ChatUpdateOneRequiredWithoutMessagesInput {
+  create?: Maybe<ChatCreateWithoutMessagesInput>;
+  update?: Maybe<ChatUpdateWithoutMessagesDataInput>;
+  upsert?: Maybe<ChatUpsertWithoutMessagesInput>;
+  connect?: Maybe<ChatWhereUniqueInput>;
+}
+
+export interface ChatUpdateWithoutMessagesDataInput {
+  user1?: Maybe<String>;
+  user2?: Maybe<String>;
+}
+
+export interface ChatUpsertWithoutMessagesInput {
+  update: ChatUpdateWithoutMessagesDataInput;
+  create: ChatCreateWithoutMessagesInput;
+}
+
+export interface MessageUpdateManyMutationInput {
+  content?: Maybe<String>;
 }
 
 export interface SeekerReviewCreateInput {
@@ -2476,21 +2851,6 @@ export interface SeekerReviewResponseUpdateManyMutationInput {
   text?: Maybe<String>;
 }
 
-export interface ServiceListingUpdateInput {
-  coach?: Maybe<UserUpdateOneRequiredInput>;
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  microservice?: Maybe<Microservice>;
-  tags?: Maybe<ListingTagUpdateManyInput>;
-  industry?: Maybe<ListingIndustryUpdateManyInput>;
-}
-
-export interface ServiceListingUpdateManyMutationInput {
-  description?: Maybe<String>;
-  price?: Maybe<Int>;
-  microservice?: Maybe<Microservice>;
-}
-
 export interface UserUpdateInput {
   stripeId?: Maybe<String>;
   stripeCusId?: Maybe<String>;
@@ -2531,6 +2891,17 @@ export interface UserUpdateManyMutationInput {
   twitter_url?: Maybe<String>;
   activated_stripe?: Maybe<Boolean>;
   chatActive?: Maybe<Boolean>;
+}
+
+export interface ChatSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ChatWhereInput>;
+  AND?: Maybe<ChatSubscriptionWhereInput[] | ChatSubscriptionWhereInput>;
+  OR?: Maybe<ChatSubscriptionWhereInput[] | ChatSubscriptionWhereInput>;
+  NOT?: Maybe<ChatSubscriptionWhereInput[] | ChatSubscriptionWhereInput>;
 }
 
 export interface CoachFeedbackSubscriptionWhereInput {
@@ -2595,6 +2966,17 @@ export interface JobSubscriptionWhereInput {
   NOT?: Maybe<JobSubscriptionWhereInput[] | JobSubscriptionWhereInput>;
 }
 
+export interface ListingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ListingWhereInput>;
+  AND?: Maybe<ListingSubscriptionWhereInput[] | ListingSubscriptionWhereInput>;
+  OR?: Maybe<ListingSubscriptionWhereInput[] | ListingSubscriptionWhereInput>;
+  NOT?: Maybe<ListingSubscriptionWhereInput[] | ListingSubscriptionWhereInput>;
+}
+
 export interface ListingAvailabilitySubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -2652,6 +3034,17 @@ export interface ListingTagSubscriptionWhereInput {
   >;
 }
 
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MessageWhereInput>;
+  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  OR?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+  NOT?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
+}
+
 export interface SeekerReviewSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -2689,26 +3082,6 @@ export interface SeekerReviewResponseSubscriptionWhereInput {
   >;
 }
 
-export interface ServiceListingSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ServiceListingWhereInput>;
-  AND?: Maybe<
-    | ServiceListingSubscriptionWhereInput[]
-    | ServiceListingSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    | ServiceListingSubscriptionWhereInput[]
-    | ServiceListingSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    | ServiceListingSubscriptionWhereInput[]
-    | ServiceListingSubscriptionWhereInput
-  >;
-}
-
 export interface UserSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -2724,66 +3097,96 @@ export interface NodeNode {
   id: ID_Output;
 }
 
-export interface CoachFeedback {
+export interface Chat {
   id: ID_Output;
-  isSent?: Boolean;
+  user1?: String;
+  user2?: String;
 }
 
-export interface CoachFeedbackPromise
-  extends Promise<CoachFeedback>,
-    Fragmentable {
+export interface ChatPromise extends Promise<Chat>, Fragmentable {
   id: () => Promise<ID_Output>;
-  coach: <T = UserPromise>() => T;
-  seeker: <T = UserPromise>() => T;
-  job: <T = JobPromise>() => T;
-  feedback: <T = FragmentableArray<FeedbackEntry>>(args?: {
-    where?: FeedbackEntryWhereInput;
-    orderBy?: FeedbackEntryOrderByInput;
+  user1: () => Promise<String>;
+  user2: () => Promise<String>;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
   }) => T;
-  isSent: () => Promise<Boolean>;
 }
 
-export interface CoachFeedbackSubscription
-  extends Promise<AsyncIterator<CoachFeedback>>,
+export interface ChatSubscription
+  extends Promise<AsyncIterator<Chat>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  coach: <T = UserSubscription>() => T;
-  seeker: <T = UserSubscription>() => T;
-  job: <T = JobSubscription>() => T;
-  feedback: <T = Promise<AsyncIterator<FeedbackEntrySubscription>>>(args?: {
-    where?: FeedbackEntryWhereInput;
-    orderBy?: FeedbackEntryOrderByInput;
+  user1: () => Promise<AsyncIterator<String>>;
+  user2: () => Promise<AsyncIterator<String>>;
+  messages: <T = Promise<AsyncIterator<MessageSubscription>>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
   }) => T;
-  isSent: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface CoachFeedbackNullablePromise
-  extends Promise<CoachFeedback | null>,
+export interface ChatNullablePromise
+  extends Promise<Chat | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  coach: <T = UserPromise>() => T;
-  seeker: <T = UserPromise>() => T;
-  job: <T = JobPromise>() => T;
-  feedback: <T = FragmentableArray<FeedbackEntry>>(args?: {
-    where?: FeedbackEntryWhereInput;
-    orderBy?: FeedbackEntryOrderByInput;
+  user1: () => Promise<String>;
+  user2: () => Promise<String>;
+  messages: <T = FragmentableArray<Message>>(args?: {
+    where?: MessageWhereInput;
+    orderBy?: MessageOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
   }) => T;
-  isSent: () => Promise<Boolean>;
+}
+
+export interface Message {
+  id: ID_Output;
+  content: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface MessagePromise extends Promise<Message>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  chat: <T = ChatPromise>() => T;
+  sender: <T = UserPromise>() => T;
+  reciever: <T = UserPromise>() => T;
+  content: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MessageSubscription
+  extends Promise<AsyncIterator<Message>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  chat: <T = ChatSubscription>() => T;
+  sender: <T = UserSubscription>() => T;
+  reciever: <T = UserSubscription>() => T;
+  content: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface MessageNullablePromise
+  extends Promise<Message | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  chat: <T = ChatPromise>() => T;
+  sender: <T = UserPromise>() => T;
+  reciever: <T = UserPromise>() => T;
+  content: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
 }
 
 export interface User {
@@ -2878,6 +3281,145 @@ export interface UserNullablePromise
   chatActive: () => Promise<Boolean>;
 }
 
+export interface ChatConnection {
+  pageInfo: PageInfo;
+  edges: ChatEdge[];
+}
+
+export interface ChatConnectionPromise
+  extends Promise<ChatConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ChatEdge>>() => T;
+  aggregate: <T = AggregateChatPromise>() => T;
+}
+
+export interface ChatConnectionSubscription
+  extends Promise<AsyncIterator<ChatConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ChatEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateChatSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChatEdge {
+  node: Chat;
+  cursor: String;
+}
+
+export interface ChatEdgePromise extends Promise<ChatEdge>, Fragmentable {
+  node: <T = ChatPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ChatEdgeSubscription
+  extends Promise<AsyncIterator<ChatEdge>>,
+    Fragmentable {
+  node: <T = ChatSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateChat {
+  count: Int;
+}
+
+export interface AggregateChatPromise
+  extends Promise<AggregateChat>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateChatSubscription
+  extends Promise<AsyncIterator<AggregateChat>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CoachFeedback {
+  id: ID_Output;
+  isSent?: Boolean;
+}
+
+export interface CoachFeedbackPromise
+  extends Promise<CoachFeedback>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: <T = UserPromise>() => T;
+  seeker: <T = UserPromise>() => T;
+  job: <T = JobPromise>() => T;
+  feedback: <T = FragmentableArray<FeedbackEntry>>(args?: {
+    where?: FeedbackEntryWhereInput;
+    orderBy?: FeedbackEntryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isSent: () => Promise<Boolean>;
+}
+
+export interface CoachFeedbackSubscription
+  extends Promise<AsyncIterator<CoachFeedback>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  coach: <T = UserSubscription>() => T;
+  seeker: <T = UserSubscription>() => T;
+  job: <T = JobSubscription>() => T;
+  feedback: <T = Promise<AsyncIterator<FeedbackEntrySubscription>>>(args?: {
+    where?: FeedbackEntryWhereInput;
+    orderBy?: FeedbackEntryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isSent: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface CoachFeedbackNullablePromise
+  extends Promise<CoachFeedback | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  coach: <T = UserPromise>() => T;
+  seeker: <T = UserPromise>() => T;
+  job: <T = JobPromise>() => T;
+  feedback: <T = FragmentableArray<FeedbackEntry>>(args?: {
+    where?: FeedbackEntryWhereInput;
+    orderBy?: FeedbackEntryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  isSent: () => Promise<Boolean>;
+}
+
 export interface Job {
   id: ID_Output;
   microservice: Microservice;
@@ -2893,7 +3435,7 @@ export interface JobPromise extends Promise<Job>, Fragmentable {
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
   seeker: <T = UserPromise>() => T;
-  listing: <T = ServiceListingPromise>() => T;
+  listing: <T = ListingPromise>() => T;
   microservice: () => Promise<Microservice>;
   dateRequested: () => Promise<DateTimeOutput>;
   dateAccepted: () => Promise<DateTimeOutput>;
@@ -2909,7 +3451,7 @@ export interface JobSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   coach: <T = UserSubscription>() => T;
   seeker: <T = UserSubscription>() => T;
-  listing: <T = ServiceListingSubscription>() => T;
+  listing: <T = ListingSubscription>() => T;
   microservice: () => Promise<AsyncIterator<Microservice>>;
   dateRequested: () => Promise<AsyncIterator<DateTimeOutput>>;
   dateAccepted: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -2923,7 +3465,7 @@ export interface JobNullablePromise extends Promise<Job | null>, Fragmentable {
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
   seeker: <T = UserPromise>() => T;
-  listing: <T = ServiceListingPromise>() => T;
+  listing: <T = ListingPromise>() => T;
   microservice: () => Promise<Microservice>;
   dateRequested: () => Promise<DateTimeOutput>;
   dateAccepted: () => Promise<DateTimeOutput>;
@@ -2933,16 +3475,14 @@ export interface JobNullablePromise extends Promise<Job | null>, Fragmentable {
   completed: () => Promise<Boolean>;
 }
 
-export interface ServiceListing {
+export interface Listing {
   id: ID_Output;
   description: String;
   price: Int;
   microservice: Microservice;
 }
 
-export interface ServiceListingPromise
-  extends Promise<ServiceListing>,
-    Fragmentable {
+export interface ListingPromise extends Promise<Listing>, Fragmentable {
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
   description: () => Promise<String>;
@@ -2968,8 +3508,8 @@ export interface ServiceListingPromise
   }) => T;
 }
 
-export interface ServiceListingSubscription
-  extends Promise<AsyncIterator<ServiceListing>>,
+export interface ListingSubscription
+  extends Promise<AsyncIterator<Listing>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   coach: <T = UserSubscription>() => T;
@@ -2996,8 +3536,8 @@ export interface ServiceListingSubscription
   }) => T;
 }
 
-export interface ServiceListingNullablePromise
-  extends Promise<ServiceListing | null>,
+export interface ListingNullablePromise
+  extends Promise<Listing | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
   coach: <T = UserPromise>() => T;
@@ -3126,29 +3666,6 @@ export interface CoachFeedbackConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<CoachFeedbackEdgeSubscription>>>() => T;
   aggregate: <T = AggregateCoachFeedbackSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CoachFeedbackEdge {
@@ -3352,7 +3869,7 @@ export interface ListingAvailabilityPromise
   hour: () => Promise<Int>;
   minute: () => Promise<Int>;
   coach: <T = UserPromise>() => T;
-  listing: <T = ServiceListingPromise>() => T;
+  listing: <T = ListingPromise>() => T;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   day: () => Promise<Int>;
@@ -3367,7 +3884,7 @@ export interface ListingAvailabilitySubscription
   hour: () => Promise<AsyncIterator<Int>>;
   minute: () => Promise<AsyncIterator<Int>>;
   coach: <T = UserSubscription>() => T;
-  listing: <T = ServiceListingSubscription>() => T;
+  listing: <T = ListingSubscription>() => T;
   year: () => Promise<AsyncIterator<Int>>;
   month: () => Promise<AsyncIterator<Int>>;
   day: () => Promise<AsyncIterator<Int>>;
@@ -3382,7 +3899,7 @@ export interface ListingAvailabilityNullablePromise
   hour: () => Promise<Int>;
   minute: () => Promise<Int>;
   coach: <T = UserPromise>() => T;
-  listing: <T = ServiceListingPromise>() => T;
+  listing: <T = ListingPromise>() => T;
   year: () => Promise<Int>;
   month: () => Promise<Int>;
   day: () => Promise<Int>;
@@ -3496,6 +4013,60 @@ export interface AggregateJobPromise
 
 export interface AggregateJobSubscription
   extends Promise<AsyncIterator<AggregateJob>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ListingConnection {
+  pageInfo: PageInfo;
+  edges: ListingEdge[];
+}
+
+export interface ListingConnectionPromise
+  extends Promise<ListingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ListingEdge>>() => T;
+  aggregate: <T = AggregateListingPromise>() => T;
+}
+
+export interface ListingConnectionSubscription
+  extends Promise<AsyncIterator<ListingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ListingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateListingSubscription>() => T;
+}
+
+export interface ListingEdge {
+  node: Listing;
+  cursor: String;
+}
+
+export interface ListingEdgePromise extends Promise<ListingEdge>, Fragmentable {
+  node: <T = ListingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ListingEdgeSubscription
+  extends Promise<AsyncIterator<ListingEdge>>,
+    Fragmentable {
+  node: <T = ListingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateListing {
+  count: Int;
+}
+
+export interface AggregateListingPromise
+  extends Promise<AggregateListing>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateListingSubscription
+  extends Promise<AsyncIterator<AggregateListing>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3666,6 +4237,60 @@ export interface AggregateListingTagPromise
 
 export interface AggregateListingTagSubscription
   extends Promise<AsyncIterator<AggregateListingTag>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface MessageConnection {
+  pageInfo: PageInfo;
+  edges: MessageEdge[];
+}
+
+export interface MessageConnectionPromise
+  extends Promise<MessageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MessageEdge>>() => T;
+  aggregate: <T = AggregateMessagePromise>() => T;
+}
+
+export interface MessageConnectionSubscription
+  extends Promise<AsyncIterator<MessageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMessageSubscription>() => T;
+}
+
+export interface MessageEdge {
+  node: Message;
+  cursor: String;
+}
+
+export interface MessageEdgePromise extends Promise<MessageEdge>, Fragmentable {
+  node: <T = MessagePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface MessageEdgeSubscription
+  extends Promise<AsyncIterator<MessageEdge>>,
+    Fragmentable {
+  node: <T = MessageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateMessage {
+  count: Int;
+}
+
+export interface AggregateMessagePromise
+  extends Promise<AggregateMessage>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMessageSubscription
+  extends Promise<AsyncIterator<AggregateMessage>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -3876,62 +4501,6 @@ export interface AggregateSeekerReviewResponseSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ServiceListingConnection {
-  pageInfo: PageInfo;
-  edges: ServiceListingEdge[];
-}
-
-export interface ServiceListingConnectionPromise
-  extends Promise<ServiceListingConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ServiceListingEdge>>() => T;
-  aggregate: <T = AggregateServiceListingPromise>() => T;
-}
-
-export interface ServiceListingConnectionSubscription
-  extends Promise<AsyncIterator<ServiceListingConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ServiceListingEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateServiceListingSubscription>() => T;
-}
-
-export interface ServiceListingEdge {
-  node: ServiceListing;
-  cursor: String;
-}
-
-export interface ServiceListingEdgePromise
-  extends Promise<ServiceListingEdge>,
-    Fragmentable {
-  node: <T = ServiceListingPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ServiceListingEdgeSubscription
-  extends Promise<AsyncIterator<ServiceListingEdge>>,
-    Fragmentable {
-  node: <T = ServiceListingSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateServiceListing {
-  count: Int;
-}
-
-export interface AggregateServiceListingPromise
-  extends Promise<AggregateServiceListing>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateServiceListingSubscription
-  extends Promise<AsyncIterator<AggregateServiceListing>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface UserConnection {
   pageInfo: PageInfo;
   edges: UserEdge[];
@@ -4000,6 +4569,53 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ChatSubscriptionPayload {
+  mutation: MutationType;
+  node: Chat;
+  updatedFields: String[];
+  previousValues: ChatPreviousValues;
+}
+
+export interface ChatSubscriptionPayloadPromise
+  extends Promise<ChatSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ChatPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ChatPreviousValuesPromise>() => T;
+}
+
+export interface ChatSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ChatSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ChatSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ChatPreviousValuesSubscription>() => T;
+}
+
+export interface ChatPreviousValues {
+  id: ID_Output;
+  user1?: String;
+  user2?: String;
+}
+
+export interface ChatPreviousValuesPromise
+  extends Promise<ChatPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  user1: () => Promise<String>;
+  user2: () => Promise<String>;
+}
+
+export interface ChatPreviousValuesSubscription
+  extends Promise<AsyncIterator<ChatPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  user1: () => Promise<AsyncIterator<String>>;
+  user2: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CoachFeedbackSubscriptionPayload {
@@ -4226,6 +4842,56 @@ export interface JobPreviousValuesSubscription
   completed: () => Promise<AsyncIterator<Boolean>>;
 }
 
+export interface ListingSubscriptionPayload {
+  mutation: MutationType;
+  node: Listing;
+  updatedFields: String[];
+  previousValues: ListingPreviousValues;
+}
+
+export interface ListingSubscriptionPayloadPromise
+  extends Promise<ListingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ListingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ListingPreviousValuesPromise>() => T;
+}
+
+export interface ListingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ListingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ListingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ListingPreviousValuesSubscription>() => T;
+}
+
+export interface ListingPreviousValues {
+  id: ID_Output;
+  description: String;
+  price: Int;
+  microservice: Microservice;
+}
+
+export interface ListingPreviousValuesPromise
+  extends Promise<ListingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  description: () => Promise<String>;
+  price: () => Promise<Int>;
+  microservice: () => Promise<Microservice>;
+}
+
+export interface ListingPreviousValuesSubscription
+  extends Promise<AsyncIterator<ListingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  description: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<Int>>;
+  microservice: () => Promise<AsyncIterator<Microservice>>;
+}
+
 export interface ListingAvailabilitySubscriptionPayload {
   mutation: MutationType;
   node: ListingAvailability;
@@ -4376,6 +5042,53 @@ export interface ListingTagPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
+export interface MessageSubscriptionPayload {
+  mutation: MutationType;
+  node: Message;
+  updatedFields: String[];
+  previousValues: MessagePreviousValues;
+}
+
+export interface MessageSubscriptionPayloadPromise
+  extends Promise<MessageSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = MessagePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = MessagePreviousValuesPromise>() => T;
+}
+
+export interface MessageSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<MessageSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = MessageSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = MessagePreviousValuesSubscription>() => T;
+}
+
+export interface MessagePreviousValues {
+  id: ID_Output;
+  content: String;
+  createdAt: DateTimeOutput;
+}
+
+export interface MessagePreviousValuesPromise
+  extends Promise<MessagePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  content: () => Promise<String>;
+  createdAt: () => Promise<DateTimeOutput>;
+}
+
+export interface MessagePreviousValuesSubscription
+  extends Promise<AsyncIterator<MessagePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  content: () => Promise<AsyncIterator<String>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
 export interface SeekerReviewSubscriptionPayload {
   mutation: MutationType;
   node: SeekerReview;
@@ -4483,56 +5196,6 @@ export interface SeekerReviewResponsePreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
-export interface ServiceListingSubscriptionPayload {
-  mutation: MutationType;
-  node: ServiceListing;
-  updatedFields: String[];
-  previousValues: ServiceListingPreviousValues;
-}
-
-export interface ServiceListingSubscriptionPayloadPromise
-  extends Promise<ServiceListingSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ServiceListingPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ServiceListingPreviousValuesPromise>() => T;
-}
-
-export interface ServiceListingSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ServiceListingSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ServiceListingSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ServiceListingPreviousValuesSubscription>() => T;
-}
-
-export interface ServiceListingPreviousValues {
-  id: ID_Output;
-  description: String;
-  price: Int;
-  microservice: Microservice;
-}
-
-export interface ServiceListingPreviousValuesPromise
-  extends Promise<ServiceListingPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
-  price: () => Promise<Int>;
-  microservice: () => Promise<Microservice>;
-}
-
-export interface ServiceListingPreviousValuesSubscription
-  extends Promise<AsyncIterator<ServiceListingPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  description: () => Promise<AsyncIterator<String>>;
-  price: () => Promise<AsyncIterator<Int>>;
-  microservice: () => Promise<AsyncIterator<Microservice>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -4647,11 +5310,6 @@ The `Boolean` scalar type represents `true` or `false`.
 export type Boolean = boolean;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-/*
 DateTime scalar input type, allowing Date
 */
 export type DateTimeInput = Date | string;
@@ -4660,6 +5318,11 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 export type Long = string;
 
@@ -4673,7 +5336,15 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "ServiceListing",
+    name: "Chat",
+    embedded: false
+  },
+  {
+    name: "Message",
+    embedded: false
+  },
+  {
+    name: "Listing",
     embedded: false
   },
   {
