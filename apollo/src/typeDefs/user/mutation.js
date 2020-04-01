@@ -1,8 +1,7 @@
 import { gql } from 'apollo-server'
 
-const typeDef = gql`
+const mutationDefs = gql`
   extend type Mutation {
-    # User Mutations
 		register(
 			input: RegistrationInput!
 			): AuthPayload!
@@ -11,7 +10,6 @@ const typeDef = gql`
 			): User!
 		deleteUser: User!
   }
-
-
 `
-export default typeDef
+
+export default mutationDefs
