@@ -48,7 +48,7 @@ const mutationDefs = gql`
       recurring: Boolean
       ): ListingAvailability!
       
-      deleteListingAvailability: LisitngAvailability!
+      deleteListingAvailability: ListingAvailability!
     }
 `
 

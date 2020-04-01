@@ -6,17 +6,17 @@ const {
 } = require('../../utils')
 
 
-async function register(_parent, args, { prisma }) {
-  const hash = bcrypt.hashSync(args.password, 10);
-  args.password = hash;
-  checkFields(args)
+async function register(_parent, { input }, { prisma }) {
+  const hash = bcrypt.hashSync(input.password, 10);
+  input.password = hash;
+  checkFields(input)
   const emailTaken = await prisma.$exists.user({
-    email: args.email
+    email: input.email
   })
 
   if (!emailTaken) {
     const user = await prisma.createUser({
-      ...args
+      ...input
     });
     const token = generateToken(user);
     return {

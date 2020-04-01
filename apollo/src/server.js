@@ -4,9 +4,9 @@ const { prisma } = require('./generated/prisma-client');
 import typeDefs from './typeDefs'
 const resolvers = require('./resolvers')
 
-console.log('server typedefs', typeDefs)
 
 const server = new ApolloServer({
+  formatError: (err) => { console.log(err.stack); return err },
   typeDefs,
   resolvers,
   context: async (request) => {
