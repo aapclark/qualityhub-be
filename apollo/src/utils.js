@@ -10,7 +10,6 @@ const JWT_SECRET = process.env.JWT_SECRET
   if there are any blank strings.
 */
 function checkFields(args) {
-  console.log('checking fields on args', args)
   for (let key of Object.keys(args)) {
     if (!args[key]) {
       throw new Error(`Invalid input for required field ${key}.`);

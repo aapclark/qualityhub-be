@@ -10,22 +10,30 @@ async function register(_parent, args, { prisma }) {
   const hash = bcrypt.hashSync(args.password, 10);
   args.password = hash;
   checkFields(args)
-  const user = await prisma.createUser({
-    ...args
-  });
-  const token = generateToken(user);
+  const emailTaken = await prisma.$exists.user({
+    email: args.email
+  })
 
-  return {
-    token,
-    user,
-  };
+  if (!emailTaken) {
+    const user = await prisma.createUser({
+      ...args
+    });
+    const token = generateToken(user);
+    return {
+      token,
+      user,
+    }
+  }
+
+  else {
+    throw new Error('Email address is already in use.')
+  }
 }
 
-async function login(_parent, args, context) {
-  console.log('LOGIN ATTEMPT')
-  const user = await context.prisma.user({ email: args.email });
+async function login(_parent, { email, password }, context) {
+  const user = await context.prisma.user({ email });
   const token = generateToken(user);
-  const passwordMatch = await bcrypt.compare(args.password, user.password);
+  const passwordMatch = await bcrypt.compare(password, user.password);
   if (!user || !passwordMatch) {
     throw new Error('Invalid Login');
   }
@@ -35,6 +43,7 @@ async function login(_parent, args, context) {
   };
 }
 
+//  TODO -- update to reflect lack of UC fields.
 async function updateUser(_parent, args, context) {
   const id = getUserId(context);
   const { first_name, last_name, city, state } = args;

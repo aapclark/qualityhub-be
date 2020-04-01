@@ -6,11 +6,6 @@ const ResumeReview = require('./ResumeReview')
 const Review = require('./Review')
 const User = require('./User')
 
-console.log('User', User)
-
-console.log('Mutation', Mutation)
-
-
 
 module.exports = {
   // Booking,
