@@ -1,12 +1,12 @@
-// import { inputDefs } from './input'
-import { mutationDefs } from './mutation'
-import { typeDef } from './type'
-import { queryDef } from './query'
+// import  inputDefs  from './input'
+import mutationDefs from './mutation'
+import typeDefs from './type'
+import queryDef from './query'
 
 
-export default {
+export default [
   // inputDefs,
   mutationDefs,
-  typeDef,
+  typeDefs,
   queryDef
-}
+]

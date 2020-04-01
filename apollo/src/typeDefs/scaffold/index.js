@@ -4,9 +4,9 @@ import { typeDef } from './type'
 import { queryDef } from './query'
 
 
-export default {
+export default [
   inputDef,
   mutationDef,
   typeDef,
   queryDef
-}
+]

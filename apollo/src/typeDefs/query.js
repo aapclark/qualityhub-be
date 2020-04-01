@@ -1,12 +1,9 @@
 import { gql } from 'apollo-server'
 
-
-const query = gql`
+// ! root query definition
+export const query = gql`
   type Query {
     info: String!
+    test: String
   }
 `
-
-export default {
-  query
-}
