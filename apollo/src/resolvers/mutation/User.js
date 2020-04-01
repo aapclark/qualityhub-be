@@ -30,10 +30,10 @@ async function register(_parent, args, { prisma }) {
   }
 }
 
-async function login(_parent, args, context) {
-  const user = await context.prisma.user({ email: args.email });
+async function login(_parent, { email, password }, context) {
+  const user = await context.prisma.user({ email });
   const token = generateToken(user);
-  const passwordMatch = await bcrypt.compare(args.password, user.password);
+  const passwordMatch = await bcrypt.compare(password, user.password);
   if (!user || !passwordMatch) {
     throw new Error('Invalid Login');
   }
