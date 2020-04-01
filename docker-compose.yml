@@ -19,7 +19,9 @@ services:
       - ./apollo/src:/app/src
     ports:
       - '${APOLLO_PORT:-8000}:${APOLLO_PORT:-8000}'
-    command: sh -c "npm install -g nodemon && nodemon src/index.js"
+    # command: sh -c "npm install -g nodemon && nodemon src/index.js"
+    command: sh -c "npm run development"
+    # command: sh -c "npm install -g nodemon nodemon --exec babel-node src/index.js"
   prisma:
     image: prismagraphql/prisma:1.34.10
     restart: always

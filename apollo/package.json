@@ -7,7 +7,8 @@
     "test": "jest --watch",
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
-    "development": "env-cmd -f ../configuration/development.env nodemon --exec babel-node src/index.js",
+    "development": "nodemon --exec babel-node src/index.js",
+    "development_former": "env-cmd -f ../configuration/development.env nodemon --exec babel-node src/index.js",
     "save_seeded_users": "env-cmd -f ../config/development.env node prisma/seeds/02_save_seeded_users.js",
     "seed_reviews": "env-cmd -f ../config/development.env node prisma/seeds/03_seed_reviews.js"
   },
@@ -23,14 +24,14 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/quality-hub-core-be#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/node": "^7.8.7",
-    "@babel/preset-env": "^7.9.0",
     "jest": "^25.2.4",
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
   },
   "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.0",
     "apollo-server": "^2.11.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",

@@ -1,8 +1,7 @@
 import { gql } from 'apollo-server'
 
-
 const typeDef = gql`
-	type User  {
+ type User  {
 		id: ID!
 		stripeCustomerConnected: Boolean
 		stripeCoachConnected: Boolean
@@ -22,4 +21,7 @@ const typeDef = gql`
 		chatActive: Boolean
   }
 `
-export default typeDef
+
+export default {
+  typeDef
+}
