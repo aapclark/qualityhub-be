@@ -1,9 +1,10 @@
 const { ApolloServer } = require('apollo-server')
 const { prisma } = require('./generated/prisma-client');
 
-const typeDefs = require('./schema');
+import typeDefs from './schema'
 const resolvers = require('./resolvers')
 
+console.log('server typedefs', typeDefs)
 
 const server = new ApolloServer({
   typeDefs,
