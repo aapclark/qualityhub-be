@@ -8,7 +8,7 @@ const resolvers = require('./resolvers')
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: request => {
+  context: async (request) => {
     return { ...request, prisma };
   },
 });

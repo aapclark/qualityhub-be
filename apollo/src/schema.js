@@ -1,6 +1,15 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+
+	type Query {
+		test: String
+		info: String
+		user: User!
+
+		# Stripe Queries
+		stripeBalance: Balance!
+	}
 	enum Microservice{
 		RESUMEQ
 		INTERVIEWQ
@@ -113,6 +122,105 @@ const typeDefs = gql`
 		coachFeedback: CoachFeedback!
 		title: String!
 		content: String!
+	}
+
+	type Mutation {
+		# User Mutations
+		
+		register(
+				first_name: String!
+				last_name: String!
+				email: String!
+				password: String!
+				city: String!
+				state: String!
+			): AuthPayload!
+		login(
+			input: LoginInput
+			): AuthPayload!
+		updateUser (
+			input: UpdateUserInput
+			): User!
+		deleteUser: User!
+		
+		# Stripe Mutations
+		createCustomer(
+			email: String!
+			source: String!
+			): String!
+		addCoachStripeId(
+			code: String!
+			): User!
+		createStripeLink: String!
+		stripeDirectCharge(
+			amount: Int!
+			currency: String
+			source: String!
+			coachId: String!
+			): Status!
+		stripePayout(
+			amount: Int!
+			currency: String
+			method: String
+			coachId: String!
+			): String!
+		stripePayIntent(
+			amount: Int!
+			currency: String
+			source: String
+			): User!
+		stripeCreateToken(
+			customer: String!
+			): User!
+		
+		}
+
+
+	type AuthPayload {
+		token: String!
+		user: User!
+	}
+
+	input RegistrationInput {
+		first_name: String!
+		last_name: String!
+		email: String!
+		password: String!
+		city: String!
+		state: String!
+		image_url: String
+		personal_url: String
+		blog_url: String
+		twitter_url: String
+		portfolio_url: String
+		linkedin_url: String
+		github_url: String
+		bio: String
+	}
+
+	input UpdateUserInput {
+		stripeId: String
+    stripeCusId: String
+    first_name: String
+    last_name: String
+    password: String
+    email: String
+    city: String
+    state: String
+    image_url: String
+    gender: String
+    personal_url: String
+    blog_url: String
+    twitter_url: String
+    portfolio_url: String
+    linkedin_url: String
+    github_url: String
+    bio: String
+	}
+
+	input LoginInput {
+		email: String!
+		password: String!
 	}
 `
 

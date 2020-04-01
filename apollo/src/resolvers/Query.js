@@ -1,8 +1,14 @@
 const { getUserId, validToken } = require('../utils');
+const stripe = require('../stripe')
 
 
 function info() {
 	return 'Welcome to Quality Hub';
+}
+
+function test(_, __, ___) {
+	console.log('Test Message')
+	return 'This is a test.'
 }
 
 async function user(parents, args, context, info) {
@@ -81,16 +87,31 @@ function checkToken(parent, args, context, info) {
 	return validToken(context)
 }
 
+async function stripeBalance(_parent, args, context) {
+	const coach = await context.prisma.user({ id: getUserId(context) });
+	return stripe.balance.retrieve({
+		stripe_account: coach.stripeId,
+	}).then(function (balance) {
+		return { available: balance.available[0].amount, pending: balance.pending[0].amount }
+	}).catch(function (err) {
+		console.log(err);
+		return err
+	})
+}
+
+
 module.exports = {
-	user,
-	users,
+	test,
+	// user,
+	// users,
 	info,
-	me,
-	review,
-	reviews,
-	checkToken,
-	reviewByJobId,
-	reviewsByMicroservice,
-	resumeQReviews,
-	interviewQReviews,
+	// me,
+	// review,
+	// reviews,
+	// checkToken,
+	// reviewByJobId,
+	// reviewsByMicroservice,
+	// resumeQReviews,
+	// interviewQReviews,
+	stripeBalance
 };

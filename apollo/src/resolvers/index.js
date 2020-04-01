@@ -1,21 +1,23 @@
 const Booking = require('./Booking')
-const Mutation = require('./Mutation')
+const Mutation = require('./mutation')
 const Query = require('./Query')
 const Response = require('./Response')
 const ResumeReview = require('./ResumeReview')
 const Review = require('./Review')
 const User = require('./User')
 
+console.log('User', User)
 
-const resolvers = {
+console.log('Mutation', Mutation)
+
+
+
+module.exports = {
   // Booking,
-  // Mutation,
-  // Query,
+  Mutation,
+  Query,
   // Response,
   // ResumeReview,
   // Review,
   User
 }
-
-
-module.exports = resolvers
