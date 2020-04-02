@@ -21,7 +21,6 @@ def removePrevious():
 
 
 checkArgs(sys.argv)
-# os.remove('.env')
 
 
 filename = sys.argv[1]
@@ -33,7 +32,6 @@ print(f'Writing new ENVs from {filename}')
 for line in f:
     if line[0] == '#':
         print('Skipping comment line.')
-        pass
     else:
         w.write(line)
 
