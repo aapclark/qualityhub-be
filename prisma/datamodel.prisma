@@ -83,6 +83,7 @@ type Job {
 	pending: Boolean @default(value: true)
 	accepted: Boolean @deafault(value: false)
 	completed: Boolean @default(value: false)
+	booking: JobBooking!
 }
 
 type CoachFeedback {
@@ -105,7 +106,7 @@ type FeedbackEntry {
 
 
 # May need to update this to reduce overlapping information between IQJI and Job
-type IQJobInfo {
+type JobBooking {
 	id: ID! @id
 	year: Int!
 	month: Int!
@@ -113,9 +114,6 @@ type IQJobInfo {
 	hour: Int!
 	minute: Int!
 	job: Job!
-	availability: [ListingAvailability]!
-	pending: Boolean
-	confirmed: Boolean
 	interviewGoals: String
 	interviewQuestions: String
 	resumeURL: String
