@@ -9,20 +9,21 @@ The folder and file structure of testing will follow the structure of typeDefs i
 ## Testing Checklist
 <details>
   <summary>Setup</summary>
-  - [] Add config folder w/ globalSetup and globalTeardown
+  - [ ] Add config folder w/ globalSetup and globalTeardown
 
 </details>
 <details>
   <summary>Template</summary>
-  - [] test 1 intent
-  - [] test2 intent
-  - [] test3 intent
+  - [ ] test 1 intent
+  - [ ] test2 intent
+  - [ ] test3 intent
 </details>
 <details>
   <summary>Auth</summary>
   <li>
-  - [] registration
-  - [] login
-  - [] unique emails
-  - [] invalid token handling
+  - [ ] registration
+  - [ ] login
+  - [ ] unique emails
+  - [ ] invalid token handling
+
 </details>
