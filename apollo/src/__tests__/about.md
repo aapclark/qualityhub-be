@@ -31,3 +31,7 @@ The folder and file structure of testing will follow the structure of typeDefs i
   - [ ] invalid token handling
 
 </details>
+
+
+## Notes
+This is a space for uncollected thoughts during the test process.
