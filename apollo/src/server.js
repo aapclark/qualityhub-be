@@ -14,4 +14,4 @@ const server = new ApolloServer({
   },
 });
 
-module.exports = server;
+export default server

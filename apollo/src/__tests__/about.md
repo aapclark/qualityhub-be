@@ -31,3 +31,17 @@ The folder and file structure of testing will follow the structure of typeDefs i
   - [ ] invalid token handling
 
 </details>
+
+
+## Notes
+This is a space for uncollected thoughts during the test process.
+
+
+Process, First Draft
+1 - load development env using `env_script.py`
+2 - `docker-compose up`
+3 - Deploy test stage to Prisma service
+3.a - cd to `prisma` and execute `prisma deploy -e ../configuration/test.env`
+3.b - Exit Docker processes.
+4 - load testing env using `env_script.py` and
+5 - `docker-compose up`, which will engage the apollo service with the test script
