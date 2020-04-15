@@ -1,13 +1,15 @@
-import { server } from '../../server'
+import server from '../../server'
 
 const options = {
   port: (process.env.APOLLO_PORT || process.env.PORT_TEST) || 3232
 }
 
 
+
 const globalSetup = async () => {
+  console.log('Starting test server.')
   global.httpServer = server
-  await global.server.listen(options)
+  await global.httpServer.listen(options)
 
 }
 
