@@ -19,8 +19,8 @@ export interface Exists {
   chat: (where?: ChatWhereInput) => Promise<boolean>;
   coachFeedback: (where?: CoachFeedbackWhereInput) => Promise<boolean>;
   feedbackEntry: (where?: FeedbackEntryWhereInput) => Promise<boolean>;
-  iQJobInfo: (where?: IQJobInfoWhereInput) => Promise<boolean>;
   job: (where?: JobWhereInput) => Promise<boolean>;
+  jobBooking: (where?: JobBookingWhereInput) => Promise<boolean>;
   listing: (where?: ListingWhereInput) => Promise<boolean>;
   listingAvailability: (
     where?: ListingAvailabilityWhereInput
@@ -115,25 +115,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => FeedbackEntryConnectionPromise;
-  iQJobInfo: (where: IQJobInfoWhereUniqueInput) => IQJobInfoNullablePromise;
-  iQJobInfoes: (args?: {
-    where?: IQJobInfoWhereInput;
-    orderBy?: IQJobInfoOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<IQJobInfo>;
-  iQJobInfoesConnection: (args?: {
-    where?: IQJobInfoWhereInput;
-    orderBy?: IQJobInfoOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => IQJobInfoConnectionPromise;
   job: (where: JobWhereUniqueInput) => JobNullablePromise;
   jobs: (args?: {
     where?: JobWhereInput;
@@ -153,6 +134,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => JobConnectionPromise;
+  jobBooking: (where: JobBookingWhereUniqueInput) => JobBookingNullablePromise;
+  jobBookings: (args?: {
+    where?: JobBookingWhereInput;
+    orderBy?: JobBookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<JobBooking>;
+  jobBookingsConnection: (args?: {
+    where?: JobBookingWhereInput;
+    orderBy?: JobBookingOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => JobBookingConnectionPromise;
   listing: (where: ListingWhereUniqueInput) => ListingNullablePromise;
   listings: (args?: {
     where?: ListingWhereInput;
@@ -375,22 +375,6 @@ export interface Prisma {
   deleteManyFeedbackEntries: (
     where?: FeedbackEntryWhereInput
   ) => BatchPayloadPromise;
-  createIQJobInfo: (data: IQJobInfoCreateInput) => IQJobInfoPromise;
-  updateIQJobInfo: (args: {
-    data: IQJobInfoUpdateInput;
-    where: IQJobInfoWhereUniqueInput;
-  }) => IQJobInfoPromise;
-  updateManyIQJobInfoes: (args: {
-    data: IQJobInfoUpdateManyMutationInput;
-    where?: IQJobInfoWhereInput;
-  }) => BatchPayloadPromise;
-  upsertIQJobInfo: (args: {
-    where: IQJobInfoWhereUniqueInput;
-    create: IQJobInfoCreateInput;
-    update: IQJobInfoUpdateInput;
-  }) => IQJobInfoPromise;
-  deleteIQJobInfo: (where: IQJobInfoWhereUniqueInput) => IQJobInfoPromise;
-  deleteManyIQJobInfoes: (where?: IQJobInfoWhereInput) => BatchPayloadPromise;
   createJob: (data: JobCreateInput) => JobPromise;
   updateJob: (args: {
     data: JobUpdateInput;
@@ -407,6 +391,22 @@ export interface Prisma {
   }) => JobPromise;
   deleteJob: (where: JobWhereUniqueInput) => JobPromise;
   deleteManyJobs: (where?: JobWhereInput) => BatchPayloadPromise;
+  createJobBooking: (data: JobBookingCreateInput) => JobBookingPromise;
+  updateJobBooking: (args: {
+    data: JobBookingUpdateInput;
+    where: JobBookingWhereUniqueInput;
+  }) => JobBookingPromise;
+  updateManyJobBookings: (args: {
+    data: JobBookingUpdateManyMutationInput;
+    where?: JobBookingWhereInput;
+  }) => BatchPayloadPromise;
+  upsertJobBooking: (args: {
+    where: JobBookingWhereUniqueInput;
+    create: JobBookingCreateInput;
+    update: JobBookingUpdateInput;
+  }) => JobBookingPromise;
+  deleteJobBooking: (where: JobBookingWhereUniqueInput) => JobBookingPromise;
+  deleteManyJobBookings: (where?: JobBookingWhereInput) => BatchPayloadPromise;
   createListing: (data: ListingCreateInput) => ListingPromise;
   updateListing: (args: {
     data: ListingUpdateInput;
@@ -575,12 +575,12 @@ export interface Subscription {
   feedbackEntry: (
     where?: FeedbackEntrySubscriptionWhereInput
   ) => FeedbackEntrySubscriptionPayloadSubscription;
-  iQJobInfo: (
-    where?: IQJobInfoSubscriptionWhereInput
-  ) => IQJobInfoSubscriptionPayloadSubscription;
   job: (
     where?: JobSubscriptionWhereInput
   ) => JobSubscriptionPayloadSubscription;
+  jobBooking: (
+    where?: JobBookingSubscriptionWhereInput
+  ) => JobBookingSubscriptionPayloadSubscription;
   listing: (
     where?: ListingSubscriptionWhereInput
   ) => ListingSubscriptionPayloadSubscription;
@@ -659,48 +659,6 @@ export type CoachFeedbackOrderByInput =
   | "isSent_ASC"
   | "isSent_DESC";
 
-export type ListingAvailabilityOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "hour_ASC"
-  | "hour_DESC"
-  | "minute_ASC"
-  | "minute_DESC"
-  | "year_ASC"
-  | "year_DESC"
-  | "month_ASC"
-  | "month_DESC"
-  | "day_ASC"
-  | "day_DESC"
-  | "isOpen_ASC"
-  | "isOpen_DESC"
-  | "recurring_ASC"
-  | "recurring_DESC";
-
-export type IQJobInfoOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "year_ASC"
-  | "year_DESC"
-  | "month_ASC"
-  | "month_DESC"
-  | "day_ASC"
-  | "day_DESC"
-  | "hour_ASC"
-  | "hour_DESC"
-  | "minute_ASC"
-  | "minute_DESC"
-  | "pending_ASC"
-  | "pending_DESC"
-  | "confirmed_ASC"
-  | "confirmed_DESC"
-  | "interviewGoals_ASC"
-  | "interviewGoals_DESC"
-  | "interviewQuestions_ASC"
-  | "interviewQuestions_DESC"
-  | "resumeURL_ASC"
-  | "resumeURL_DESC";
-
 export type JobOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -719,6 +677,26 @@ export type JobOrderByInput =
   | "completed_ASC"
   | "completed_DESC";
 
+export type JobBookingOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "day_ASC"
+  | "day_DESC"
+  | "hour_ASC"
+  | "hour_DESC"
+  | "minute_ASC"
+  | "minute_DESC"
+  | "interviewGoals_ASC"
+  | "interviewGoals_DESC"
+  | "interviewQuestions_ASC"
+  | "interviewQuestions_DESC"
+  | "resumeURL_ASC"
+  | "resumeURL_DESC";
+
 export type ListingOrderByInput =
   | "id_ASC"
   | "id_DESC"
@@ -728,6 +706,24 @@ export type ListingOrderByInput =
   | "price_DESC"
   | "microservice_ASC"
   | "microservice_DESC";
+
+export type ListingAvailabilityOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "hour_ASC"
+  | "hour_DESC"
+  | "minute_ASC"
+  | "minute_DESC"
+  | "year_ASC"
+  | "year_DESC"
+  | "month_ASC"
+  | "month_DESC"
+  | "day_ASC"
+  | "day_DESC"
+  | "isOpen_ASC"
+  | "isOpen_DESC"
+  | "recurring_ASC"
+  | "recurring_DESC";
 
 export type SeekerReviewOrderByInput =
   | "id_ASC"
@@ -1346,6 +1342,7 @@ export interface JobWhereInput {
   accepted_not?: Maybe<Boolean>;
   completed?: Maybe<Boolean>;
   completed_not?: Maybe<Boolean>;
+  booking?: Maybe<JobBookingWhereInput>;
   AND?: Maybe<JobWhereInput[] | JobWhereInput>;
   OR?: Maybe<JobWhereInput[] | JobWhereInput>;
   NOT?: Maybe<JobWhereInput[] | JobWhereInput>;
@@ -1404,11 +1401,126 @@ export interface ListingWhereInput {
   NOT?: Maybe<ListingWhereInput[] | ListingWhereInput>;
 }
 
+export interface JobBookingWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  year?: Maybe<Int>;
+  year_not?: Maybe<Int>;
+  year_in?: Maybe<Int[] | Int>;
+  year_not_in?: Maybe<Int[] | Int>;
+  year_lt?: Maybe<Int>;
+  year_lte?: Maybe<Int>;
+  year_gt?: Maybe<Int>;
+  year_gte?: Maybe<Int>;
+  month?: Maybe<Int>;
+  month_not?: Maybe<Int>;
+  month_in?: Maybe<Int[] | Int>;
+  month_not_in?: Maybe<Int[] | Int>;
+  month_lt?: Maybe<Int>;
+  month_lte?: Maybe<Int>;
+  month_gt?: Maybe<Int>;
+  month_gte?: Maybe<Int>;
+  day?: Maybe<Int>;
+  day_not?: Maybe<Int>;
+  day_in?: Maybe<Int[] | Int>;
+  day_not_in?: Maybe<Int[] | Int>;
+  day_lt?: Maybe<Int>;
+  day_lte?: Maybe<Int>;
+  day_gt?: Maybe<Int>;
+  day_gte?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  hour_not?: Maybe<Int>;
+  hour_in?: Maybe<Int[] | Int>;
+  hour_not_in?: Maybe<Int[] | Int>;
+  hour_lt?: Maybe<Int>;
+  hour_lte?: Maybe<Int>;
+  hour_gt?: Maybe<Int>;
+  hour_gte?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  minute_not?: Maybe<Int>;
+  minute_in?: Maybe<Int[] | Int>;
+  minute_not_in?: Maybe<Int[] | Int>;
+  minute_lt?: Maybe<Int>;
+  minute_lte?: Maybe<Int>;
+  minute_gt?: Maybe<Int>;
+  minute_gte?: Maybe<Int>;
+  job?: Maybe<JobWhereInput>;
+  interviewGoals?: Maybe<String>;
+  interviewGoals_not?: Maybe<String>;
+  interviewGoals_in?: Maybe<String[] | String>;
+  interviewGoals_not_in?: Maybe<String[] | String>;
+  interviewGoals_lt?: Maybe<String>;
+  interviewGoals_lte?: Maybe<String>;
+  interviewGoals_gt?: Maybe<String>;
+  interviewGoals_gte?: Maybe<String>;
+  interviewGoals_contains?: Maybe<String>;
+  interviewGoals_not_contains?: Maybe<String>;
+  interviewGoals_starts_with?: Maybe<String>;
+  interviewGoals_not_starts_with?: Maybe<String>;
+  interviewGoals_ends_with?: Maybe<String>;
+  interviewGoals_not_ends_with?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  interviewQuestions_not?: Maybe<String>;
+  interviewQuestions_in?: Maybe<String[] | String>;
+  interviewQuestions_not_in?: Maybe<String[] | String>;
+  interviewQuestions_lt?: Maybe<String>;
+  interviewQuestions_lte?: Maybe<String>;
+  interviewQuestions_gt?: Maybe<String>;
+  interviewQuestions_gte?: Maybe<String>;
+  interviewQuestions_contains?: Maybe<String>;
+  interviewQuestions_not_contains?: Maybe<String>;
+  interviewQuestions_starts_with?: Maybe<String>;
+  interviewQuestions_not_starts_with?: Maybe<String>;
+  interviewQuestions_ends_with?: Maybe<String>;
+  interviewQuestions_not_ends_with?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+  resumeURL_not?: Maybe<String>;
+  resumeURL_in?: Maybe<String[] | String>;
+  resumeURL_not_in?: Maybe<String[] | String>;
+  resumeURL_lt?: Maybe<String>;
+  resumeURL_lte?: Maybe<String>;
+  resumeURL_gt?: Maybe<String>;
+  resumeURL_gte?: Maybe<String>;
+  resumeURL_contains?: Maybe<String>;
+  resumeURL_not_contains?: Maybe<String>;
+  resumeURL_starts_with?: Maybe<String>;
+  resumeURL_not_starts_with?: Maybe<String>;
+  resumeURL_ends_with?: Maybe<String>;
+  resumeURL_not_ends_with?: Maybe<String>;
+  AND?: Maybe<JobBookingWhereInput[] | JobBookingWhereInput>;
+  OR?: Maybe<JobBookingWhereInput[] | JobBookingWhereInput>;
+  NOT?: Maybe<JobBookingWhereInput[] | JobBookingWhereInput>;
+}
+
 export type FeedbackEntryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export type IQJobInfoWhereUniqueInput = AtLeastOne<{
+export type JobWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type JobBookingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type ListingWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type ListingAvailabilityWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -1477,128 +1589,6 @@ export interface ListingAvailabilityWhereInput {
   OR?: Maybe<ListingAvailabilityWhereInput[] | ListingAvailabilityWhereInput>;
   NOT?: Maybe<ListingAvailabilityWhereInput[] | ListingAvailabilityWhereInput>;
 }
-
-export interface IQJobInfoWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  year?: Maybe<Int>;
-  year_not?: Maybe<Int>;
-  year_in?: Maybe<Int[] | Int>;
-  year_not_in?: Maybe<Int[] | Int>;
-  year_lt?: Maybe<Int>;
-  year_lte?: Maybe<Int>;
-  year_gt?: Maybe<Int>;
-  year_gte?: Maybe<Int>;
-  month?: Maybe<Int>;
-  month_not?: Maybe<Int>;
-  month_in?: Maybe<Int[] | Int>;
-  month_not_in?: Maybe<Int[] | Int>;
-  month_lt?: Maybe<Int>;
-  month_lte?: Maybe<Int>;
-  month_gt?: Maybe<Int>;
-  month_gte?: Maybe<Int>;
-  day?: Maybe<Int>;
-  day_not?: Maybe<Int>;
-  day_in?: Maybe<Int[] | Int>;
-  day_not_in?: Maybe<Int[] | Int>;
-  day_lt?: Maybe<Int>;
-  day_lte?: Maybe<Int>;
-  day_gt?: Maybe<Int>;
-  day_gte?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  hour_not?: Maybe<Int>;
-  hour_in?: Maybe<Int[] | Int>;
-  hour_not_in?: Maybe<Int[] | Int>;
-  hour_lt?: Maybe<Int>;
-  hour_lte?: Maybe<Int>;
-  hour_gt?: Maybe<Int>;
-  hour_gte?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  minute_not?: Maybe<Int>;
-  minute_in?: Maybe<Int[] | Int>;
-  minute_not_in?: Maybe<Int[] | Int>;
-  minute_lt?: Maybe<Int>;
-  minute_lte?: Maybe<Int>;
-  minute_gt?: Maybe<Int>;
-  minute_gte?: Maybe<Int>;
-  job?: Maybe<JobWhereInput>;
-  availability_every?: Maybe<ListingAvailabilityWhereInput>;
-  availability_some?: Maybe<ListingAvailabilityWhereInput>;
-  availability_none?: Maybe<ListingAvailabilityWhereInput>;
-  pending?: Maybe<Boolean>;
-  pending_not?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  confirmed_not?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewGoals_not?: Maybe<String>;
-  interviewGoals_in?: Maybe<String[] | String>;
-  interviewGoals_not_in?: Maybe<String[] | String>;
-  interviewGoals_lt?: Maybe<String>;
-  interviewGoals_lte?: Maybe<String>;
-  interviewGoals_gt?: Maybe<String>;
-  interviewGoals_gte?: Maybe<String>;
-  interviewGoals_contains?: Maybe<String>;
-  interviewGoals_not_contains?: Maybe<String>;
-  interviewGoals_starts_with?: Maybe<String>;
-  interviewGoals_not_starts_with?: Maybe<String>;
-  interviewGoals_ends_with?: Maybe<String>;
-  interviewGoals_not_ends_with?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  interviewQuestions_not?: Maybe<String>;
-  interviewQuestions_in?: Maybe<String[] | String>;
-  interviewQuestions_not_in?: Maybe<String[] | String>;
-  interviewQuestions_lt?: Maybe<String>;
-  interviewQuestions_lte?: Maybe<String>;
-  interviewQuestions_gt?: Maybe<String>;
-  interviewQuestions_gte?: Maybe<String>;
-  interviewQuestions_contains?: Maybe<String>;
-  interviewQuestions_not_contains?: Maybe<String>;
-  interviewQuestions_starts_with?: Maybe<String>;
-  interviewQuestions_not_starts_with?: Maybe<String>;
-  interviewQuestions_ends_with?: Maybe<String>;
-  interviewQuestions_not_ends_with?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-  resumeURL_not?: Maybe<String>;
-  resumeURL_in?: Maybe<String[] | String>;
-  resumeURL_not_in?: Maybe<String[] | String>;
-  resumeURL_lt?: Maybe<String>;
-  resumeURL_lte?: Maybe<String>;
-  resumeURL_gt?: Maybe<String>;
-  resumeURL_gte?: Maybe<String>;
-  resumeURL_contains?: Maybe<String>;
-  resumeURL_not_contains?: Maybe<String>;
-  resumeURL_starts_with?: Maybe<String>;
-  resumeURL_not_starts_with?: Maybe<String>;
-  resumeURL_ends_with?: Maybe<String>;
-  resumeURL_not_ends_with?: Maybe<String>;
-  AND?: Maybe<IQJobInfoWhereInput[] | IQJobInfoWhereInput>;
-  OR?: Maybe<IQJobInfoWhereInput[] | IQJobInfoWhereInput>;
-  NOT?: Maybe<IQJobInfoWhereInput[] | IQJobInfoWhereInput>;
-}
-
-export type JobWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type ListingWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type ListingAvailabilityWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
 
 export type ListingIndustryWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -1971,6 +1961,7 @@ export interface JobCreateInput {
   pending?: Maybe<Boolean>;
   accepted?: Maybe<Boolean>;
   completed?: Maybe<Boolean>;
+  booking: JobBookingCreateOneWithoutJobInput;
 }
 
 export interface ListingCreateOneInput {
@@ -2008,6 +1999,23 @@ export interface ListingIndustryCreateManyInput {
 export interface ListingIndustryCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
+}
+
+export interface JobBookingCreateOneWithoutJobInput {
+  create?: Maybe<JobBookingCreateWithoutJobInput>;
+  connect?: Maybe<JobBookingWhereUniqueInput>;
+}
+
+export interface JobBookingCreateWithoutJobInput {
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
 }
 
 export interface FeedbackEntryCreateManyWithoutCoachFeedbackInput {
@@ -2052,6 +2060,7 @@ export interface JobUpdateDataInput {
   pending?: Maybe<Boolean>;
   accepted?: Maybe<Boolean>;
   completed?: Maybe<Boolean>;
+  booking?: Maybe<JobBookingUpdateOneRequiredWithoutJobInput>;
 }
 
 export interface ListingUpdateOneRequiredInput {
@@ -2249,6 +2258,29 @@ export interface ListingUpsertNestedInput {
   create: ListingCreateInput;
 }
 
+export interface JobBookingUpdateOneRequiredWithoutJobInput {
+  create?: Maybe<JobBookingCreateWithoutJobInput>;
+  update?: Maybe<JobBookingUpdateWithoutJobDataInput>;
+  upsert?: Maybe<JobBookingUpsertWithoutJobInput>;
+  connect?: Maybe<JobBookingWhereUniqueInput>;
+}
+
+export interface JobBookingUpdateWithoutJobDataInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+}
+
+export interface JobBookingUpsertWithoutJobInput {
+  update: JobBookingUpdateWithoutJobDataInput;
+  create: JobBookingCreateWithoutJobInput;
+}
+
 export interface JobUpsertNestedInput {
   update: JobUpdateDataInput;
   create: JobCreateInput;
@@ -2414,214 +2446,82 @@ export interface FeedbackEntryUpdateManyMutationInput {
   content?: Maybe<String>;
 }
 
-export interface IQJobInfoCreateInput {
-  id?: Maybe<ID_Input>;
-  year: Int;
-  month: Int;
-  day: Int;
-  hour: Int;
-  minute: Int;
-  job: JobCreateOneInput;
-  availability?: Maybe<ListingAvailabilityCreateManyInput>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface ListingAvailabilityCreateManyInput {
-  create?: Maybe<
-    ListingAvailabilityCreateInput[] | ListingAvailabilityCreateInput
-  >;
-  connect?: Maybe<
-    ListingAvailabilityWhereUniqueInput[] | ListingAvailabilityWhereUniqueInput
-  >;
-}
-
-export interface ListingAvailabilityCreateInput {
-  id?: Maybe<ID_Input>;
-  hour: Int;
-  minute: Int;
-  coach: UserCreateOneInput;
-  listing: ListingCreateOneInput;
-  year: Int;
-  month: Int;
-  day: Int;
-  isOpen: Boolean;
-  recurring: Boolean;
-}
-
-export interface IQJobInfoUpdateInput {
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  job?: Maybe<JobUpdateOneRequiredInput>;
-  availability?: Maybe<ListingAvailabilityUpdateManyInput>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
-export interface ListingAvailabilityUpdateManyInput {
-  create?: Maybe<
-    ListingAvailabilityCreateInput[] | ListingAvailabilityCreateInput
-  >;
-  update?: Maybe<
-    | ListingAvailabilityUpdateWithWhereUniqueNestedInput[]
-    | ListingAvailabilityUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | ListingAvailabilityUpsertWithWhereUniqueNestedInput[]
-    | ListingAvailabilityUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<
-    ListingAvailabilityWhereUniqueInput[] | ListingAvailabilityWhereUniqueInput
-  >;
-  connect?: Maybe<
-    ListingAvailabilityWhereUniqueInput[] | ListingAvailabilityWhereUniqueInput
-  >;
-  set?: Maybe<
-    ListingAvailabilityWhereUniqueInput[] | ListingAvailabilityWhereUniqueInput
-  >;
-  disconnect?: Maybe<
-    ListingAvailabilityWhereUniqueInput[] | ListingAvailabilityWhereUniqueInput
-  >;
-  deleteMany?: Maybe<
-    ListingAvailabilityScalarWhereInput[] | ListingAvailabilityScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | ListingAvailabilityUpdateManyWithWhereNestedInput[]
-    | ListingAvailabilityUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface ListingAvailabilityUpdateWithWhereUniqueNestedInput {
-  where: ListingAvailabilityWhereUniqueInput;
-  data: ListingAvailabilityUpdateDataInput;
-}
-
-export interface ListingAvailabilityUpdateDataInput {
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  coach?: Maybe<UserUpdateOneRequiredInput>;
-  listing?: Maybe<ListingUpdateOneRequiredInput>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export interface ListingAvailabilityUpsertWithWhereUniqueNestedInput {
-  where: ListingAvailabilityWhereUniqueInput;
-  update: ListingAvailabilityUpdateDataInput;
-  create: ListingAvailabilityCreateInput;
-}
-
-export interface ListingAvailabilityScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  hour?: Maybe<Int>;
-  hour_not?: Maybe<Int>;
-  hour_in?: Maybe<Int[] | Int>;
-  hour_not_in?: Maybe<Int[] | Int>;
-  hour_lt?: Maybe<Int>;
-  hour_lte?: Maybe<Int>;
-  hour_gt?: Maybe<Int>;
-  hour_gte?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  minute_not?: Maybe<Int>;
-  minute_in?: Maybe<Int[] | Int>;
-  minute_not_in?: Maybe<Int[] | Int>;
-  minute_lt?: Maybe<Int>;
-  minute_lte?: Maybe<Int>;
-  minute_gt?: Maybe<Int>;
-  minute_gte?: Maybe<Int>;
-  year?: Maybe<Int>;
-  year_not?: Maybe<Int>;
-  year_in?: Maybe<Int[] | Int>;
-  year_not_in?: Maybe<Int[] | Int>;
-  year_lt?: Maybe<Int>;
-  year_lte?: Maybe<Int>;
-  year_gt?: Maybe<Int>;
-  year_gte?: Maybe<Int>;
-  month?: Maybe<Int>;
-  month_not?: Maybe<Int>;
-  month_in?: Maybe<Int[] | Int>;
-  month_not_in?: Maybe<Int[] | Int>;
-  month_lt?: Maybe<Int>;
-  month_lte?: Maybe<Int>;
-  month_gt?: Maybe<Int>;
-  month_gte?: Maybe<Int>;
-  day?: Maybe<Int>;
-  day_not?: Maybe<Int>;
-  day_in?: Maybe<Int[] | Int>;
-  day_not_in?: Maybe<Int[] | Int>;
-  day_lt?: Maybe<Int>;
-  day_lte?: Maybe<Int>;
-  day_gt?: Maybe<Int>;
-  day_gte?: Maybe<Int>;
-  isOpen?: Maybe<Boolean>;
-  isOpen_not?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-  recurring_not?: Maybe<Boolean>;
-  AND?: Maybe<
-    ListingAvailabilityScalarWhereInput[] | ListingAvailabilityScalarWhereInput
-  >;
-  OR?: Maybe<
-    ListingAvailabilityScalarWhereInput[] | ListingAvailabilityScalarWhereInput
-  >;
-  NOT?: Maybe<
-    ListingAvailabilityScalarWhereInput[] | ListingAvailabilityScalarWhereInput
-  >;
-}
-
-export interface ListingAvailabilityUpdateManyWithWhereNestedInput {
-  where: ListingAvailabilityScalarWhereInput;
-  data: ListingAvailabilityUpdateManyDataInput;
-}
-
-export interface ListingAvailabilityUpdateManyDataInput {
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  isOpen?: Maybe<Boolean>;
-  recurring?: Maybe<Boolean>;
-}
-
-export interface IQJobInfoUpdateManyMutationInput {
-  year?: Maybe<Int>;
-  month?: Maybe<Int>;
-  day?: Maybe<Int>;
-  hour?: Maybe<Int>;
-  minute?: Maybe<Int>;
-  pending?: Maybe<Boolean>;
-  confirmed?: Maybe<Boolean>;
-  interviewGoals?: Maybe<String>;
-  interviewQuestions?: Maybe<String>;
-  resumeURL?: Maybe<String>;
-}
-
 export interface JobUpdateInput {
+  coach?: Maybe<UserUpdateOneRequiredInput>;
+  seeker?: Maybe<UserUpdateOneRequiredInput>;
+  listing?: Maybe<ListingUpdateOneRequiredInput>;
+  microservice?: Maybe<Microservice>;
+  dateRequested?: Maybe<DateTimeInput>;
+  dateAccepted?: Maybe<DateTimeInput>;
+  dateCompleted?: Maybe<DateTimeInput>;
+  pending?: Maybe<Boolean>;
+  accepted?: Maybe<Boolean>;
+  completed?: Maybe<Boolean>;
+  booking?: Maybe<JobBookingUpdateOneRequiredWithoutJobInput>;
+}
+
+export interface JobUpdateManyMutationInput {
+  microservice?: Maybe<Microservice>;
+  dateRequested?: Maybe<DateTimeInput>;
+  dateAccepted?: Maybe<DateTimeInput>;
+  dateCompleted?: Maybe<DateTimeInput>;
+  pending?: Maybe<Boolean>;
+  accepted?: Maybe<Boolean>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface JobBookingCreateInput {
+  id?: Maybe<ID_Input>;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  job: JobCreateOneWithoutBookingInput;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+}
+
+export interface JobCreateOneWithoutBookingInput {
+  create?: Maybe<JobCreateWithoutBookingInput>;
+  connect?: Maybe<JobWhereUniqueInput>;
+}
+
+export interface JobCreateWithoutBookingInput {
+  id?: Maybe<ID_Input>;
+  coach: UserCreateOneInput;
+  seeker: UserCreateOneInput;
+  listing: ListingCreateOneInput;
+  microservice: Microservice;
+  dateRequested?: Maybe<DateTimeInput>;
+  dateAccepted?: Maybe<DateTimeInput>;
+  dateCompleted?: Maybe<DateTimeInput>;
+  pending?: Maybe<Boolean>;
+  accepted?: Maybe<Boolean>;
+  completed?: Maybe<Boolean>;
+}
+
+export interface JobBookingUpdateInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  job?: Maybe<JobUpdateOneRequiredWithoutBookingInput>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
+}
+
+export interface JobUpdateOneRequiredWithoutBookingInput {
+  create?: Maybe<JobCreateWithoutBookingInput>;
+  update?: Maybe<JobUpdateWithoutBookingDataInput>;
+  upsert?: Maybe<JobUpsertWithoutBookingInput>;
+  connect?: Maybe<JobWhereUniqueInput>;
+}
+
+export interface JobUpdateWithoutBookingDataInput {
   coach?: Maybe<UserUpdateOneRequiredInput>;
   seeker?: Maybe<UserUpdateOneRequiredInput>;
   listing?: Maybe<ListingUpdateOneRequiredInput>;
@@ -2634,14 +2534,20 @@ export interface JobUpdateInput {
   completed?: Maybe<Boolean>;
 }
 
-export interface JobUpdateManyMutationInput {
-  microservice?: Maybe<Microservice>;
-  dateRequested?: Maybe<DateTimeInput>;
-  dateAccepted?: Maybe<DateTimeInput>;
-  dateCompleted?: Maybe<DateTimeInput>;
-  pending?: Maybe<Boolean>;
-  accepted?: Maybe<Boolean>;
-  completed?: Maybe<Boolean>;
+export interface JobUpsertWithoutBookingInput {
+  update: JobUpdateWithoutBookingDataInput;
+  create: JobCreateWithoutBookingInput;
+}
+
+export interface JobBookingUpdateManyMutationInput {
+  year?: Maybe<Int>;
+  month?: Maybe<Int>;
+  day?: Maybe<Int>;
+  hour?: Maybe<Int>;
+  minute?: Maybe<Int>;
+  interviewGoals?: Maybe<String>;
+  interviewQuestions?: Maybe<String>;
+  resumeURL?: Maybe<String>;
 }
 
 export interface ListingUpdateInput {
@@ -2657,6 +2563,19 @@ export interface ListingUpdateManyMutationInput {
   description?: Maybe<String>;
   price?: Maybe<Int>;
   microservice?: Maybe<Microservice>;
+}
+
+export interface ListingAvailabilityCreateInput {
+  id?: Maybe<ID_Input>;
+  hour: Int;
+  minute: Int;
+  coach: UserCreateOneInput;
+  listing: ListingCreateOneInput;
+  year: Int;
+  month: Int;
+  day: Int;
+  isOpen: Boolean;
+  recurring: Boolean;
 }
 
 export interface ListingAvailabilityUpdateInput {
@@ -2938,23 +2857,6 @@ export interface FeedbackEntrySubscriptionWhereInput {
   >;
 }
 
-export interface IQJobInfoSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<IQJobInfoWhereInput>;
-  AND?: Maybe<
-    IQJobInfoSubscriptionWhereInput[] | IQJobInfoSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    IQJobInfoSubscriptionWhereInput[] | IQJobInfoSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    IQJobInfoSubscriptionWhereInput[] | IQJobInfoSubscriptionWhereInput
-  >;
-}
-
 export interface JobSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -2964,6 +2866,23 @@ export interface JobSubscriptionWhereInput {
   AND?: Maybe<JobSubscriptionWhereInput[] | JobSubscriptionWhereInput>;
   OR?: Maybe<JobSubscriptionWhereInput[] | JobSubscriptionWhereInput>;
   NOT?: Maybe<JobSubscriptionWhereInput[] | JobSubscriptionWhereInput>;
+}
+
+export interface JobBookingSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<JobBookingWhereInput>;
+  AND?: Maybe<
+    JobBookingSubscriptionWhereInput[] | JobBookingSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    JobBookingSubscriptionWhereInput[] | JobBookingSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    JobBookingSubscriptionWhereInput[] | JobBookingSubscriptionWhereInput
+  >;
 }
 
 export interface ListingSubscriptionWhereInput {
@@ -3443,6 +3362,7 @@ export interface JobPromise extends Promise<Job>, Fragmentable {
   pending: () => Promise<Boolean>;
   accepted: () => Promise<Boolean>;
   completed: () => Promise<Boolean>;
+  booking: <T = JobBookingPromise>() => T;
 }
 
 export interface JobSubscription
@@ -3459,6 +3379,7 @@ export interface JobSubscription
   pending: () => Promise<AsyncIterator<Boolean>>;
   accepted: () => Promise<AsyncIterator<Boolean>>;
   completed: () => Promise<AsyncIterator<Boolean>>;
+  booking: <T = JobBookingSubscription>() => T;
 }
 
 export interface JobNullablePromise extends Promise<Job | null>, Fragmentable {
@@ -3473,6 +3394,7 @@ export interface JobNullablePromise extends Promise<Job | null>, Fragmentable {
   pending: () => Promise<Boolean>;
   accepted: () => Promise<Boolean>;
   completed: () => Promise<Boolean>;
+  booking: <T = JobBookingPromise>() => T;
 }
 
 export interface Listing {
@@ -3612,6 +3534,61 @@ export interface ListingIndustryNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
+}
+
+export interface JobBooking {
+  id: ID_Output;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  interviewGoals?: String;
+  interviewQuestions?: String;
+  resumeURL?: String;
+}
+
+export interface JobBookingPromise extends Promise<JobBooking>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  job: <T = JobPromise>() => T;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
+}
+
+export interface JobBookingSubscription
+  extends Promise<AsyncIterator<JobBooking>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
+  job: <T = JobSubscription>() => T;
+  interviewGoals: () => Promise<AsyncIterator<String>>;
+  interviewQuestions: () => Promise<AsyncIterator<String>>;
+  resumeURL: () => Promise<AsyncIterator<String>>;
+}
+
+export interface JobBookingNullablePromise
+  extends Promise<JobBooking | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  job: <T = JobPromise>() => T;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
 }
 
 export interface FeedbackEntry {
@@ -3759,210 +3736,6 @@ export interface AggregateFeedbackEntrySubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface IQJobInfo {
-  id: ID_Output;
-  year: Int;
-  month: Int;
-  day: Int;
-  hour: Int;
-  minute: Int;
-  pending?: Boolean;
-  confirmed?: Boolean;
-  interviewGoals?: String;
-  interviewQuestions?: String;
-  resumeURL?: String;
-}
-
-export interface IQJobInfoPromise extends Promise<IQJobInfo>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  hour: () => Promise<Int>;
-  minute: () => Promise<Int>;
-  job: <T = JobPromise>() => T;
-  availability: <T = FragmentableArray<ListingAvailability>>(args?: {
-    where?: ListingAvailabilityWhereInput;
-    orderBy?: ListingAvailabilityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  pending: () => Promise<Boolean>;
-  confirmed: () => Promise<Boolean>;
-  interviewGoals: () => Promise<String>;
-  interviewQuestions: () => Promise<String>;
-  resumeURL: () => Promise<String>;
-}
-
-export interface IQJobInfoSubscription
-  extends Promise<AsyncIterator<IQJobInfo>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  day: () => Promise<AsyncIterator<Int>>;
-  hour: () => Promise<AsyncIterator<Int>>;
-  minute: () => Promise<AsyncIterator<Int>>;
-  job: <T = JobSubscription>() => T;
-  availability: <
-    T = Promise<AsyncIterator<ListingAvailabilitySubscription>>
-  >(args?: {
-    where?: ListingAvailabilityWhereInput;
-    orderBy?: ListingAvailabilityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  pending: () => Promise<AsyncIterator<Boolean>>;
-  confirmed: () => Promise<AsyncIterator<Boolean>>;
-  interviewGoals: () => Promise<AsyncIterator<String>>;
-  interviewQuestions: () => Promise<AsyncIterator<String>>;
-  resumeURL: () => Promise<AsyncIterator<String>>;
-}
-
-export interface IQJobInfoNullablePromise
-  extends Promise<IQJobInfo | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  hour: () => Promise<Int>;
-  minute: () => Promise<Int>;
-  job: <T = JobPromise>() => T;
-  availability: <T = FragmentableArray<ListingAvailability>>(args?: {
-    where?: ListingAvailabilityWhereInput;
-    orderBy?: ListingAvailabilityOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  pending: () => Promise<Boolean>;
-  confirmed: () => Promise<Boolean>;
-  interviewGoals: () => Promise<String>;
-  interviewQuestions: () => Promise<String>;
-  resumeURL: () => Promise<String>;
-}
-
-export interface ListingAvailability {
-  id: ID_Output;
-  hour: Int;
-  minute: Int;
-  year: Int;
-  month: Int;
-  day: Int;
-  isOpen: Boolean;
-  recurring: Boolean;
-}
-
-export interface ListingAvailabilityPromise
-  extends Promise<ListingAvailability>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  hour: () => Promise<Int>;
-  minute: () => Promise<Int>;
-  coach: <T = UserPromise>() => T;
-  listing: <T = ListingPromise>() => T;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  isOpen: () => Promise<Boolean>;
-  recurring: () => Promise<Boolean>;
-}
-
-export interface ListingAvailabilitySubscription
-  extends Promise<AsyncIterator<ListingAvailability>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  hour: () => Promise<AsyncIterator<Int>>;
-  minute: () => Promise<AsyncIterator<Int>>;
-  coach: <T = UserSubscription>() => T;
-  listing: <T = ListingSubscription>() => T;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  day: () => Promise<AsyncIterator<Int>>;
-  isOpen: () => Promise<AsyncIterator<Boolean>>;
-  recurring: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface ListingAvailabilityNullablePromise
-  extends Promise<ListingAvailability | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  hour: () => Promise<Int>;
-  minute: () => Promise<Int>;
-  coach: <T = UserPromise>() => T;
-  listing: <T = ListingPromise>() => T;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  isOpen: () => Promise<Boolean>;
-  recurring: () => Promise<Boolean>;
-}
-
-export interface IQJobInfoConnection {
-  pageInfo: PageInfo;
-  edges: IQJobInfoEdge[];
-}
-
-export interface IQJobInfoConnectionPromise
-  extends Promise<IQJobInfoConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IQJobInfoEdge>>() => T;
-  aggregate: <T = AggregateIQJobInfoPromise>() => T;
-}
-
-export interface IQJobInfoConnectionSubscription
-  extends Promise<AsyncIterator<IQJobInfoConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IQJobInfoEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIQJobInfoSubscription>() => T;
-}
-
-export interface IQJobInfoEdge {
-  node: IQJobInfo;
-  cursor: String;
-}
-
-export interface IQJobInfoEdgePromise
-  extends Promise<IQJobInfoEdge>,
-    Fragmentable {
-  node: <T = IQJobInfoPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface IQJobInfoEdgeSubscription
-  extends Promise<AsyncIterator<IQJobInfoEdge>>,
-    Fragmentable {
-  node: <T = IQJobInfoSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateIQJobInfo {
-  count: Int;
-}
-
-export interface AggregateIQJobInfoPromise
-  extends Promise<AggregateIQJobInfo>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateIQJobInfoSubscription
-  extends Promise<AsyncIterator<AggregateIQJobInfo>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface JobConnection {
   pageInfo: PageInfo;
   edges: JobEdge[];
@@ -4013,6 +3786,62 @@ export interface AggregateJobPromise
 
 export interface AggregateJobSubscription
   extends Promise<AsyncIterator<AggregateJob>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface JobBookingConnection {
+  pageInfo: PageInfo;
+  edges: JobBookingEdge[];
+}
+
+export interface JobBookingConnectionPromise
+  extends Promise<JobBookingConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<JobBookingEdge>>() => T;
+  aggregate: <T = AggregateJobBookingPromise>() => T;
+}
+
+export interface JobBookingConnectionSubscription
+  extends Promise<AsyncIterator<JobBookingConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<JobBookingEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateJobBookingSubscription>() => T;
+}
+
+export interface JobBookingEdge {
+  node: JobBooking;
+  cursor: String;
+}
+
+export interface JobBookingEdgePromise
+  extends Promise<JobBookingEdge>,
+    Fragmentable {
+  node: <T = JobBookingPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface JobBookingEdgeSubscription
+  extends Promise<AsyncIterator<JobBookingEdge>>,
+    Fragmentable {
+  node: <T = JobBookingSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateJobBooking {
+  count: Int;
+}
+
+export interface AggregateJobBookingPromise
+  extends Promise<AggregateJobBooking>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateJobBookingSubscription
+  extends Promise<AsyncIterator<AggregateJobBooking>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -4069,6 +3898,62 @@ export interface AggregateListingSubscription
   extends Promise<AsyncIterator<AggregateListing>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ListingAvailability {
+  id: ID_Output;
+  hour: Int;
+  minute: Int;
+  year: Int;
+  month: Int;
+  day: Int;
+  isOpen: Boolean;
+  recurring: Boolean;
+}
+
+export interface ListingAvailabilityPromise
+  extends Promise<ListingAvailability>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  coach: <T = UserPromise>() => T;
+  listing: <T = ListingPromise>() => T;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  isOpen: () => Promise<Boolean>;
+  recurring: () => Promise<Boolean>;
+}
+
+export interface ListingAvailabilitySubscription
+  extends Promise<AsyncIterator<ListingAvailability>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
+  coach: <T = UserSubscription>() => T;
+  listing: <T = ListingSubscription>() => T;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  isOpen: () => Promise<AsyncIterator<Boolean>>;
+  recurring: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface ListingAvailabilityNullablePromise
+  extends Promise<ListingAvailability | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  coach: <T = UserPromise>() => T;
+  listing: <T = ListingPromise>() => T;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  isOpen: () => Promise<Boolean>;
+  recurring: () => Promise<Boolean>;
 }
 
 export interface ListingAvailabilityConnection {
@@ -4709,77 +4594,6 @@ export interface FeedbackEntryPreviousValuesSubscription
   content: () => Promise<AsyncIterator<String>>;
 }
 
-export interface IQJobInfoSubscriptionPayload {
-  mutation: MutationType;
-  node: IQJobInfo;
-  updatedFields: String[];
-  previousValues: IQJobInfoPreviousValues;
-}
-
-export interface IQJobInfoSubscriptionPayloadPromise
-  extends Promise<IQJobInfoSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = IQJobInfoPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = IQJobInfoPreviousValuesPromise>() => T;
-}
-
-export interface IQJobInfoSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IQJobInfoSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IQJobInfoSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IQJobInfoPreviousValuesSubscription>() => T;
-}
-
-export interface IQJobInfoPreviousValues {
-  id: ID_Output;
-  year: Int;
-  month: Int;
-  day: Int;
-  hour: Int;
-  minute: Int;
-  pending?: Boolean;
-  confirmed?: Boolean;
-  interviewGoals?: String;
-  interviewQuestions?: String;
-  resumeURL?: String;
-}
-
-export interface IQJobInfoPreviousValuesPromise
-  extends Promise<IQJobInfoPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  year: () => Promise<Int>;
-  month: () => Promise<Int>;
-  day: () => Promise<Int>;
-  hour: () => Promise<Int>;
-  minute: () => Promise<Int>;
-  pending: () => Promise<Boolean>;
-  confirmed: () => Promise<Boolean>;
-  interviewGoals: () => Promise<String>;
-  interviewQuestions: () => Promise<String>;
-  resumeURL: () => Promise<String>;
-}
-
-export interface IQJobInfoPreviousValuesSubscription
-  extends Promise<AsyncIterator<IQJobInfoPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  year: () => Promise<AsyncIterator<Int>>;
-  month: () => Promise<AsyncIterator<Int>>;
-  day: () => Promise<AsyncIterator<Int>>;
-  hour: () => Promise<AsyncIterator<Int>>;
-  minute: () => Promise<AsyncIterator<Int>>;
-  pending: () => Promise<AsyncIterator<Boolean>>;
-  confirmed: () => Promise<AsyncIterator<Boolean>>;
-  interviewGoals: () => Promise<AsyncIterator<String>>;
-  interviewQuestions: () => Promise<AsyncIterator<String>>;
-  resumeURL: () => Promise<AsyncIterator<String>>;
-}
-
 export interface JobSubscriptionPayload {
   mutation: MutationType;
   node: Job;
@@ -4840,6 +4654,71 @@ export interface JobPreviousValuesSubscription
   pending: () => Promise<AsyncIterator<Boolean>>;
   accepted: () => Promise<AsyncIterator<Boolean>>;
   completed: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface JobBookingSubscriptionPayload {
+  mutation: MutationType;
+  node: JobBooking;
+  updatedFields: String[];
+  previousValues: JobBookingPreviousValues;
+}
+
+export interface JobBookingSubscriptionPayloadPromise
+  extends Promise<JobBookingSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = JobBookingPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = JobBookingPreviousValuesPromise>() => T;
+}
+
+export interface JobBookingSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<JobBookingSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = JobBookingSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = JobBookingPreviousValuesSubscription>() => T;
+}
+
+export interface JobBookingPreviousValues {
+  id: ID_Output;
+  year: Int;
+  month: Int;
+  day: Int;
+  hour: Int;
+  minute: Int;
+  interviewGoals?: String;
+  interviewQuestions?: String;
+  resumeURL?: String;
+}
+
+export interface JobBookingPreviousValuesPromise
+  extends Promise<JobBookingPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  year: () => Promise<Int>;
+  month: () => Promise<Int>;
+  day: () => Promise<Int>;
+  hour: () => Promise<Int>;
+  minute: () => Promise<Int>;
+  interviewGoals: () => Promise<String>;
+  interviewQuestions: () => Promise<String>;
+  resumeURL: () => Promise<String>;
+}
+
+export interface JobBookingPreviousValuesSubscription
+  extends Promise<AsyncIterator<JobBookingPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  year: () => Promise<AsyncIterator<Int>>;
+  month: () => Promise<AsyncIterator<Int>>;
+  day: () => Promise<AsyncIterator<Int>>;
+  hour: () => Promise<AsyncIterator<Int>>;
+  minute: () => Promise<AsyncIterator<Int>>;
+  interviewGoals: () => Promise<AsyncIterator<String>>;
+  interviewQuestions: () => Promise<AsyncIterator<String>>;
+  resumeURL: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ListingSubscriptionPayload {
@@ -5372,7 +5251,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "IQJobInfo",
+    name: "JobBooking",
     embedded: false
   },
   {

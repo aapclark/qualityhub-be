@@ -83,7 +83,7 @@ type Job {
 	pending: Boolean @default(value: true)
 	accepted: Boolean @deafault(value: false)
 	completed: Boolean @default(value: false)
-	booking: JobBooking!
+	booking: JobBooking! @relation(link: TABLE)
 }
 
 type CoachFeedback {

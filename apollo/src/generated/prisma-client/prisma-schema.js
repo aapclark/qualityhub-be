@@ -15,11 +15,11 @@ type AggregateFeedbackEntry {
   count: Int!
 }
 
-type AggregateIQJobInfo {
+type AggregateJob {
   count: Int!
 }
 
-type AggregateJob {
+type AggregateJobBooking {
   count: Int!
 }
 
@@ -567,7 +567,22 @@ input FeedbackEntryWhereUniqueInput {
   id: ID
 }
 
-type IQJobInfo {
+type Job {
+  id: ID!
+  coach: User!
+  seeker: User!
+  listing: Listing!
+  microservice: Microservice!
+  dateRequested: DateTime
+  dateAccepted: DateTime
+  dateCompleted: DateTime
+  pending: Boolean
+  accepted: Boolean
+  completed: Boolean
+  booking: JobBooking!
+}
+
+type JobBooking {
   id: ID!
   year: Int!
   month: Int!
@@ -575,42 +590,53 @@ type IQJobInfo {
   hour: Int!
   minute: Int!
   job: Job!
-  availability(where: ListingAvailabilityWhereInput, orderBy: ListingAvailabilityOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ListingAvailability!]
-  pending: Boolean
-  confirmed: Boolean
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
 }
 
-type IQJobInfoConnection {
+type JobBookingConnection {
   pageInfo: PageInfo!
-  edges: [IQJobInfoEdge]!
-  aggregate: AggregateIQJobInfo!
+  edges: [JobBookingEdge]!
+  aggregate: AggregateJobBooking!
 }
 
-input IQJobInfoCreateInput {
+input JobBookingCreateInput {
   id: ID
   year: Int!
   month: Int!
   day: Int!
   hour: Int!
   minute: Int!
-  job: JobCreateOneInput!
-  availability: ListingAvailabilityCreateManyInput
-  pending: Boolean
-  confirmed: Boolean
+  job: JobCreateOneWithoutBookingInput!
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
 }
 
-type IQJobInfoEdge {
-  node: IQJobInfo!
+input JobBookingCreateOneWithoutJobInput {
+  create: JobBookingCreateWithoutJobInput
+  connect: JobBookingWhereUniqueInput
+}
+
+input JobBookingCreateWithoutJobInput {
+  id: ID
+  year: Int!
+  month: Int!
+  day: Int!
+  hour: Int!
+  minute: Int!
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+}
+
+type JobBookingEdge {
+  node: JobBooking!
   cursor: String!
 }
 
-enum IQJobInfoOrderByInput {
+enum JobBookingOrderByInput {
   id_ASC
   id_DESC
   year_ASC
@@ -623,10 +649,6 @@ enum IQJobInfoOrderByInput {
   hour_DESC
   minute_ASC
   minute_DESC
-  pending_ASC
-  pending_DESC
-  confirmed_ASC
-  confirmed_DESC
   interviewGoals_ASC
   interviewGoals_DESC
   interviewQuestions_ASC
@@ -635,67 +657,83 @@ enum IQJobInfoOrderByInput {
   resumeURL_DESC
 }
 
-type IQJobInfoPreviousValues {
+type JobBookingPreviousValues {
   id: ID!
   year: Int!
   month: Int!
   day: Int!
   hour: Int!
   minute: Int!
-  pending: Boolean
-  confirmed: Boolean
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
 }
 
-type IQJobInfoSubscriptionPayload {
+type JobBookingSubscriptionPayload {
   mutation: MutationType!
-  node: IQJobInfo
+  node: JobBooking
   updatedFields: [String!]
-  previousValues: IQJobInfoPreviousValues
+  previousValues: JobBookingPreviousValues
 }
 
-input IQJobInfoSubscriptionWhereInput {
+input JobBookingSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: IQJobInfoWhereInput
-  AND: [IQJobInfoSubscriptionWhereInput!]
-  OR: [IQJobInfoSubscriptionWhereInput!]
-  NOT: [IQJobInfoSubscriptionWhereInput!]
+  node: JobBookingWhereInput
+  AND: [JobBookingSubscriptionWhereInput!]
+  OR: [JobBookingSubscriptionWhereInput!]
+  NOT: [JobBookingSubscriptionWhereInput!]
 }
 
-input IQJobInfoUpdateInput {
+input JobBookingUpdateInput {
   year: Int
   month: Int
   day: Int
   hour: Int
   minute: Int
-  job: JobUpdateOneRequiredInput
-  availability: ListingAvailabilityUpdateManyInput
-  pending: Boolean
-  confirmed: Boolean
+  job: JobUpdateOneRequiredWithoutBookingInput
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
 }
 
-input IQJobInfoUpdateManyMutationInput {
+input JobBookingUpdateManyMutationInput {
   year: Int
   month: Int
   day: Int
   hour: Int
   minute: Int
-  pending: Boolean
-  confirmed: Boolean
   interviewGoals: String
   interviewQuestions: String
   resumeURL: String
 }
 
-input IQJobInfoWhereInput {
+input JobBookingUpdateOneRequiredWithoutJobInput {
+  create: JobBookingCreateWithoutJobInput
+  update: JobBookingUpdateWithoutJobDataInput
+  upsert: JobBookingUpsertWithoutJobInput
+  connect: JobBookingWhereUniqueInput
+}
+
+input JobBookingUpdateWithoutJobDataInput {
+  year: Int
+  month: Int
+  day: Int
+  hour: Int
+  minute: Int
+  interviewGoals: String
+  interviewQuestions: String
+  resumeURL: String
+}
+
+input JobBookingUpsertWithoutJobInput {
+  update: JobBookingUpdateWithoutJobDataInput!
+  create: JobBookingCreateWithoutJobInput!
+}
+
+input JobBookingWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -751,13 +789,6 @@ input IQJobInfoWhereInput {
   minute_gt: Int
   minute_gte: Int
   job: JobWhereInput
-  availability_every: ListingAvailabilityWhereInput
-  availability_some: ListingAvailabilityWhereInput
-  availability_none: ListingAvailabilityWhereInput
-  pending: Boolean
-  pending_not: Boolean
-  confirmed: Boolean
-  confirmed_not: Boolean
   interviewGoals: String
   interviewGoals_not: String
   interviewGoals_in: [String!]
@@ -800,27 +831,13 @@ input IQJobInfoWhereInput {
   resumeURL_not_starts_with: String
   resumeURL_ends_with: String
   resumeURL_not_ends_with: String
-  AND: [IQJobInfoWhereInput!]
-  OR: [IQJobInfoWhereInput!]
-  NOT: [IQJobInfoWhereInput!]
+  AND: [JobBookingWhereInput!]
+  OR: [JobBookingWhereInput!]
+  NOT: [JobBookingWhereInput!]
 }
 
-input IQJobInfoWhereUniqueInput {
+input JobBookingWhereUniqueInput {
   id: ID
-}
-
-type Job {
-  id: ID!
-  coach: User!
-  seeker: User!
-  listing: Listing!
-  microservice: Microservice!
-  dateRequested: DateTime
-  dateAccepted: DateTime
-  dateCompleted: DateTime
-  pending: Boolean
-  accepted: Boolean
-  completed: Boolean
 }
 
 type JobConnection {
@@ -841,11 +858,31 @@ input JobCreateInput {
   pending: Boolean
   accepted: Boolean
   completed: Boolean
+  booking: JobBookingCreateOneWithoutJobInput!
 }
 
 input JobCreateOneInput {
   create: JobCreateInput
   connect: JobWhereUniqueInput
+}
+
+input JobCreateOneWithoutBookingInput {
+  create: JobCreateWithoutBookingInput
+  connect: JobWhereUniqueInput
+}
+
+input JobCreateWithoutBookingInput {
+  id: ID
+  coach: UserCreateOneInput!
+  seeker: UserCreateOneInput!
+  listing: ListingCreateOneInput!
+  microservice: Microservice!
+  dateRequested: DateTime
+  dateAccepted: DateTime
+  dateCompleted: DateTime
+  pending: Boolean
+  accepted: Boolean
+  completed: Boolean
 }
 
 type JobEdge {
@@ -912,6 +949,7 @@ input JobUpdateDataInput {
   pending: Boolean
   accepted: Boolean
   completed: Boolean
+  booking: JobBookingUpdateOneRequiredWithoutJobInput
 }
 
 input JobUpdateInput {
@@ -925,6 +963,7 @@ input JobUpdateInput {
   pending: Boolean
   accepted: Boolean
   completed: Boolean
+  booking: JobBookingUpdateOneRequiredWithoutJobInput
 }
 
 input JobUpdateManyMutationInput {
@@ -944,9 +983,34 @@ input JobUpdateOneRequiredInput {
   connect: JobWhereUniqueInput
 }
 
+input JobUpdateOneRequiredWithoutBookingInput {
+  create: JobCreateWithoutBookingInput
+  update: JobUpdateWithoutBookingDataInput
+  upsert: JobUpsertWithoutBookingInput
+  connect: JobWhereUniqueInput
+}
+
+input JobUpdateWithoutBookingDataInput {
+  coach: UserUpdateOneRequiredInput
+  seeker: UserUpdateOneRequiredInput
+  listing: ListingUpdateOneRequiredInput
+  microservice: Microservice
+  dateRequested: DateTime
+  dateAccepted: DateTime
+  dateCompleted: DateTime
+  pending: Boolean
+  accepted: Boolean
+  completed: Boolean
+}
+
 input JobUpsertNestedInput {
   update: JobUpdateDataInput!
   create: JobCreateInput!
+}
+
+input JobUpsertWithoutBookingInput {
+  update: JobUpdateWithoutBookingDataInput!
+  create: JobCreateWithoutBookingInput!
 }
 
 input JobWhereInput {
@@ -1001,6 +1065,7 @@ input JobWhereInput {
   accepted_not: Boolean
   completed: Boolean
   completed_not: Boolean
+  booking: JobBookingWhereInput
   AND: [JobWhereInput!]
   OR: [JobWhereInput!]
   NOT: [JobWhereInput!]
@@ -1052,11 +1117,6 @@ input ListingAvailabilityCreateInput {
   recurring: Boolean!
 }
 
-input ListingAvailabilityCreateManyInput {
-  create: [ListingAvailabilityCreateInput!]
-  connect: [ListingAvailabilityWhereUniqueInput!]
-}
-
 type ListingAvailabilityEdge {
   node: ListingAvailability!
   cursor: String!
@@ -1092,70 +1152,6 @@ type ListingAvailabilityPreviousValues {
   recurring: Boolean!
 }
 
-input ListingAvailabilityScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  hour: Int
-  hour_not: Int
-  hour_in: [Int!]
-  hour_not_in: [Int!]
-  hour_lt: Int
-  hour_lte: Int
-  hour_gt: Int
-  hour_gte: Int
-  minute: Int
-  minute_not: Int
-  minute_in: [Int!]
-  minute_not_in: [Int!]
-  minute_lt: Int
-  minute_lte: Int
-  minute_gt: Int
-  minute_gte: Int
-  year: Int
-  year_not: Int
-  year_in: [Int!]
-  year_not_in: [Int!]
-  year_lt: Int
-  year_lte: Int
-  year_gt: Int
-  year_gte: Int
-  month: Int
-  month_not: Int
-  month_in: [Int!]
-  month_not_in: [Int!]
-  month_lt: Int
-  month_lte: Int
-  month_gt: Int
-  month_gte: Int
-  day: Int
-  day_not: Int
-  day_in: [Int!]
-  day_not_in: [Int!]
-  day_lt: Int
-  day_lte: Int
-  day_gt: Int
-  day_gte: Int
-  isOpen: Boolean
-  isOpen_not: Boolean
-  recurring: Boolean
-  recurring_not: Boolean
-  AND: [ListingAvailabilityScalarWhereInput!]
-  OR: [ListingAvailabilityScalarWhereInput!]
-  NOT: [ListingAvailabilityScalarWhereInput!]
-}
-
 type ListingAvailabilitySubscriptionPayload {
   mutation: MutationType!
   node: ListingAvailability
@@ -1174,18 +1170,6 @@ input ListingAvailabilitySubscriptionWhereInput {
   NOT: [ListingAvailabilitySubscriptionWhereInput!]
 }
 
-input ListingAvailabilityUpdateDataInput {
-  hour: Int
-  minute: Int
-  coach: UserUpdateOneRequiredInput
-  listing: ListingUpdateOneRequiredInput
-  year: Int
-  month: Int
-  day: Int
-  isOpen: Boolean
-  recurring: Boolean
-}
-
 input ListingAvailabilityUpdateInput {
   hour: Int
   minute: Int
@@ -1198,28 +1182,6 @@ input ListingAvailabilityUpdateInput {
   recurring: Boolean
 }
 
-input ListingAvailabilityUpdateManyDataInput {
-  hour: Int
-  minute: Int
-  year: Int
-  month: Int
-  day: Int
-  isOpen: Boolean
-  recurring: Boolean
-}
-
-input ListingAvailabilityUpdateManyInput {
-  create: [ListingAvailabilityCreateInput!]
-  update: [ListingAvailabilityUpdateWithWhereUniqueNestedInput!]
-  upsert: [ListingAvailabilityUpsertWithWhereUniqueNestedInput!]
-  delete: [ListingAvailabilityWhereUniqueInput!]
-  connect: [ListingAvailabilityWhereUniqueInput!]
-  set: [ListingAvailabilityWhereUniqueInput!]
-  disconnect: [ListingAvailabilityWhereUniqueInput!]
-  deleteMany: [ListingAvailabilityScalarWhereInput!]
-  updateMany: [ListingAvailabilityUpdateManyWithWhereNestedInput!]
-}
-
 input ListingAvailabilityUpdateManyMutationInput {
   hour: Int
   minute: Int
@@ -1228,22 +1190,6 @@ input ListingAvailabilityUpdateManyMutationInput {
   day: Int
   isOpen: Boolean
   recurring: Boolean
-}
-
-input ListingAvailabilityUpdateManyWithWhereNestedInput {
-  where: ListingAvailabilityScalarWhereInput!
-  data: ListingAvailabilityUpdateManyDataInput!
-}
-
-input ListingAvailabilityUpdateWithWhereUniqueNestedInput {
-  where: ListingAvailabilityWhereUniqueInput!
-  data: ListingAvailabilityUpdateDataInput!
-}
-
-input ListingAvailabilityUpsertWithWhereUniqueNestedInput {
-  where: ListingAvailabilityWhereUniqueInput!
-  update: ListingAvailabilityUpdateDataInput!
-  create: ListingAvailabilityCreateInput!
 }
 
 input ListingAvailabilityWhereInput {
@@ -2054,18 +2000,18 @@ type Mutation {
   upsertFeedbackEntry(where: FeedbackEntryWhereUniqueInput!, create: FeedbackEntryCreateInput!, update: FeedbackEntryUpdateInput!): FeedbackEntry!
   deleteFeedbackEntry(where: FeedbackEntryWhereUniqueInput!): FeedbackEntry
   deleteManyFeedbackEntries(where: FeedbackEntryWhereInput): BatchPayload!
-  createIQJobInfo(data: IQJobInfoCreateInput!): IQJobInfo!
-  updateIQJobInfo(data: IQJobInfoUpdateInput!, where: IQJobInfoWhereUniqueInput!): IQJobInfo
-  updateManyIQJobInfoes(data: IQJobInfoUpdateManyMutationInput!, where: IQJobInfoWhereInput): BatchPayload!
-  upsertIQJobInfo(where: IQJobInfoWhereUniqueInput!, create: IQJobInfoCreateInput!, update: IQJobInfoUpdateInput!): IQJobInfo!
-  deleteIQJobInfo(where: IQJobInfoWhereUniqueInput!): IQJobInfo
-  deleteManyIQJobInfoes(where: IQJobInfoWhereInput): BatchPayload!
   createJob(data: JobCreateInput!): Job!
   updateJob(data: JobUpdateInput!, where: JobWhereUniqueInput!): Job
   updateManyJobs(data: JobUpdateManyMutationInput!, where: JobWhereInput): BatchPayload!
   upsertJob(where: JobWhereUniqueInput!, create: JobCreateInput!, update: JobUpdateInput!): Job!
   deleteJob(where: JobWhereUniqueInput!): Job
   deleteManyJobs(where: JobWhereInput): BatchPayload!
+  createJobBooking(data: JobBookingCreateInput!): JobBooking!
+  updateJobBooking(data: JobBookingUpdateInput!, where: JobBookingWhereUniqueInput!): JobBooking
+  updateManyJobBookings(data: JobBookingUpdateManyMutationInput!, where: JobBookingWhereInput): BatchPayload!
+  upsertJobBooking(where: JobBookingWhereUniqueInput!, create: JobBookingCreateInput!, update: JobBookingUpdateInput!): JobBooking!
+  deleteJobBooking(where: JobBookingWhereUniqueInput!): JobBooking
+  deleteManyJobBookings(where: JobBookingWhereInput): BatchPayload!
   createListing(data: ListingCreateInput!): Listing!
   updateListing(data: ListingUpdateInput!, where: ListingWhereUniqueInput!): Listing
   updateManyListings(data: ListingUpdateManyMutationInput!, where: ListingWhereInput): BatchPayload!
@@ -2143,12 +2089,12 @@ type Query {
   feedbackEntry(where: FeedbackEntryWhereUniqueInput!): FeedbackEntry
   feedbackEntries(where: FeedbackEntryWhereInput, orderBy: FeedbackEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [FeedbackEntry]!
   feedbackEntriesConnection(where: FeedbackEntryWhereInput, orderBy: FeedbackEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeedbackEntryConnection!
-  iQJobInfo(where: IQJobInfoWhereUniqueInput!): IQJobInfo
-  iQJobInfoes(where: IQJobInfoWhereInput, orderBy: IQJobInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [IQJobInfo]!
-  iQJobInfoesConnection(where: IQJobInfoWhereInput, orderBy: IQJobInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IQJobInfoConnection!
   job(where: JobWhereUniqueInput!): Job
   jobs(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Job]!
   jobsConnection(where: JobWhereInput, orderBy: JobOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobConnection!
+  jobBooking(where: JobBookingWhereUniqueInput!): JobBooking
+  jobBookings(where: JobBookingWhereInput, orderBy: JobBookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [JobBooking]!
+  jobBookingsConnection(where: JobBookingWhereInput, orderBy: JobBookingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JobBookingConnection!
   listing(where: ListingWhereUniqueInput!): Listing
   listings(where: ListingWhereInput, orderBy: ListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Listing]!
   listingsConnection(where: ListingWhereInput, orderBy: ListingOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ListingConnection!
@@ -2550,8 +2496,8 @@ type Subscription {
   chat(where: ChatSubscriptionWhereInput): ChatSubscriptionPayload
   coachFeedback(where: CoachFeedbackSubscriptionWhereInput): CoachFeedbackSubscriptionPayload
   feedbackEntry(where: FeedbackEntrySubscriptionWhereInput): FeedbackEntrySubscriptionPayload
-  iQJobInfo(where: IQJobInfoSubscriptionWhereInput): IQJobInfoSubscriptionPayload
   job(where: JobSubscriptionWhereInput): JobSubscriptionPayload
+  jobBooking(where: JobBookingSubscriptionWhereInput): JobBookingSubscriptionPayload
   listing(where: ListingSubscriptionWhereInput): ListingSubscriptionPayload
   listingAvailability(where: ListingAvailabilitySubscriptionWhereInput): ListingAvailabilitySubscriptionPayload
   listingIndustry(where: ListingIndustrySubscriptionWhereInput): ListingIndustrySubscriptionPayload
