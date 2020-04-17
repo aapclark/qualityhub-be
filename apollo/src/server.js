@@ -5,8 +5,11 @@ import typeDefs from './typeDefs'
 const resolvers = require('./resolvers')
 
 
+
+
+
 const server = new ApolloServer({
-  formatError: (err) => { console.log(err.stack); return err },
+  formatError: (err) => { console.log('Server encountered an error:', err); return err },
   typeDefs,
   resolvers,
   context: async (request) => {
