@@ -7,6 +7,10 @@ const {
 
 
 async function register(_parent, { input }, { prisma }) {
+  console.log('REGISTER')
+  console.log(`input`, input)
+  // console.log(`prisma`, prisma)
+
   const hash = bcrypt.hashSync(input.password, 10);
   input.password = hash;
   checkFields(input)
@@ -18,6 +22,7 @@ async function register(_parent, { input }, { prisma }) {
     const user = await prisma.createUser({
       ...input
     });
+    console.log(`user`, user)
     const token = generateToken(user);
     return {
       token,

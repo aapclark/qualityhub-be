@@ -4,11 +4,9 @@ services:
     build:
       context: ./apollo
       dockerfile: Dockerfile
+
     environment:
-      PRISMA_ENDPOINT: '${PRISMA_ENDPOINT}/${PRISMA_SERVICE_NAME}/${PRISMA_STAGE}'
-      PRISMA_SERVICE_NAME: ${PRISMA_SERVICE_NAME}
-      PRISMA_STAGE: ${PRISMA_STAGE}
-      PRISMA_PORT: ${PRISMA_PORT}
+      PRISMA_ENDPOINT: '${PRISMA_URL}:${PRISMA_PORT}/${PRISMA_SERVICE_NAME}/${PRISMA_STAGE}'
       PRISMA_SECRET: '${PRISMA_SECRET}'
       APOLLO_PORT: '${APOLLO_PORT}'
       JWT_SECRET: '${JWT_SECRET}'
@@ -17,6 +15,8 @@ services:
       - ./apollo/src:/app/src
     ports:
       - '${APOLLO_PORT:-8000}:${APOLLO_PORT:-8000}'
+    depends_on:
+      - prisma
     command: sh -c "npm run ${NPM_COMMAND}"
   prisma:
     image: prismagraphql/prisma:1.34.10
