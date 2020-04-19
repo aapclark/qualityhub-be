@@ -8,7 +8,7 @@
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "nodemon --exec babel-node src/index.js",
-    "development_former": "env-cmd -f ../configuration/development.env nodemon --exec babel-node src/index.js",
+    "development_former": "env-cmd -f ../.env nodemon --exec babel-node src/index.js",
     "save_seeded_users": "env-cmd -f ../config/development.env node prisma/seeds/02_save_seeded_users.js",
     "seed_reviews": "env-cmd -f ../config/development.env node prisma/seeds/03_seed_reviews.js"
   },
