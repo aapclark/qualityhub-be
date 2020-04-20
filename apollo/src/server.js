@@ -4,7 +4,7 @@ import { ApolloServer } from 'apollo-server'
 import createContext from './context'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
-
+import apolloLogger from './middleware/apolloLogger'
 
 
 const server = new ApolloServer({
@@ -12,6 +12,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: createContext,
+  plugins: [apolloLogger],
   cors: true,
   ssl: false,
 });
