@@ -1,12 +1,5 @@
 
 
-// const apolloLogger = ({ req }) => {
-//   const { method, original, url, statusCode } = req
-//   now = new Date()
-//   res = `${now}
-//       -- ${method} to ${url} -- ${statusCode}`
-//   console.log(res)
-// }
 
 const apolloLogger = {
   requestDidStart({ request }) {
@@ -18,18 +11,17 @@ const apolloLogger = {
     const now = new Date()
     const date = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${now.getDay()}/${now.getMonth()}/${now.getFullYear()}`
 
-    const res = `${requestInternals.method} -- ${date}`
-    // console.log(res)
+    const info = `${requestInternals.method} -- ${query} -- ${date}`
+    console.log(info)
     return {
       parsingDidStart(ctx) {
-        console.log('parsing started')
-        console.log(`parsing CTX`, ctx)
+        console.log('Parsing Started')
+        // console.log(`parsing CTX`, ctx)
       },
       validationDidStart(ctx) {
-        console.log('validation started')
+        console.log('Validation started.')
       }
     }
-
   }
 }
 
