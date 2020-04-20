@@ -9,7 +9,7 @@ const apolloLogger = {
     const date = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${now.getDay()}/${now.getMonth()}/${now.getFullYear()}`
 
     const info = `${requestInternals.method} -- ${query} -- ${date}`
-    console.log(info)
+    console.log('==========', info, '==========')
     return {
       parsingDidStart(ctx) {
         console.log('Parsing Started')

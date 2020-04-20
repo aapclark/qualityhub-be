@@ -4,7 +4,7 @@ import { ApolloServer } from 'apollo-server'
 import createContext from './context'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
-import apolloLogger from './middleware/apolloLogger'
+import apolloLogger from './plugins/apolloLogger'
 
 
 const server = new ApolloServer({
