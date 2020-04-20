@@ -1,8 +1,9 @@
-const { ApolloServer } = require('apollo-server')
+import { ApolloServer } from 'apollo-server'
+
 
 import createContext from './context'
 import typeDefs from './typeDefs'
-const resolvers = require('./resolvers')
+import resolvers from './resolvers'
 
 
 
