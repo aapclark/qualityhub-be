@@ -1,6 +1,3 @@
-
-
-
 const apolloLogger = {
   requestDidStart({ request }) {
     const { query, http } = request
@@ -16,7 +13,6 @@ const apolloLogger = {
     return {
       parsingDidStart(ctx) {
         console.log('Parsing Started')
-        // console.log(`parsing CTX`, ctx)
       },
       validationDidStart(ctx) {
         console.log('Validation started.')
@@ -24,6 +20,5 @@ const apolloLogger = {
     }
   }
 }
-
 
 export default apolloLogger
