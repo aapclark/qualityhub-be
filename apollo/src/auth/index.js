@@ -1,57 +1,56 @@
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcryptjs'
 
-const secret = process.env.PRISMA_SECRET
 
+import { AuthenticationError, UserInputError } from 'apollo-server'
 
-export const generateToken = ({ id, email }) => {
+const JWT_SECRET = process.env.PRISMA_SECRET
+
+/*
+  @param {Object} user - user info pulled from database
+
+  Creates a token storing user id and email. Expires in 12 hours
+*/
+export function generateToken(user) {
+
   const payload = {
-    id,
-    email
-  }
+    id: user.id,
+    email: user.email,
+  };
   const options = {
     expiresIn: '3d'
   }
-  return jwt.sign(payload, secret, options)
+  return jwt.sign(payload, JWT_SECRET, options)
 }
 
+/*
+  @param String -- string passed to hashPassword from argument object.
 
-// expect just a header object
-export const validToken = header => {
-  console.log(`header`, header)
-  if (header) {
-    const token = header.replace('Bearer ', '')
+  Checks length of password, throws error if insufficient, and returns hash password
+*/
+export function hashPassword(password) {
+  if (password.length < 8) {
+    throw new UserInputError('Password must be at least 8 characters.')
+  }
 
-    return jwt.verify(token, secret, (err, decoded) => {
-      if (err) {
-        return {
-          token: ``,
-          valid: false
-        }
-      }
-      else {
-        return {
-          token: generateToken(decoded),
-          valid: true
-        }
-      }
-    })
-  }
-  else {
-    throw new Error('Not authenticated.')
-  }
+  return bcrypt.hashSync(password, 10)
 }
 
+/* 
+  @param {Object} context - Contains request object
 
-export const getUserID = token => {
-  console.log(`determining user id from ${token}`)
-  const pureToken = token.replace(`Bearer `, ``)
+  Gets user ID from token stored in the authorization header. If there is no token or 
+  if it is expired, it will throw an error.
 
-  try {
-    const { id } = jwt.verify(pureToken, secret)
-    console.log(`decoded id`, id)
-    return id
-  } catch {
-    throw new Error('Not Authenticated.')
+  @return {ID} userId - User ID stored in token
+*/
+export function getUserId(request) {
+  const authorization = request.get('Authorization')
+
+  if (authorization) {
+    const token = authorization.replace('Bearer ', '')
+    const { id: userId } = jwt.verify(token, JWT_SECRET)
+    return userId
   }
-
+  throw new AuthenticationError('Not Authenticated.')
 }
