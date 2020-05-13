@@ -4,17 +4,21 @@
   "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
   "main": "index.js",
   "scripts": {
-    "test": "env-cmd -f ../configuration/test.env jest --runInBand --watchAll",
+    "test": "jest --runInBand --watchAll",
+    "test:local": "env-cmd -f ../configuration/test.env jest --runInBand --watchAll",
     "server": "nodemon src/index.js",
     "start": "node src/index.js",
     "development": "nodemon --exec babel-node src/index.js",
-    "development_former": "env-cmd -f ../.env nodemon --exec babel-node src/index.js",
-    "save_seeded_users": "env-cmd -f ../config/development.env node prisma/seeds/02_save_seeded_users.js",
-    "seed_reviews": "env-cmd -f ../config/development.env node prisma/seeds/03_seed_reviews.js"
+    "development:local": "env-cmd -f ../configuration/development.env nodemon --exec babel-node src/index.js"
   },
   "jest": {
     "globalSetup": "./src/__tests__/config/globalSetup.js",
-    "globalTeardown": "./src/__tests__/config/globalTeardown.js"
+    "globalTeardown": "./src/__tests__/config/globalTeardown.js",
+    "testPathIgnorePatterns": [
+      "src/__tests__/config/",
+      "src/__tests__/utils/",
+      "src/__tests__/queries/"
+    ]
   },
   "repository": {
     "type": "git",
