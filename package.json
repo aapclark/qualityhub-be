@@ -24,7 +24,6 @@
     "test:docker": "npm run beforeRun && npm run env:test && docker-compose up",
     "test:local": "npm run beforeRun && npm run env:test && docker-compose up -d postgres prisma && npm run apollo:test"
   },
-  },
   "dependencies": {
     "apollo-boost": "^0.4.7"
   }
