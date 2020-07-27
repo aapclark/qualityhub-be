@@ -1,19 +1,23 @@
-FROM node:13.10.1-alpine as deps
+FROM node:12.18.1-alpine AS base
 
 WORKDIR /app
 COPY package.json  ./
 
 RUN npm install && \
-  npm cache clean --force
+  npm cache clean --force 
 
-FROM node:13.10.1-alpine
+FROM node:12.18.1-alpine AS app
 WORKDIR /app
 
-# COPY  /app/node_modules ./node_modules/
-COPY --from=deps /app/node_modules ./node_modules/
-COPY ./src ./
-COPY .babelrc ./
-COPY package.json ./
 
-CMD ["NODE", "index.js"]
-EXPOSE 5500
+COPY --from=base /app/node_modules ./node_modules/
+COPY package.json ./
+COPY ./prisma ./prisma/
+COPY ./src ./src/
+COPY .babelrc ./
+
+# RUN cd prisma && npx prisma migrate save --experimental 
+# RUN cd prisma && npx prisma migrate up --experimental 
+# RUN cd prisma && npx prisma generate 
+
+EXPOSE 5502
